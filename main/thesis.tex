@@ -1,7 +1,10 @@
 % ******************************* PhD Thesis Template **************************
 % Please have a look at the README.md file for info on how to use the template
 
-\documentclass[a4paper,12pt,times,numbered,print,index]{../classes/PhDThesisPSnPDF}
+\documentclass[a4paper,10pt,numbered,print,index]{../classes/PhDThesisPSnPDF}
+
+%% Should I put `times' back??
+
 
 % ******************************************************************************
 % ******************************* Class Options ********************************
@@ -82,6 +85,19 @@
 % Preamble: Contains packages and user-defined commands and settings
 \input{../include/inclusions}
 
+\usepackage{ragged2e}
+\justifying
+
+\newenvironment{textbox}[1][\textwidth]{
+  \begin{center} % so the minipage is centered
+   
+   \begin{minipage}[t]{#1}
+    \raggedright \justify% so the minipage's text is left justified
+}{
+  \end{minipage}
+   \end{center}
+}
+
 % ************************ Thesis Information & Meta-data **********************
 % Thesis title and author information, refernce file for biblatex
 \input{../include/thesis-info}
@@ -105,6 +121,9 @@
 \ifdefineChapter
  \includeonly{chapters/chapter1}
 \fi
+
+\DeclareMathOperator{\id}{id}
+
 
 % ******************************** Front Matter ********************************
 \begin{document}
@@ -133,11 +152,14 @@
 
 % ******************************** Main Matter *********************************
 \mainmatter
-\chapter{Introduction}
+\chapter{Introduction} 
 \subfile{../chapters/chapter1}
 
 \chapter{Preliminaries}
 \subfile{../chapters/chapter2}
+
+\chapter{A New Framework}
+\subfile{../chapters/new-framework}
 
 \chapter{Symmetric Circuits}
 \subfile{../chapters/chapter3}
@@ -147,6 +169,12 @@
 
 \chapter{Transparent Circuits}
 \subfile{../chapters/chapter5}
+
+\chapter{Translating to and from Circuits}
+\subfile{../chapters/formulas-to-circuits }
+
+\chapter{Translating Circuits into Formulas}
+\subfile{../chapters/circuits-to-formulas}
 
 \chapter{Generalising The Characterisation}
 \subfile{../chapters/chapter6}

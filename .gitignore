@@ -37,7 +37,7 @@ thesis.run.xml*
 *run.xml*
 *.latexmkrc*
 *_latexmk*
-
+*.pdf
 .travis.yml
 auto/
 main/auto/
