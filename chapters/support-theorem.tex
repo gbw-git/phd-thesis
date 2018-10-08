@@ -1,0 +1,669 @@
+%!TEX root = ../main/thesis.tex
+\documentclass[../main/thesis.tex]{subfiles}
+\begin{document}
+
+\section{Supports and Supporting Partitions}
+We reproduce the definitions of a support and supporting partition from Anderson
+and Dawar~\cite{AndersonD17} below.
+
+\begin{definition}
+  Let $G \leq \sym_n$ and let $S \subseteq [n]$. Then $S$ is a \emph{support}
+  for $G$ if $\stab_n(S) \leq G$.
+\end{definition}
+
+\begin{definition}
+  Let $G \leq \sym_n$ and $\mathcal{P}$ be a partition of $[n]$. Then
+  $\mathcal{P}$ is a \emph{supporting partition} for $G$ if
+  $\stab_n(\mathcal{P}) \leq G$.
+\end{definition}
+
+Notice that if $\mathcal{P}$ is a supporting partition for $G$ and $P \in
+\mathcal{P}$ then $\stab([n] \setminus P) \leq \stab(\mathcal{P}) \leq G$, i.e.\
+$[n] \setminus P$ is a support for $G$.
+
+Let $\mathcal{P}, \mathcal{P}'$ be partitions of $[n]$. We say that
+$\mathcal{P}'$ is as \emph{coarse} as $\mathcal{P}$ (denoted by $\mathcal{P}
+\preceq \mathcal{P}'$) if for all $x \in \mathcal{P}$ there exists $y \in
+\mathcal{P}'$ such that $x \subseteq y$. Anderson and Dawar~\cite{AndersonD17}
+define an operation $\mathcal{E}$ on pairs of partitions of $[n]$, where
+$\mathcal{E} (\mathcal{P}, \mathcal{P}')$ is the partition of $[n]$ consisting
+of the equivalence classes of the transitive closure of the relation $\sim$ on
+$[n]$ defined by $a \sim b$ if, and only if, there exists $P \in \mathcal{P}
+\cup \mathcal{P}'$ such that $a,b \in P$.
+
+Anderson and Dawar show that $\mathcal{E}$ preserves supporting partitions, and
+that $\mathcal{E}(\mathcal{P}, \mathcal{P}')$ is as coarse as both $\mathcal{P}$
+and $\mathcal{P}'$. We state this result formally in
+Proposition~\ref{prop:combining-supporting-patitions}.
+
+\begin{prop}[{\cite[Proposition 2]{AndersonD17}}]
+  \label{prop:combining-supporting-patitions}
+  Let $G \leq \sym_n$ be a group and let $\mathcal{P}$ and $\mathcal{P}'$ be
+  supporting partitions of $G$. Then $\mathcal{P} \preceq
+  \mathcal{E}(\mathcal{P}, \mathcal{P}')$, $ \mathcal{P}' \preceq
+  \mathcal{E}(\mathcal{P}, \mathcal{P}')$ and $\mathcal{E}(\mathcal{P},
+  \mathcal{P}')$ is a supporting partition of $G$.
+\end{prop}
+
+Anderson and Dawar, using Proposition~\ref{prop:combining-supporting-patitions},
+show that every group $G \leq \sym_n$ has a unique coarsest supporting
+partition. We call this partition the \emph{canonical supporting partition}, and
+denote it by $\SP (G)$. We now define the notion of a \emph{canonical support}.
+
+\begin{definition}
+  Let $G \leq \sym_n$. Let $\| \SP(G) \| = \min \{\vert [n] \setminus P \vert :
+  P \in \SP(G) \}$. We say that $G$ has \emph{small support} if $\| \SP(G) \| <
+  \frac{n}{2}$.
+\end{definition}
+
+Note that if $G$ has small support then there is a part in its canonical
+supporting partition of size greater than $\frac{n}{2}$, and this part is the
+unique largest part in the partition.
+
+\begin{definition}
+  Let $G \leq \sym_n$ such that $G$ has small support. Let $\consp(G) = [n]
+  \setminus P$, where $P$ is the largest element of $\SP(G)$. We call
+  $\consp(G)$ the \emph{canonical support} of $G$.
+\end{definition}
+
+\begin{lem}\label{lem:subgroup-coarse}
+  Let $G_1, G_2 \leq \sym_n$ with $G_1 \leq G_2$. Then $\SP(G_1) \preceq
+  \SP(G_2)$
+\end{lem}
+\begin{proof}
+  We have that $\stab(\SP(G_1)) \leq G_1 \leq G_2$, and so $\SP(G_1)$ supports
+  $G_2$. Since $\SP(G_2)$ is the coarsest supporting partition of $G_2$ we have
+  that $\SP(G_1) \preceq \SP(G_2)$.
+\end{proof}
+
+\begin{lem}
+  Let $G_1, G_2 \leq \sym_n$ such that $G_1 \leq G_2$ and $G_1$ has small
+  support. Then $G_2$ has small support and $\consp(G_2) \subseteq \consp(G_1)$.
+  \label{lem:support-containment}
+\end{lem}
+\begin{proof}
+  By Lemma~\ref{lem:subgroup-coarse}, we have that $\SP(G_1) \preceq \SP(G_2)$.
+  Let $P_1$ be the largest element of $\SP(G_1)$, and note that since $G_1$ has
+  small support, $\vert P_1 \vert > \frac{n}{2}$. Then there exists a (unique)
+  $P_2 \in \SP(G_2)$ such that $P_1 \subseteq P_2$. Thus $G_2$ has small
+  support, and $\consp(G_2) = [n] \setminus P_2 \subseteq [n] \setminus P_1 =
+  \consp(G_1)$.
+\end{proof}
+
+\begin{lem}
+  Let $G, H, K \leq \sym_n$ such that $G$ has small support and $G = H \cap K$.
+  Then $H$ and $K$ have small support and $\consp(G) = \consp(H) \cup
+  \consp(K)$.
+  \label{lem:row-column-supports-well-behaved}
+\end{lem}
+\begin{proof}
+  The fact that $H$ and $K$ have small support follows from
+  Lemma~\ref{lem:support-containment}.
+
+  Let $\mathcal{Q} := \{P_H \cap P_K : P_H \in \SP(H), P_K \in \SP(K) \text{ and
+  } \exists P \in \SP(G), P \subseteq P_H \cap P_K \} $. We first show that
+  $\mathcal{Q}$ is a supporting partition of $G$. We have that for any $P_H \cap
+  P_K, P_H' \cap P_K' \in \mathcal{Q}$, $P_H \cap P_K \cap P_H' \cap P_K' \neq
+  \emptyset$ if, and only if, $P_H = P_H'$ and $P_K = P_K'$ if, and only if,
+  $P_H \cap P_K = P_H' \cap P_K'$. By Lemma~\ref{lem:subgroup-coarse}, we have
+  that $\SP(G) \preceq \SP(H)$ and $\SP(G) \preceq \SP(K)$. It follows that for
+  each $P \in \SP(G)$ there exists $P_K \in \SP(K)$ and $P_H \in \SP(H)$ such
+  that $P \subseteq P_H \cap P_K$. So, for each $a \in [n]$ there is $P_a \in
+  \SP(G)$, $P_H \in \SP(H)$ and $P_K \in \SP(K)$ such that $a \in P_a \subseteq
+  P_H \cap P_K$. It follows that $\mathcal{Q}$ is a partition.
+
+  Moreover, we note that $\stab(\mathcal{Q}) \leq \stab(\SP(H))$ and
+  $\stab(\mathcal{Q}) \leq \stab(\SP(K))$, and thus $\stab(\mathcal{Q}) \leq
+  \stab(\SP(H)) \cap \stab(\SP(K)) \leq H \cap K = G$. It follows that
+  $\mathcal{Q}$ is a supporting partition of $G$, and so by definition of the
+  canonical supporting partition $\mathcal{Q} \preceq \SP (G)$. Since $G$ has
+  small support, there is a part $P_G$ in $\SP(G)$ with $|P_G| > \frac{n}{2}$.
+  Then there exists $P_H \in \SP(H)$ and $P_K \in \SP(K)$ such that $P_G
+  \subseteq P_H \cap P_K$, and so $\vert P_H \cap P_K \vert > \frac{n}{2}$. Thus
+  $P_H \cap P_K$ is the unique largest element in $\mathcal{Q}$. It follows from
+  $\mathcal{Q} \preceq \SP(G)$ that $P_G \subseteq P_H \cap P_K \subseteq P_G$.
+\end{proof}
+
+We state the following two results proved by Anderson and
+Dawar~\cite{AndersonD17}.
+
+\begin{lem}
+  \label{lem:SP-conjugation}
+  Let $G \leq \sym_n$ and $\sigma \in \sym_n$ then $\sigma \SP (G) = \SP(\sigma
+  G \sigma^{-1})$.
+\end{lem}
+
+\begin{lem}
+  For any $G \leq \sym_n$ we have that $\stab (\SP (G)) \leq G \leq
+  \setstab(\SP(G))$.
+\end{lem}
+
+\section{Group Action on Supports}
+\label{subsec:group-actions-on-supports}
+In this paper, unlike in the case of Anderson and Dawar \cite{AndersonD17}, we
+often wish to speak of supports and group actions on elements of the circuit
+other than gates, particularly elements of the universe or index of a gate. In
+this subsection we develop theory and terminology for dealing with group actions
+and supports in this more general setting.
+
+\begin{definition}
+  Let $X$ be a set on which a left group action of $G \leq \sym_n$ is defined.
+  We denote the \emph{canonical supporting partition} of $x \in X$ by $\SP_G (x)
+  = \SP (\stab_G(x))$. Similarly we let $\| \SP_G (x) \| = \| \SP (\stab_G(x))
+  \|$. We say that $x \in X$ has \emph{small support} if $\stab_G(x)$ has small
+  support. We say that $X$ has small supports if each $x \in X$ has small
+  support. If $x \in X$ has small support (i.e.\ $\| \SP_G(x) \| <
+  \frac{n}{2}$), we denote the \emph{canonical support} of $x$ by $\consp_G(x) =
+  \consp (stab_G(x))$. We refer to $\SP_G$ (resp.\ $\consp_G(g)$) as the
+  canonical supporting partition (resp.\ canonical support) of $x$
+  \emph{relative to $G$}.
+\end{definition}
+
+If the subgroup $G \leq \sym_n$ is obvious from context we omit the subscript in
+the canonical support and canonical support partition without the subscript. The
+group action most often referenced in this paper is the action of the entire
+group $\sym_n$ on the gates of a symmetric circuit with unique extensions given
+by extending a permutation to an automorphism of the circuit. In this case we
+omit the subscript.
+
+We are often interested in group actions of some set $G \lneq \sym_n$ on $X$,
+where $G$ is the stabiliser group of some object (or set of objects) and $X$ is
+some set of gates or the universe of a gate.
+
+We are often interested in defining a group action of some stabiliser group on
+some part of the circuit. In this case we make use of supports relative to some
+$G \lneq \sym_n$, where $G$ is the stabiliser group of some object or set of
+objects. In this case we make use of the following abbreviations in order to
+avoid complex subscripts. Let $X_1$ and $X_2$ be sets on which a group action of
+$\sym_n$ is defined, and let $x \in X_1$ and $S \subseteq X_2$. Let $\SP_S(x)$
+and $\consp_S(x)$ abbreviate $\SP_{\stab(S)}(x)$ and $\consp_{\stab(S)}(x)$,
+respectively. Similarly, we let $\orb_S(x)$ and $\stab_S(x)$ abbreviate
+$\orb_{\stab(S)}(x)$ and $\stab_{\stab(S)}(x)$, respectively. In the event that
+$S$ is a singleton we omit the set braces in the subscript.
+
+\begin{lem}
+  \label{lem:stab-conjugation}
+  Let $X$ be a set on which a left group action of $G \leq \sym_n$ is defined
+  and let $\sigma \in G$. Then for any $x \in X$, $\sigma \stab_G (x)
+  \sigma^{-1} = \stab_G(\sigma x)$.
+\end{lem}
+
+\begin{proof}
+  Let $\pi \in \stab_G(x)$, then $\sigma \pi \sigma^{-1}(\sigma x) = \sigma \pi
+  x = \sigma x$, and so $\sigma \pi \sigma^{-1} \in \stab_G(\sigma x)$. Let $\pi
+  \in \stab_G(\sigma x)$ then $\pi (\sigma x) = \sigma x$ and so $\sigma^{-1}
+  \pi \sigma x = x$. It follows that $\sigma^{-1} \pi \sigma \in \stab_G(x)$ and
+  so $\pi = \sigma (\sigma^{-1} \pi \sigma) \sigma ^{-1} \in \sigma \stab_G(x)
+  \sigma^{-1}$.
+\end{proof}
+
+\begin{lem}
+  \label{lem:support-mapping}
+  Let $X$ be a set on which a left group action of $G \leq \sym_n$ is defined
+  and let $\sigma \in G$. Then for any $x \in X$ it follows that $\sigma \SP_G
+  (x) = \SP_G (\sigma x)$ and, if $x$ has small support, $\sigma \consp_G (x) =
+  \consp_G (\sigma x)$.
+\end{lem}
+\begin{proof}
+  We have Lemmas~\ref{lem:SP-conjugation} and~\ref{lem:stab-conjugation} that
+  $\sigma \SP_G (x) = \sigma \SP(\stab_G (x)) = \SP(\sigma \stab_G(x)
+  \sigma^{-1}) = \SP (\stab_G(\sigma x)) = \SP_G (\sigma x)$, proving the first
+  part of the statement.
+
+  From the fact that $\| \SP_G(x) \| < \frac{n}{2}$ it follows there exists a
+  unique $P \in \SP_G(x)$ such that $\vert P \vert > \frac{n}{2}$ and
+  $\consp_G(x) = [n] \setminus P$. But then $\sigma \consp_G (x) = \sigma([n]
+  \setminus P) = [n] \setminus (\sigma P)$. We note that $\sigma P \in \sigma
+  \SP_G (x) = \SP_G(\sigma x)$ and $\vert \sigma P \vert > \frac{n}{2}$. Thus
+  $\sigma P$ is the unique largest part in $\SP_G(\sigma x)$, and so
+  $\consp_G(\sigma x) = [n] \setminus (\sigma P) = \sigma \consp_G(x)$.
+\end{proof}
+
+\begin{lem}
+  Let $X$ be a set on which a left group action of $G \leq \sym_n$ is defined.
+  Let $x \in X$ be such that $x$ has small support and let $\sigma, \sigma' \in
+  G$. If $\sigma (a) = \sigma' (a)$ for all $a \in \consp_G(x)$ then $\sigma (x)
+  = \sigma'(x)$.
+  \label{lem:support-determine-action}
+\end{lem}
+\begin{proof}
+  We have that $(\sigma')^{-1}\sigma \in \stab(\consp_G(x)) \subseteq
+  \stab_G(x)$ and so $(\sigma')^{-1} \sigma (x) = x$ and thus $\sigma (x) =
+  \sigma' (x)$.
+\end{proof}
+
+\section{The Support Theorem}
+The support theorem of Anderson and Dawar~\cite{AndersonD17} gives us an upper
+bound on the size of the support of a gate in a symmetric circuit with symmetric
+gates in terms of the size of the circuit. In particular, their result implies
+that if $(C_n)_{n \in \nats}$ is a polynomial-size family of symmetric circuits
+with symmetric gates then for large enough $n$ every gate in $C_n$ has a
+constant-size canonical support. In this section we generalise the support
+theorem to $(\mathbb{B}, \rho)$-circuits with unique labels defined over
+arbitrary bases.
+
+The proof of this result follows a strategy broadly similar to the one used
+in~\cite{AndersonD17}, and makes use of two lemmas from there. The first of
+these lemmas gives us that if the index of a group $G \leq \sym_n$ is small then
+$\SP(G)$ either has very few or very many parts. The second lemma gives us that
+for $G \leq \sym_n$, if $\SP(G)$ has very few parts then it must have a single
+very large part (and hence a small canonical support). These two results allow
+us to conclude that a gate in a symmetric circuit has a small canonical support
+if it has a canonical supporting partition with very few parts. We then prove by
+structural induction that the canonical supporting partition of every gate has
+few parts. To be precise, we show that if $g$ is the first gate in the circuit
+with a canonical supporting partition with too many parts, then the size of its
+orbit would exceed the bound on the size of the circuit.
+
+We begin by first building up a few observations about the size of the
+stabiliser group, and hence the orbit, of a gate. We first introduce some useful
+notation needed in this subsection. Let $C$ be a symmetric circuit of order $n$
+with unique labels and let $g$ be a gate in the circuit. Let $\vec{a}_R \in
+\ind(g)$ and $\sigma \in \sym_n$ be such that $\sigma L(g)(\vec{a}_R) \in H_g$.
+We let $\sigma \cdot \vec{a}_R := L(g)^{-1}\sigma L(g)(\vec{a}_R)$. We note that
+$\sigma \cdot \vec{a}_R$ may not be defined for every $\sigma \in \sym_n$, and
+so this operation does not define a group action of $\sym_n$ on $\ind(g)$.
+However, we note that this operation does define a group action of
+$\setstab_n(H_g)$ on $\ind(g)$.
+
+Moreover, we notice that, for $\sigma \in \sym_n$, we have that $\sigma H_g =
+H_g$ and $L(g)$ is isomorphic to $\sigma L(g)$ if, and only if, $\sigma \in
+\stab_n(g)$ if, and only if, $\sigma H_g = H_g$ and there exists $\pi \in
+\aut(g)$ such that $\sigma \cdot \vec{a}_R = \pi (\vec{a}_R)$ for all $\vec{a}_R
+\in \ind(g)$. The final equivalence expresses the fact that $\sigma \in \sym_n$
+fixes $g$ if, and only if, $\sigma$ acts like an element of $\aut(g)$ on
+$\ind(g)$.
+
+We now use this observation to establish a useful characterisation of the
+stabiliser group of a gate. We first prove, more generally, that if $\sigma \in
+\sym_{\ind(\tau, D)}$ (for some vocabulary $\tau$ and universe $D$), then
+$\sigma$ acts on $\ind(\tau, D)$ like an element of $\aut(\tau, D)$ if, and only
+if, for every pair of elements in $\ind(\tau, D)$, $\sigma$ acts like a partial
+automorphism of $\str{\tau, D}$ on this pair of elements. We then apply this
+result to circuits, proving that if $\sigma$ extends to an automorphism of the
+circuit, then $\sigma$ fixes a gate $g$ if, and only if, $\sigma$ acts like a
+partial automorphism on the labels associated with every pair of gates in $H_g$.
+We now define what it means for a permutation to act like a partial automorphism
+and prove these two results.
+
+\begin{definition}
+  Let $\tau$ be a relational vocabulary and $D$ be $\tau$-sorted set. Let $X :=
+  \ind(\tau, D)$, $\sigma \in \sym_X$ and $\vec{a}_R, \vec{b}_{R'} \in X$. We
+  say that $\sigma$ \emph{acts like a partial automorphism} on $(\vec{a}_R,
+  \vec{b}_{R'})$ if (i) $\sigma \vec{a}_R$ has tag $R$ and $\sigma \vec{b}_{R'}$
+  has tag $R'$ and (ii) for all $i \in [\arty(R)]$ and $j \in [\arty(R')]$,
+  $\vec{a}(i) = \vec{b}(j)$ if, and only if, $(\sigma \vec{a}_R)(i) = (\sigma
+  \vec{b}_{R'})(j)$.
+\end{definition}
+
+We now define an analogous notion for pairs of gates in a circuit.
+
+\begin{definition}
+  Let $C$ be a symmetric circuit of order $n$ with unique labels and let $g$ be
+  a gate in the circuit. Let $\sigma \in \sym_n$ and $h, h' \in H_g$. Let
+  $\vec{a}_R:= L(g)^{-1}(h)$ and $\vec{b}_{R'} := L(g)^{-1}(h')$. We say that
+  $(h, h')$ is \emph{compatible} with $\sigma$ if $\sigma h, \sigma h' \in H_g$
+  and $\sigma$ acts like a partial automorphism on $(\vec{a}_R, \vec{b}_{R'})$
+\end{definition}
+  
+We now show that a permutation acts like an element of $\aut(\tau,D)$ if, and
+only if, it acts like a partial automorphism on every pair of elements in the
+domain.
+
+\begin{lem}
+  Let $\tau$ be a relational vocabulary and $D$ be $\tau$-sorted set. Let $X :=
+  \ind(\tau, D)$, $\sigma \in \sym_X$ and $\vec{a}_R, \vec{b}_{R'} \in X$. Then
+  $\sigma$ acts like an element of $\aut (\tau, D)$ if, and only if, for all
+  $\vec{a}_R, \vec{b}_{R'} \in X$, $\sigma$ acts like a partial automorphism on
+  $(\vec{a}_R, \vec{b}_{R'})$.
+  \label{lem:aut-partial}
+\end{lem}
+\begin{proof}
+  `$\Rightarrow$': Suppose there exists $\pi \in \aut(\tau, D)$ such that
+  $\sigma \vec{a}_R = \pi \vec{a}_R$ for all $\vec{a}_R \in X$. It follows that
+  the action of $\sigma$ on $X$ preserves tag. Let $\vec{a}_R, \vec{b}_{R'} \in
+  X$, $i \in [\arty (R)]$,and $j \in [\arty (R')]$. Then $(\sigma \vec{a}_R) (i)
+  = (\pi \vec{a}_R)(i) = (\pi \vec{b}_{R'})(j) = (\sigma \vec{b}_{R'})(j)$ if,
+  and only if, $(\pi \vec{a}_R)(i) = \pi (\vec{a}(i)) = \pi (\vec{b}(j)) =
+  (\pi\vec{b}_{R'})(j)$ if, and only if, $\vec{a}(i) = \vec{b}(j)$. The final
+  equivalence follows from the injectivity of $\pi$.
+  
+  `$\Leftarrow$': Suppose for all $\vec{a}_R, \vec{b}_{R'} \in X$, $\sigma$ acts
+  like a partial automorphism on $(\vec{a}_R, \vec{b}_{R'})$. We now define
+  $\pi$ such that $\pi \in \aut(\tau, D)$ and $\sigma \vec{a}_R = \pi \vec{a}_R$
+  for all $\vec{a}_R \in X$. Let $a \in D$ and $\vec{a}_R \in X$ be an element
+  containing $a$. Let $\pi (a) = (\sigma \vec{a}_R) (\vec{a}^{-1}_R(a))$. Since
+  $\sigma$ acts like a partial automorphism on all pairs of elements of $X$, the
+  definition of $\pi$ is independent of the particular choice of $\vec{a}_R$ and
+  for all $a \in D$, $a$ and $\pi (a)$ must be of the same sort.
+  
+  Since $\sigma$ acts like a partial automorphism on each pair $(\vec{a}_R,
+  \vec{b}_{R'})$ it is easy to see that $\pi$ is an injection. Let $c \in D$.
+  Suppose $c$ appears in $\vec{a}_R \in X$ and let $i \in [\arty(R)]$ be such
+  that $\vec{a}_R(i) = c$. Since the action of $\sigma$ is a permutation, there
+  exists $\vec{b}_R \in X$ such that $\sigma \vec{b}_R = \vec{a}_R$. It follows
+  that $\pi (\vec{b}_R(i)) = (\sigma \vec{b}_R) (\vec{b}^{-1}_R(\vec{b}_R(i))) =
+  \vec{a}_R(i) = c$. Thus $\pi$ surjective, and so bijective, and $\pi \in
+  \aut(\tau, D)$.
+
+  Clearly $\pi \vec{a}_R = \sigma \vec{a}_R$ for all $\vec{a}_R \in X$, and the
+  result follows.
+
+\end{proof}
+
+We now prove an analogous result in the context of circuits, giving us a useful
+characterisation of the stabiliser group of a gate.
+
+\begin{lem}
+  Let $C$ be a symmetric circuit of order $n$ with injective labels, $g$ be a
+  gate in the circuit, and $\sigma \in \sym_n$. Then $\sigma \in \stab_n(g)$ if,
+  and only if, $\sigma H_g = H_g$ and $\sigma L(g)$ is isomorphic to $L(g)$ if,
+  and only if, for all $h, h' \in H_g$, $(h, h')$ is compatible with $\sigma$.
+  \label{lem:isostab-compatible}
+\end{lem}
+
+\begin{proof}
+  The result follows from the following equivalences.
+  \begin{align*}
+    & \sigma \in \stab_n\\
+    & \Leftrightarrow \text{ $\sigma H_g = H_g$ and $\sigma L(g)$ is
+      isomorphic to $L(g)$}\\
+    & \Leftrightarrow \text{$\sigma H_g = H_g$ and $\sigma H_g$ acts like an
+      element of $\aut (g)$ on $\ind(g)$} \\
+    & \Leftrightarrow \text{$\sigma H_g = H_g$ and for all $\vec{a}_R,
+      \vec{b}_{R'} \in \ind(g)$, $\sigma$ acts like a partial automorphism on
+      $(\vec{a}_R, \vec{b}_{R'})$}\\
+    & \Leftrightarrow \text{for all $h, h' \in H_g$, $(h, h')$ is compatible with
+      $\sigma$}
+  \end{align*}
+
+  The second equivalence follows from the fact that $C$ has injective labels and
+  the third equivalence follows from Lemma~\ref{lem:aut-partial}.
+
+\end{proof}
+
+In the proof of the support theorem we aim to show that if we a gate $g$ has a
+canonical support that is too big then the orbit of $g$ is also necessarily
+large. We do this by establishing the existence of a large set of permutations
+that each take $g$ to a different gate. To construct this set, we define a set
+of triples of the form $(\sigma, h, h')$ where $\sigma \in \sym_n$ and $h,h' \in
+H_g$. Each of these triples is useful (formally defined below) in a sense that
+guarantees that $\sigma$ moves $g$. Moreover, the triples are pairwise
+independent which means that we can compose them in arbitrary combinations to
+generate new permutations moving $g$, while guaranteeing that each such
+combination gives us a different element in the orbit of $g$. We now define
+these terms formally and prove the result.
+
+\begin{definition}
+  Let $C$ be a circuit with injective labels of order $n$ and $g$ be a gate in
+  $C$. We say that $(\sigma, h, h') \in \sym_n \times H^2_g$ is \emph{useful} if
+  $(h, h')$ is not compatible with $\sigma$.
+
+  We say that two distinct pairs $(\sigma_1, h_1, h_1'), (\sigma_2, h_2, h_2')
+  \in \sym_n\times H^2_g$ are \emph{mutually independent} if
+  \begin{myitemize}
+  \item $\sigma_2 h_1 = h_1$,
+  \item $\sigma_2 \sigma_1 h_1 = \sigma_1 h_1$,
+  \item $\sigma_2 h_1' = h_1'$, and
+  \item $\sigma_2 \sigma_1 h_1' = \sigma h_1'$.
+  \end{myitemize}
+  We say that a set $S \subseteq \sym_n \times H^2$ is \emph{useful} (at $g$) if
+  each pair in it is useful. We say that $S$ is \emph{independent} (at $g$) if
+  every two distinct elements of $S$ are mutually independent.
+\end{definition}
+
+We now prove the upper-bound on the powerset of useful and independent sets used
+in the proof of the support theorem.
+
+\begin{lem}
+  \label{lem:useful-independant-set}
+  Let $C$ be a circuit of order $n$ and let $g$ be a gate in that circuit. If
+  $S$ is a useful and independent set at $g$ then $[\sym_n : \stab_n(g)] \geq
+  2^{\vert S \vert}$.
+\end{lem}
+\begin{proof}
+  We have that $\sigma \in \stab_n(g)$ if, and only if, $H_g = \sigma H_g$ and
+  $L(g)$ is isomorphic to $\sigma L(g)$. For any $R \subseteq S$ define
+  $\sigma_R = \Pi_{(\sigma, h, h') \in R} \sigma$ (with some arbitrary linear
+  order assumed on $S$). We prove that the mapping $R \mapsto \sigma_R
+  \in\aut(C)$ is injective. Let $R$ and $Q$ be distinct subsets of $S$ and,
+  without loss of generality, let $\vert R \vert \geq \vert Q \vert$.
+
+  We prove that if $\sigma^{-1}_Q \sigma_R H_g = H_g$ then $\sigma^{-1}_Q
+  \sigma_R L(g)$ is not isomorphic to $L(g)$.
+
+  Pick any $(\sigma, h, h') \in R \setminus Q \neq \emptyset$. From independence
+  we have $\sigma_R h = \sigma h$, $\sigma_R h' = \sigma h'$, $\sigma_Q \sigma h
+  = \sigma h $, and $\sigma_Q \sigma h = \sigma h$. Thus $\sigma^{-1}_Q \sigma_R
+  h = \sigma^{-1}_Q \sigma h = \sigma h$, and similarly $\sigma^{-1}_Q\sigma_R
+  h' = \sigma h'$. Thus, since $(h, h')$ is incompatible with $\sigma$, it
+  follows $(h, h')$ is incompatible with $\sigma^{-1}_Q\sigma_R$. So Lemma
+  \ref{lem:isostab-compatible} gives us that $\sigma^{-1}_Q \sigma_R L(g)$ is
+  not isomorphic to $L(g)$ and the result follows.
+\end{proof}
+
+The following two lemmas are proved by Anderson and Dawar \cite{AndersonD17},
+and are both useful for proving the support theorem.
+Lemma~\ref{lem:big-or-small} is used to establish a size bound on the supporting
+partition of a gate. In particular, it shows that for a partition $\mathcal{P}$
+of $[n]$, if the index of $\setstab (\mathcal{P})$ in $\sym_n$ is small enough,
+then $\mathcal{P}$ either contains very few or very many parts.
+
+\begin{lem}[{\cite[Lemma 5]{AndersonD17}}]
+  \label{lem:big-or-small}
+  For any $\epsilon$ and $n$ such that $0 < \epsilon < 1$ and $\log n \geq
+  \frac{4}{\epsilon}$, if $\mathcal{P}$ is a partition of $[n]$ with $k$ parts,
+  $s = [\sym_n : \setstab (\mathcal{P})]$ and $n \leq s \leq
+  2^{n^{1-\epsilon}}$, then $\min \{k, n-k\} \leq \frac{8}{\epsilon} \frac{\log
+    s}{\log n}$.
+\end{lem}
+
+Lemma~\ref{lem:small-means-support} gives us that, under the same assumptions as
+Lemma~\ref{lem:big-or-small}, if the number of parts in $\mathcal{P}$ is less
+then $\frac{n}{2}$ then $\mathcal{P}$ contains a very large part. This lemma is
+used both to establish that the stabiliser group of a gate has small support,
+and hence a canonical support, but also that this canonical support has bounded
+size (and is in fact constant for polynomial-size circuits).
+
+\begin{lem}[{\cite[Lemma 6]{AndersonD17}}]
+  \label{lem:small-means-support}
+  For any $\epsilon$ and $n$ such that $0 < \epsilon < 1$ and $\log n \geq
+  \frac{8}{\epsilon^2}$, if $\mathcal{P}$ is a partition of $[n]$ with $\vert
+  \mathcal{P} \vert \leq \frac{n}{2}$, $s:= [\sym_n : \setstab (\mathcal{P})]$
+  and $n \leq s \leq 2^{n^{1-\epsilon}}$, then $\mathcal{P}$ contains a part $P$
+  with at least $n - \frac{33}{\epsilon} \cdot \frac{\log s} {\log n}$ elements.
+\end{lem}
+
+We are now ready to prove the support theorem for symmetric circuits with
+non-symmetric gates.
+
+\begin{thm}
+  \label{thm:support-thm}
+  For any $\epsilon$ and $n$ such that $\frac{2}{3} \leq \epsilon \leq 1$ and $n
+  \geq \frac{128}{\epsilon^2}$, if $C$ is a symmetric circuit of order $n$ with
+  unique labels and $s := \max_{g \in C} \vert \orb (g)\vert \leq
+  2^{n^{1-\epsilon}}$, then, $\SP(C) \leq \frac{33}{\epsilon}\frac{\log s}{\log
+    n}$.
+\end{thm}
+
+\begin{proof}
+  First we note that if $1 \leq s < n$, then $C$ cannot have a relational gate,
+  as the orbit of a relational gate has at least $n$ elements. Since $C$ has no
+  relational gates, the only input gates in the circuit are the constant gates.
+  Since constant gates are fixed by all permutations, it follows that any gate
+  $g$ whose children are constant gates must similarly be fixed under all
+  permutations. Furthermore, from the fact that $C$ has unique labels, and hence
+  unique extensions, this property inductively extends to the rest of the
+  circuit. Thus for each gate $g$ in $C$ the partition $\{[n]\}$ supports $g$,
+  and since this is trivially the coarsest such partition it follows that $\|
+  \SP(g) \| = 0 = \SP(C)$. We therefore assume that $s \geq n$.
+
+  If $g$ is a gate in $C$ then $\stab (g) \leq \setstab(\SP(g))$, and so $s \geq
+  \vert \orb(g) \vert = [\sym_n : \stab(g)] \geq [\sym_n : \setstab(\SP(g))]$.
+  Thus if $\vert \SP(g) \vert \leq \frac{n}{2}$, then from Lemma
+  \ref{lem:small-means-support}, we have $\| \SP (g) \| \leq \frac{33}{\epsilon}
+  \cdot \frac{\log s} {\log n}$. The result thus follows from showing that for
+  each $g$ in $C$ we have that $\vert \SP (g) \vert \leq \frac{n}{2}$.
+  
+  If $g$ is a constant gate, then as argued above, it follows $\vert \SP(g)
+  \vert = 0 < \frac{n}{2}$. If $g$ is a relational gate, then $g$ is fixed by a
+  permutation $\sigma \in \sym_n$ if, and only if, $\sigma$ fixes all elements
+  that appear in $\Lambda(g)$. It follows that $\{a\} \in \SP(g)$ for each $a$
+  appearing in $\Lambda(g)$ and all other elements of $[n]$ are contained in a
+  single part of $\SP(g)$. But suppose $\vert \SP(g) \vert > \frac{n}{2}$. Then
+  the number of singletons in $\SP(g)$ must be larger than $\frac{n}{2}$, which
+  in turn, from the orbit-stabiliser theorem, gives us that $ s \geq \vert \orb
+  (g) \vert \geq \frac{n!}{(n-\vert \Lambda (g) \vert)!} \geq
+  \frac{n!}{{(\frac{n}{2}})!} \geq 2^{\frac{n}{4}} > 2^{n^{1- \epsilon}} $. This
+  is a contradiction, and so $\vert \SP(g) \vert \leq \frac{n}{2}$.
+
+  We now consider the internal gate case. Let $g$ be the topologically first
+  internal gate with $\vert \SP(g) \vert > \frac{n}{2}$. Let $k' := \lceil
+  \frac{8 \log s}{\epsilon \log n} \rceil$. From the assumptions on $s$, $ n$
+  and $\epsilon$ we have that $k' \leq \frac{1}{4}n^{1-\epsilon} < \frac{n}{2}$.
+  We note that Lemma~\ref{lem:big-or-small} implies that $n - \vert \SP(g) \vert
+  \leq k'$.
+  
+  We now construct a sufficiently large useful and independent set of triples
+  which, using Lemma~\ref{lem:useful-independant-set}, allows us to place a
+  lower bound on the orbit size of $g$. Divide $[n]$ into $\lfloor \frac{n}{k' +
+    2} \rfloor$ disjoint sets $S_i$ of size $k' + 2$ and ignore the elements
+  left over. It follows that for each $i$ there is a permutation $\sigma_i$
+  which fixes $[n] \setminus S_i$ pointwise but moves $g$. Suppose there was no
+  such $\sigma_i$, but then every permutation that fixes $[n]\setminus S_i$
+  pointwise fixes $g$. Thus the partition of all the singletons in $[n]\setminus
+  S_i$ and $S_i$ is a supporting partition of $g$. As $\SP(g)$ is the coarsest
+  such partition it follows that $\vert \SP(g) \vert \leq n - (k'+2) + 1 = n -
+  k' - 1$, which contradicts the inequality $n - \vert \SP(g) \vert \leq k'$.
+
+  Since $g$ is moved by each $\sigma_i$, and $C$ has unique labels, it follows
+  from Lemma~\ref{lem:isostab-compatible}, and the fact that the circuit has
+  unique labels, that there exists $(h_i, h_i') \in H_g$ such that $(h_i, h_i')$
+  is not consistent with $\sigma_i$, and so the triple $(\sigma_i, h_i, h_i')$
+  is useful.
+
+  Note that our choice of $g$ guarantees that for all $h \in H_g$, $\vert \SP(h)
+  \vert \leq \frac{n}{2}$, and so, from Lemma \ref{lem:small-means-support} and
+  the hypothesis of this theorem, $h$ has small support. Let $Q_i = \consp(h_i)
+  \cup \consp(\sigma_i h_i) \cup \consp(h_i') \cup \consp(\sigma_i h_i')$. Then
+  note that if $\sigma_j$ fixes $Q_i$ pointwise then by construction we have
+  that $\sigma_j \in \stab(\SP(h_i)) \cap \stab(\SP(\sigma_i h_i)) \cap
+  \stab(\SP(h_i')) \cap \stab(\SP(\sigma_i h_i'))$
+
+  Define a directed graph $K$ with vertices given by the sets $S_i$ and an edge
+  from $S_i$ to $S_j$ (with $i \neq j$) if, and only if, $Q_i \cap S_j \neq
+  \emptyset$. It follows then that if there is no edge from $S_i$ to $S_j$ then
+  $Q_i \subseteq [n]\setminus S_j$, and so $\sigma_j$ fixes $Q_i$ pointwise,
+  giving us that $(\sigma_i, h_i, h_i')$ and $(\sigma_j, h_j, h_j')$ are
+  mutually independent. It remains to argue that $K$ has a large independent
+  set. This is possible as the out-degree of $S_i$ in $K$ is bounded by
+  \begin{align*}
+    \vert Q_i \vert \leq \|\SP(h_i) \| + \|\SP(\sigma_i h_i) \| + \|\SP(h_i') \| + \|\SP(\sigma_i h_i') \leq 4 \cdot \frac{33\log s}{\epsilon \log n}.
+  \end{align*}
+  These inequalities follow from the fact that the sets $S_i$ are disjoint and
+  we may apply Lemma \ref{lem:small-means-support} to each of the child gates.
+  From these inequalities we have that the average total degree (in + out
+  degree) of $K$ is at most $2 \cdot \vert Q_i \vert \leq 34 \cdot k'$. Now
+  greedily select a maximal independent set in $K$ by repeatedly selecting $S_i$
+  with the lowest total degree and eliminating it and its neighbours. This
+  action does not affect the bound on the average total degree of $K$ and hence
+  determines an independent set $I$ in $K$ of size at least
+  \begin{align*}
+    \frac{\lfloor \frac{n}{k' + 2} \rfloor}{34k' + 1} \geq \frac{n - (k'+2)}{34k'+1k'+2} \geq \frac{n\frac{7}{16}}{34k'^2 + 69k' +2} \geq \frac{n}{(16k')^2}.
+  \end{align*}
+
+  Take $S = \{(\sigma_i, h_i, h_i') : S_i \in I \}$. Then from the above
+  argument we have that $S$ is useful and independent.
+  
+  Moreover, from Lemma~\ref{lem:useful-independant-set}, we have that $s \geq
+  \vert \orb(g) \vert \geq 2^{\vert S \vert} \geq 2^{\frac{n}{(16k')^2}}$ then
+  $n^{1-\epsilon} \geq \log s \geq n \cdot (\frac{128}{\epsilon}\frac{\log
+    s}{\log n})^{-2} > n \cdot (n^{1-\epsilon})^{-2} = n^{2\epsilon -1} \geq
+  n^{1-\epsilon}$. This is a contradiction, and the result follows.
+\end{proof}
+ 
+Let $\mathcal{C} = (C_n)_{n \in \nats}$ be a polynomial-size family of symmetric
+circuits with unique labels. Then $s(n) := \max_{g \in C_n} \vert \orb (g)\vert$
+must be polynomially bounded, and so the theorem implies that there exists $k
+\in \nats$ such that for all $n$ large enough, for all $g \in C_n$, $\vert
+\consp(g) \vert \leq k$.
+
+\begin{cor}
+  Let $\mathcal{C} := (C_n)_{n \in \nats}$ be a polynomial-size family of
+  symmetric circuits with unique labels. There is a $k$ such that $\SP(C_n) \leq
+  k$ for all $n$.
+  \label{cor:constant-size-support}
+\end{cor}
+
+\subsection{Supports on Indexes}
+We have shown that families of polynomial-size symmetric circuits with unique
+labels have constant-size supports. In this subsection we introduce a group
+action on the elements of the universe of a gate, and show that the support
+theorem can be extended to apply to the (relative) supports of these elements as well.
+
+Let $C$ be a symmetric circuit of order $n$ with unique labels and $g$ be a gate
+in the circuit. Since $C$ is symmetric and has unique labels, we have from
+Proposition~\ref{prop:unique-children-unique-extensions} that each permutation in $\sym_n$ extends uniquely to an
+automorphism of $C$. We have defined an action of $\setstab(H_g) \leq \sym_n$ on
+$\ind(g)$, and noted that $\sigma \in \stab(g)$ if, and only if, $\sigma \in
+\setstab(H_g)$ and there exists $\pi_{\sigma} \in \aut(g)$ such that $\sigma
+\vec{a}_R = \pi_{\sigma} \vec{a}_R$ for all $\vec{a}_R \in \ind(g)$.
+
+We now define a group action of $\stab(g)$ on $\universe{g}$ by $\sigma \cdot a
+:= (\pi_{\sigma}\vec{a}_R) (\vec{a}^{-1}_R(a))$, for $\sigma \in \stab(g)$ and
+$a \in \universe{g}$, and where $\vec{a}_R \in \ind(g)$ contains the element
+$a$. Since $\pi_{\sigma}$ is an automorphism uniquely determined by $\sigma$
+this action is well-defined.
+
+Since we have a group action of $\stab(g)$ on $\universe{g}$, but not $\sym_n$
+on $\universe{g}$, we must speak of the support of $a \in \universe{g}$ relative
+to $\stab(g)$.  We now prove an analogue of the support theorem, showing 
+that for any polynomial-size family $(C_n)_{n \in \nats}$ of symmetric circuits
+with unique labels, we have for large enough $n$ that for each $g$ in $C_n$ the
+sizes of the supports of $a \in \universe{g}$ relative to the subgroups $\stab(g)$ and
+$\spstab{g}$ are bounded by a constant. In the proof of the following result we
+make use of the abbreviations introduced in Section~\ref{subsec:group-actions-on-supports} for relative supports.
+
+\begin{lem}
+  \label{lem:row-column-supports}
+  Let $(C_n)_{n \in \nats}$ be a polynomial-size family of symmetric circuits
+  with unique labels. There exists $n_0, k \in \nats$ such that for all $n >
+  n_0$, $g$ a gate $C_n$ and $a \in \universe{g}$
+  \begin{myitemize}
+  \item $\stab_n(g)$, $\stab_{\consp(g)}(a)$ and $\stab_{g}(a)$ have small
+    supports,
+  \item if $h \in H_g$ and $a$ appears in $L(g)^{-1}(h)$ then $\consp_g(a)
+    \subseteq \consp_{\consp(g)}(a) \subseteq \consp(g) \cup \consp(h)$, and
+  \item $\vert \consp(g) \leq k$ and $\vert \consp_g(a) \vert \leq \vert
+    \consp_{\consp(g)}(a) \vert \leq 2k$.
+  \end{myitemize}
+\end{lem}
+
+\begin{proof}
+  We have from Corollary~\ref{cor:constant-size-support} that there exists $k,
+  n_0' \in \nats$ such that for all $n \geq n_0'$, $\SP(C_n) \leq k$. Let $n_0 =
+  \max(n_0', 4k + 1)$. Let $g$ be a gate in $C_n$, $a \in \universe{g}$, and $h
+  \in H_g$ be such that $a \in \vec{a}_R := (a_1, \ldots , a_r)_R :=
+  L(g)^{-1}(h)$.
+
+  Since $\SP(C_n) \leq k$ and $n > 2k$, we have that $g$ and $h$ have small
+  supports of size at most $k$. Moreover, we have that $\stab(\consp(h) \cup
+  \consp(g)) = \stab(\consp(h)) \cap \stab(\consp(g)) \leq \stab(h) \cap
+  \spstab{g} = \stab_{\consp(g)}(h)$. It follows that $\consp(h) \cup \consp(g)$
+  supports $\stab_{\consp(g)}(h)$ and so, since $\vert \consp(h) \cup \consp(g)
+  \vert \leq 2k < \frac{n}{2}$, $\stab_{\consp(g)}(h)$ has small support and
+  $\consp_{\consp(g)}(h) \subseteq \consp(h) \cup \consp(g)$.
+
+  We also have that $\stab_{\consp(g)}(h) = \bigcap_{i \in
+    [r]}\stab_{\consp(g)}(a_i)$, and so by repeated application of
+  Lemma~\ref{lem:row-column-supports-well-behaved}, we have that
+  $\consp_{\consp(g)}(a) \subseteq \bigcup_{i \in [r]}\consp_{\consp(g)}(a_i) =
+  \consp_{\consp(g)}(h) \subseteq \consp(h) \cup \consp(g)$. We thus also have
+  that $\vert \consp_{\consp(g)}(a) \vert \leq 2k$.
+
+  Lastly, we note that $\stab_{\consp(g)}(a) \subseteq \stab_g(a)$, and so
+  $\stab_g(a)$ has small support and $\consp_g(a) = \subseteq
+  \consp_{\consp(g)}(a)$. The result follows.
+\end{proof}
+
+\end{document}

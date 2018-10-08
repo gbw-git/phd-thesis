@@ -1,0 +1,68 @@
+%% Creator: Inkscape inkscape 0.92.3, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'drawing.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{595.27559055bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,1.41428571)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0.08999433,1.25362103){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.21868624\unitlength}\raggedright $\theta$\\ \end{minipage}}}%
+    \put(0.44606975,1.35509666){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.30673597\unitlength}\centering $\PT$-Uniform\\ $\FO^{\nats}(\setop)$ - SP\end{minipage}}}%
+    \put(0.16352625,1.07881406){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.17894401\unitlength}\raggedright $\PT$-Uniform\\ $\FO(\setquant)$ - SP\end{minipage}}}%
+    \put(0.42056185,1.21592405){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.44367208\unitlength}\raggedright \end{minipage}}}%
+    \put(0.16318812,0.95079044){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.21868624\unitlength}\raggedright list\\ \end{minipage}}}%
+    \put(0.62619936,1.08144255){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.17894401\unitlength}\raggedright $\PT$-Uniform\\ $\FO(\setquant)$ - SP\end{minipage}}}%
+    \put(0.62586123,0.95341893){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.21868624\unitlength}\raggedright list\\ \end{minipage}}}%
+    \put(0.49699077,1.35030243){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.58077931\unitlength}\raggedright $\theta_n = \begin{cases}\\ \theta_{n; 1} \\\\ \theta_{n; 2} \\\\ \\ \\ \\ \ldots \\\\ \theta_{n; n^k}\\ \end{cases}$\end{minipage}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{../figures/test/drawing.pdf}}%
+    \put(0.27718254,1.28871883){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.16198979\unitlength}\raggedright Unroll FP Operator\end{minipage}}}%
+    \put(0.2872236,1.228751){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.16198979\unitlength}\raggedright Lemma~\ref{}\\ \end{minipage}}}%
+  \end{picture}%
+\endgroup%

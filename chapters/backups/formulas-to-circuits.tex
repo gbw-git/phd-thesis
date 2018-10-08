@@ -1,0 +1,126 @@
+%!TEX root = ../main/thesis.tex
+\documentclass[../main/thesis.tex]{subfiles}
+\begin{document}
+
+\section{Translate Formulas to Circuits}
+
+\begin{definition}[Rank Quantifier]
+  Let $\vec{x}$ and $\vec{y}$ be tuples of element variables. Let $I$, $J$ and
+  $E$ be finite sets. Let $p , k \in \nats$. Let $\tau$ be a vocabulary and
+  $L[\tau]$ be a logic. Let $\Phi : I \times J \times E \ra L[\tau]$. A
+  \emph{rank-threshold operator} (or just \emph{rank operator}) is a number-term
+  of the form $\rank^{\geq k}_p (\vec{x}, \vec{y}) \cdot \Phi$. For a
+  $\tau$-structure $\mathcal{A}$ we have that $\mathcal{A} \models \rank^{\geq
+    k}_p (\vec{x}, \vec{y}) \cdot \Phi$ if, and only if, the matrix $M_\Phi :
+  (A^{\vert \vec{x} \vert} \times I) \times (A^{\vert \vec{y} \vert} \times J)
+  \ra \ff_p$ defined by
+  \begin{align*}
+    M((\vec{a}, i), (\vec{b}, j)) = \sum_{e
+    \in E} (\Phi(i,j,e))^{\mathcal{A}} \mod p,
+  \end{align*}
+
+  understood as a matrix in $\ff_p$, has rank greater than or equal to $k$.
+\end{definition}
+
+\begin{lem}
+  Let $\tau$ be a vocabulary and $\phi \in \FPR[\tau]$. Then there exists a
+  $\PT$-uniform family of formulas $(\phi_n)_{n \in \nats}$ in $\FOR[\tau]$ such
+  that the width of $\width(\phi_n) \leq 2 \width (\phi)$ for all $n \in \nats$.
+\end{lem}
+
+\begin{lem}
+  Let $r$ be the maximal arity, $q$ be the quantifier depth, and $d$ be the
+  maximal number of 
+  Let $\tau$ be a vocabulary and $\theta(\vec{y}) \in \FOR[\tau]$. There exists
+  a $\PT$-uniform family of formulas $(\theta_n(\vec{y}))_{n \in \nats}$ in
+  $\FOrk[\tau]$.
+\end{lem}
+\begin{proof}
+  Let $\theta(\vec{y}) \in FOR[\tau]$. There exists $t \in \nats$ such that for
+  all $n \in \nats$ the evaluation of $\theta$ on a $\tau$-structure of size $n$
+  involves no element of the number universe larger than $n^t$. Fix $n \in
+  \nats$ and let $M = n^t$. We first describe the construction of a formula
+  $\theta_n \in \FOrk[\tau]$ that translates $\theta$ for $n$ and then explain
+  how this (recursive) construction can be implemented as an appropriate
+  algorithm.
+  
+  We proceed by associating with each number term $\eta (\vec{x}, \vec{\mu})$ a
+  family of $\FOrk$-formulas $(\phi^{\eta}_{n, k; \beta}(\vec{x}))_{\beta \in
+    [M]^{\vec{\mu}}}$, on for each assignment to the free number variables that
+  appear in $\eta$, such that for any $\tau$-structure $\mathcal{A}$ of size
+  $n$, $\alpha \in A^{\vec{x}}$, $\beta \in M^{\vec{\mu}}$ we have that
+  $\mathcal{A} \models \phi^{\eta}_{n, k; \beta} [\alpha]$ if, and only if,
+  $\mathcal{A} \models (\eta = k)[\alpha \cup \beta]$.
+
+  We similarly associate each formula $\phi(\vec{x}, \vec{\mu})$ with a
+  corresponding family of $\FOrk$-formulas $(\phi_{n; \beta} (\vec{x}))_{\beta
+    \in [M]^{\vec{\mu}}}$ such that for any $\tau$-structure $\mathcal{A}$ of
+  size $n$, $\alpha \in A^{\vec{x}}$, $\beta \in M^{\vec{\mu}}$ we have that
+  $\mathcal{A} \models \phi[\alpha \cup \beta]$ if, and only if, $\mathcal{A}
+  \models \phi_{n; \vec{\beta}}[\alpha]$.
+
+  Let $\eta$ be a number term. Suppose $\eta (\mu) = \mu$. Then for each $\beta:
+  \{\mu\} \ra M$ and $k \in \nats$ if $\beta(\mu) = k$ let $\phi^{\eta}_{n, k ;
+    \beta} := (\exists x . x \neq x)$ and otherwise let $\phi^{\eta}_{n, k;
+    \beta} := (\forall x. x = x)$.
+
+  Suppose $\eta(\vec{x}, \vec{\mu}) = \eta_1 \cdot \eta_2$. Let $\beta \in
+  [M]^{\vec{\mu}}$ and $a, b, k \in [M]$. From the inductive hypothesis we have
+  $\phi^{\eta_1}_{n, a; \beta_1}$ and $\phi^{\eta_2}_{n, b; \beta_2}$ with
+  $\beta_1$ and $\beta_2$ assignments to the free number variables in $\eta_1$
+  and $\eta_2$ and both $\beta_1$ and $\beta_2$ being compatible with $\beta$.
+  Let $\psi^{\eta}_{n,k ; \beta} (\vec{x}) := \underset{a, b \leq k, a \cdot b =
+    k}{\bigvee} (\psi^{\eta_1}_{n, a ;\beta}(\vec{x}) \land \psi^{\eta_2}_{n, b;
+    \beta}(\vec{x}))$. We handle the other arithmetic cases similarly.
+
+
+  We now consider the rank case. Suppose
+  \begin{align*}
+    \eta (\vec{x}, \vec{\mu}, \pi) = [\rank (\vec{w}_1 \vec{\nu}_1 \leq
+    \vec{s}, \vec{w}_2 \vec{\nu}_2 \leq \vec{t}, \pi) \cdot \zeta (\vec{x}, \vec{\mu}, \vec{w}_1, \vec{\nu}_1, \vec{w}_2, \vec{\nu}_2)].
+  \end{align*}
+
+  Let $\beta \in M^{\vec{\mu}}$. For each $\gamma_1 \in M^{\vec{\nu}_1}$ and
+  $\gamma_2 \in M^{\vec{\nu}_2}$ we have formulas $\phi^{\zeta}_{n, k;
+    \vec{\beta \cup \gamma_1 \cup \gamma_2}}$.
+
+  $\vec{m} \in M^{\vert \vec{\mu} \vert}$, $n_1 \in M^{\vert \vec{\nu}_1 \vert}$
+  and $n_1 \in M^{\vert \vec{\nu}_2 \vert}$ a formula $\phi^{\zeta}_{n, k;
+    \vec{m}, \vec{n}_1, \vec{n}_2}(\vec{x}, \vec{w}_1, \vec{w}_2)$. We also have
+  for each $i \in [\vert \vec{t} \vert]$, $j \in [\vert \vec{s} \vert]$ the
+  formulas $\phi^{t_i}_{n, k; \vec{m}}(\vec{x})$ and $\phi^{s_i}_{n, k;
+    \vec{m}}(\vec{x})$. For each $l \in [M]$ let
+  \begin{align*}
+    \phi^{\zeta, l}_{n; \vec{m}, \vec{n}_1, \vec{n}_2}(\vec{x}, \vec{w}_1, \vec{w}_2) = \bigvee_{k \leq M} [l \leq k \land \phi^{\zeta}_{n, k; \vec{m}, \vec{n}_1, \vec{n}_2}(\vec{x}, \vec{w}_1, \vec{w}_2)].
+  \end{align*}
+
+  Let $p \in [M]$. If $p$ is not prime let $\phi^{\eta}_{n, k; \vec{m}, p} :=
+  \exists x . (x \neq x)$. Suppose $p$ is prime. For each $\vec{a} \in M^{\vert
+    \vec{s} \vert}$ and $\vec{b} \in M^{\vert \vec{t} \vert}$ and for each
+  $\vec{n}_1 \leq \vec{a}$ and $\vec{n}_2 \leq \vec{b}$ and $i \in M$ let
+  $\Phi_{\vec{a}, \vec{b}} (\vec{n}_1, \vec{n}_2, i) = \phi^{\zeta}_{n; \vec{m},
+    \vec{n_1}, \vec{n}_2} (\vec{x}, \vec{w}_1, \vec{w}_2)$.
+  \begin{align*}
+    \phi^{\eta}_{n, k; \vec{m} , p}(\vec{x}) := \bigvee_{\vec{a} \in [M]^{\vert \vec{s} \vert}, \vec{b} \in [M]^{\vert \vec{t} \vert}}[  &(\bigwedge_{e \in [\vert \vec{s} \vert], f \in [\vert \vec{t} \vert]} \phi^{s_e}_{n, a_e; \vec{m}}(\vec{x}) \land \phi^{t_f}_{n, b_f; \vec{m}}(\vec{x})) \\ &\land \rank^{=k}_p (\vec{w}_1, \vec{w_2}})(\Phi_{\vec{a}, \vec{b}})]
+  \end{align*}
+
+  Suppose $\phi (\vec{x}, \vec{\mu}) = \eta_1 (\vec{x}, \vec{\mu}) \leq
+  \eta_2(\vec{x}, \vec{\mu})$. Then $\phi_{n, \vec{m}} (\vec{x}) = \bigvee_{k_1,
+    k_2 \leq M, k_1 \leq k_2} \phi^{\eta_1}_{n, k_1, \vec{m}} \land
+  \phi^{\eta_2}_{n, k_2, \vec{m}}$. If $\phi (\vec{x}, \vec{\mu}) = \exists \nu
+  \leq t . \psi (\vec{x}, \vec{\mu}, \nu)$ then we may define
+  
+  \begin{align*}
+    \phi_{n, \vec{m}}(\vec{x}) := \bigvee_{c \leq M} [\phi^t_{n, c, \vec{m}}(\vec{x}) \land (\bigvee_{m' \leq c} \psi_{n, (\vec{m}, m')}(\vec{x}))]
+  \end{align*}
+
+  We handle universal quantifiers similarly. This completes all of the
+  non-trivial cases in the inductive definition of $\theta_n(\vec{y})$. We note
+  that $\width(\theta_n) \leq \width(\theta)$. It is not hard to show that the
+  above construction of $\phi_n$ can be carried out in time polynomial in $n$.
+  
+\end{proof}
+
+\section{Translate Circuits to Formulas}
+
+\end{document}

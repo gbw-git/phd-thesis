@@ -1,0 +1,304 @@
+%!TEX root = ../main/thesis.tex
+\documentclass[../main/thesis.tex]{subfiles}
+\begin{document}
+In this chapter we provide a brief introduction to the relevant background
+material from mathematical logic, complexity theory, and algebra. We also
+introduce definitions and notation that will be used throughout this thesis.
+
+\section{Basic Notation}
+Let $\nats = \{1, 2, \ldots\}$ and $\nats_0 = \{0, 1, 2, \ldots\}$ be the
+positive and non-negative integers, respectively. For each $a, b \in \nats_0$
+let $[a, b] := \{x \in \nats_0 : a \leq x \leq b\}$. For each $n \in \nats_0$
+let $[n] = [1, n]$ and let $[n]_0 = [0, n]$.
+
+Let $X$ be a set and $k \in \nats$. A $k$-tuple in $X$ is a function $\vec{v} :
+[k] \ra X$, which we often write as $\vec{v} = (v_1, \ldots, v_k)$, where for
+each $i \in [k]$, $v_i = \vec{v}(i)$.
+
+We say two functions are \emph{compatible} if we can define a function on the
+union of their domains their domains that agrees with both functions on their
+respective domains.
+
+\begin{definition}
+  Let $X_1, X_2, Y_1, Y_2$ be sets. We say that $f: X_1 \ra Y_1$ and $g : X_2
+  \ra Y_2$ are \emph{compatible} if (i) for all $x \in X_1 \cap X_2$ we have
+  $f(x) = g(x)$, (ii) for all $x \in X_1 \setminus X_2$ and $y \in X_2$ we have
+  $f(x) \neq g(y)$, and (iii) for all $x \in X_2 \setminus X_1$ and $y \in X_1$
+  we have $g(x) \neq f(y)$.
+\end{definition}
+
+Let $X$ and $Y$ be sets. Let $X^Y$ denote the set of all functions from $Y$ to
+$X$ and let $X^{\underline{Y}}$ denote the set of injections in $X^Y$. We say a
+relation $R \subseteq X^Y$ is \emph{trivial} if $R = X^Y$, i.e.\ if the relation
+contains every possible element.
+
+\section{General Mathematics}
+\subsection{Graphs}
+A \emph{graph} is a tuple $G := (V, E)$, where $V$ is a set and $E$ is a binary
+relation on $V$ such that
+\begin{myenum}
+\item if $x \in V$ then $(x, x) \not\in V$ (\emph{Reflexively}), and
+\item if $(x, y) \in E$ then $(y, x) \in E$ (\emph{Symmetry}).
+\end{myenum}
+We call $V$ the \emph{vertices} of $G$ and $E$ the \emph{edges} of $G$. A
+\emph{directed graph} is defined similarly, but without the symmetry
+requirement. A \emph{path} in a directed graph $G := (V, E)$ is a sequence of
+vertices $\vec{p} = (p_1, \ldots, p_k)$ such that for all $i \in [k -1]$ we have
+$(p_i, p_{i+1}) \in E$. We call $\vec{p}$ a \emph{cycle} if $p_1 = p_k$. We say
+$G$ is a \emph{directed acyclic graph (DAG)} if $G$ is a directed graph and
+there is no cycle in $G$.
+
+% A \emph{directed-graph} is defined simiis a tuple $(V, E)$, where $V$ is a set
+% and $E$ is the a binary relation on $V$ such that for all $x \in V$, $(x, x)
+% \no\in V$, i.e.\ $E$ is not \emph{reflexive}. We call $V$ the set of
+% \emph{vertices} and $E$ the set of \emph{edges}. A \emph{graph} (or
+% \emph{undirected graph}) is a directed-graph $(V, E)$ such that if $(x, y) \in
+% E$ then $(y, x) \in E$, i.e.\ $E$
+\subsection{Finite Field}
+
+\subsection{Group Theory}
+Let $X$ be a set, we write $\sym_X$ to denote the symmetric group on the set
+$X$. For $n \in \nats$ we write $\sym_n$ for $\sym_{[n]}$.
+
+Let $G$ be a group and let $H \leq G$. Let $X$ be a set on which a group action
+of $G$ is defined. This group action can be lifted to a group action on
+$\mathcal{P}(X)$ (and hence $\mathcal{P}(\ldots(\mathcal{P}(X))\ldots)$) defined
+by $\sigma \cdot S := \{\sigma x : x \in S\}$ for $\sigma \in G$, $S \subseteq
+X$. Let $S \subseteq X$. We let $\stab_G(S) := \{\sigma \in G : \forall x \in S
+\,, \sigma x = x\}$ be the \emph{stabiliser} of $S$ with respect to $G$. We let
+$\setstab_G(S) := \stab_G(\{S\}) = \{\sigma \in G : \sigma S = S\}$ be the
+\emph{set-wise stabiliser} of $S$ with respect to $G$. We let $\orb_G(S) :=
+\{\sigma S : \sigma \in G\}$ be the \emph{orbit} of $S$ with respect to $G$. If
+$S$ is a singleton we omit the set bracers, e.g.\ we write $\orb_G(x)$ for
+$\orb_G(\{x\})$. If $G = \sym_n$ for some $n \in \nats$ we replace the subscript
+with the number $n$, e.g.\ we write $\orb_n(x)$ for $\orb_{\sym_n}(x)$, and if
+the group $G$ is obvious from context we omit the subscript entirely.
+
+\subsection{Equivalence Relations}
+% \begin{definition}
+%   Let $X$ be a set. An \emph{equivalence relation} on $X$ is a binary relation
+%   $\sim \subseteq X^2$ that is
+%   \begin{itemize}
+%   \item
+%   \end{itemize}
+% \end{definition}
+Let $\sim$ be an equivalence relation on the set $X$. For $x \in X$ we write
+$[x]_\sim$ to denote the equivalence class of $x$ with respect to $\sim$. We
+omit the subscript if the equivalence relation is obvious from context. We write
+$X/_{\sim}$ to denote the set of equivalence classes of $X$. Let $A = \Pi_{i \in
+  I} A_i$ and let $J \subseteq I$ be such that for $i \in J$, $A_i \subseteq X$.
+Let $\sim_A$ be an equivalence relation on $A$ defined such that $\vec{a} \sim_A
+\vec{b}$ if, and only if, $\vec{a}(i) \sim \vec{b}(i)$ for all $i \in J$. We
+call $\sim_A$ the \emph{extension} of $\sim$ to $A$. We often abuse notation and
+write $\sim$ for the extension of the equivalence relation $\sim$. We notice
+that $(\Pi_{i \in I} A_i) /_{\sim} = \Pi_{i \in I} (A_i /_\sim)$.
+
+Let $Y$ and $Z$ be sets on which extensions $\sim_Y$ and $\sim_Z$ of $\sim$ have
+been defined and let $f : Y \rightarrow Z$ be a function. We say $f$ is
+\emph{invariant} under $\sim$ if for all $a, b \in Y$ if $a \sim_Y b$ then $f(a)
+\sim_Z f(b)$. If $f$ is an invariant under $\sim$ then $f /_{\sim}$ is a
+function mapping $Y /_{\sim_Y} $ to $ Z /_{\sim_Z}$ such that $f /_{\sim} ([a])
+= [f(a)]$ for all $a \in Y$. We call $f_{\sim}$ the \emph{quotient} of $f$ with
+respect to $\sim$.
+
+
+\section{Logic}
+In this subsection we introduce some of the basic notions from mathematical
+logic generally and finite model theory in particular.
+
+\subsection{Vocabularies}
+A \emph{relational vocabulary} (otherwise just called a \emph{vocabulary} or
+\emph{signature}) is a finite sequence of relation symbols $(R_1, \ldots, R_k)$,
+each of which has a fixed \emph{arity}, denoted by $\arty(R_i) \in \nats$. We
+often let $r_i \in \nats$ denote the arity of the relation symbol $R_i$. A
+\emph{many-sorted vocabulary} is a tuple of the form $(R, S, \nu)$, where $R$ is
+a relational vocabulary, $S$ is a finite sequence of \emph{sort} symbols, and
+$\nu$ is a function that assigns to each $R_i \in R$ a tuple $\nu(R_i) := (s_1,
+\ldots, s_{r_i})$, where for each $j \in [r_i]$, $s_j \in S$. We call $\nu$ the
+\emph{\type function} and $\nu(R_i)$ the \emph{type} of $R_i$. We note that a
+relational vocabulary can be thought of as a single-sorted vocabulary, i.e.\ a
+many-sorted vocabulary where the set of sorts is a singleton. As such, if $\tau
+:= (R, S, \nu)$ is single-sorted we identify $\tau$ with $R$.
+
+\subsection{Structures}
+Let $\tau := (R, S, \nu)$ be a many-sorted vocabulary, where $R = (R_1, \ldots,
+R_k)$ and $S = (s_1, \ldots , s_p)$. A \emph{$\tau$-structure} $\mathcal{A}$ is
+a tuple $(U , R^{\mathcal{A}}_1 , \ldots , R^{\mathcal{A}}_k)$ where $U =
+\uplus_{s \in S } U_{s}$ a disjoint union of non-empty sets, and is called the
+\emph{universe} of $\mathcal{A}$, and for all $i \in [k]$, $R^{\mathcal{A}}_i
+\subseteq R^{\mathcal{A}}_i \subseteq U_{s^i_1} \times \ldots \times
+U_{s_{r_i}}$, where $(s_1 , \ldots , s_{r_i}) = \nu (R_i)$. The size of
+$\mathcal{A}$, denoted by $\vert \mathcal{A} \vert$ is the cardinality of its
+universe. The \emph{sorted-size} of $\mathcal{A}$ is a vector $\vec{n} :=
+(n_{s})_{s \in S} \in \mathbb{N}^{S}$ such that $\vert U_{s} \vert = n_{s}$ for
+all $s \in S$. We say $a \in U$ has \emph{sort} $s \in S$ if $a \in U_s$. All
+structures in this paper are assumed to have finite size unless stated
+otherwise. For more details on these basic definitions please
+see~\cite{Gradel:2005}, \cite{immerman1999descriptive},
+or~\cite{grohe2017descriptive}.
+
+\subsection{First-Order Logic}
+Let $\FO[\tau]$ denote \emph{first-order logic} with respect to the vocabulary
+$\tau$. A formula in $\FO[\tau]$ is formed from atomic formulas, each formed
+using variables from some countable sequence of (first-order) variable symbols
+$(x, y, \ldots)$, the relation symbols in $\tau$, and the equality symbol $=$,
+and then closing the set of atomic formulas under the Boolean connectives,
+negation, and universal and existential quantification (i.e.\ $\land$, $\lor$,
+$\neg$, $\forall$, and $\exists$).
+
+
+\subsection{Assignemnts and Models}
+
+Let $\alpha$, $\beta$ and $\gamma$ be assignments. We say that \emph{$\alpha$ is
+  the extension of $\beta$ by the binding $\gamma$} if the domain of $\alpha$ is
+the union of the domains of $\beta$ and $\gamma$ and for each $x \in
+\dom(\alpha)$, $\alpha (x) = \gamma(x)$ if $x \in \dom(\gamma)$ and otherwise
+$\alpha (x) = \beta(x)$.
+
+\subsection{Logics with Counting}
+\subsection{Logics with Rank Operators}
+\subsection{Lindestr\"{o}m Quantifiers}
+\subsection{Interpretations}
+
+\begin{definition}
+  Let $L$ be a logic with a number sort. Let $\rho$ be a vocabulary. Let $\tau =
+  (R, F, S, \zeta)$ be a many-sorted vocabulary with number-valued functions,
+  where $R = \{R_1, \ldots, R_{r}\}$, $F = \{ F_1, \ldots, F_{f} \}$, and $S =
+  \{s_1, \ldots, s_{q}\}$. For each $i \in [r]$ and $j \in [f]$ let $r_i$ denote
+  the arity of $R_i$ and $f_j$ be the arity of $F_j$.
+
+  Let $\ar : S \times [2] \ra \nats$. A \emph{many-sorted $L [\rho,
+    \tau]$-interpretation} of \emph{width} $(\ar)$ is a sequence $\mathcal{I} :=
+  (\vec{\phi}^D, \vec{\phi}^{\approx}, (\phi_i)_{i \in [r]}, (\eta_j)_{j \in
+    [f]})$, where
+
+  \begin{myenum}
+  \item $\vec{\phi}^D = (\phi^D_1, \ldots, \phi^D_q)$, and for each $i \in [q]$,
+    $\phi^D_i(\vec{x}, \vec{\mu})$ where $\vert \vec{x} \vert = \ar(s_i, 1)$ and
+    $\vert \vec{\mu} \vert = \ar(s_i, 2)$,
+  \item $\vec{\phi}^{\approx} = (\phi^{\approx}_1, \ldots, \phi^{\approx}_q)$,
+    and for each $i \in [q]$ $\phi^{\approx}_i(\vec{x}_1\vec{\mu}_1, \vec{x}_2
+    \vec{\mu}_2)$ where $\vert \vec{x}_1 \vert = \vert \vec{x}_2 \vert =
+    \ar(s_i, 1)$ and $\vert \vec{\mu}_1 \vert = \vert \vec{\mu}_2 \vert =
+    \ar(s_i, 2)$,
+  \item for each $i \in [r]$, $\phi_i (\vec{x}^i_1 \vec{\mu}^i_1, \ldots,
+    \vec{x}^{i}_{r_i} \vec{\mu}^{i}_{r_i})$ where for each $j \in [r_i]$, $\vert
+    \vec{x}^i_j\vert = \ar(\zeta(R_i)(j), 1)$ and $\vert \vec{\mu}^i_j \vert =
+    \ar(\zeta(R_i)(j), 2)$, and
+  \item for each $i \in [f]$, $\nu_i (\vec{x}^i_1 \vec{\mu}^i_1, \ldots,
+    \vec{x}^{i}_{f_i} \vec{\mu}^{i}_{f_i})$ where for each $j \in [f_i]$, $\vert
+    \vec{x}^i_j \vert = \ar(\zeta(R_i)(j), 1)$ and $\vert \vec{\mu}^i_j \vert =
+    \ar(\zeta(R_i)(j), 2)$.
+  \end{myenum}
+
+  Let $\mathcal{A} \in \fin[\rho]$ and for all $i \in [q]$ let
+  $(\phi^D_i)^{\mathcal{A}} := \{ \vec{a}\vec{m} \in A^{\ar(s_i, 1)} \times
+  \nats^{\ar(s_i, 2)}: \mathcal{A} \models \phi^D_i[\vec{a}\vec{m}] \}$. We say
+  that $\mathcal{I} (\mathcal{A})$ is defined if there exists $\mathcal{B} \in
+  \fin[\tau]$ with universe $B = \uplus_{i \in [q]} B_i$ and a sort preserving
+  surjection $h : \uplus_{i \in [q]} (\phi^D_i)^{\mathcal{A}} \ra \uplus_{i \in
+    [q]} B_i$ such that:
+    
+  \begin{myenum}
+  \item for each $i \in [q]$ the relation $\approx_i$ on $B_i$ defined for each
+    $\vec{a}_1\vec{m}_1, \vec{a}_2\vec{m}_2 \in (\phi^D_i)^{\mathcal{A}}$ such
+    that $\vec{a}_1\vec{m}_1 \approx_i \vec{a}_2\vec{m}_2$ if, and only if,
+    $\mathcal{A} \models \phi^{\approx}_i[\vec{a}_1\vec{m}_1,
+    \vec{a}_2\vec{m}_2]$ is an equivalence relation,
+  \item let $\approx = \uplus_{i \in [q]}\approx_i$ be an equivalence relation
+    $B$, then for $a , b \in \uplus_{i \in [q]}(\phi^D_i)^{\mathcal{A}}$ if $a
+    \approx b$ then $h(a) = h(b)$,
+  \item for each $i \in [r]$ and for all $j \in [r_i]$ and
+    $\vec{a}^j_i\vec{m}^j_i \in (\phi^D_i)$ $\vec{a}$$h(a) \in R^h_i =
+    \{(\vec{a}_1\vec{})\}$
+  \end{myenum}
+\end{definition}
+
+\subsection{Fixed-Point Logic}
+\subsection{Fixed-Point with Counting}
+\subsection{Fixed-Point with Rank}
+\subsection{Infinitary Logics}
+
+\section{General Complexity Theory and Logic}
+\subsection{Basic Notions and Complexity Classes}
+\subsection{Encoding Structures as Strings}
+\subsection{Capturing Complexity Classes}
+\subsection{Candidate Logics}
+
+
+\section{Circuit Complexity and Logic}
+\subsection{Boolean Functions}
+A (finite) \emph{Boolean function} is a function of the form $f: \{0,1\}^X
+\rightarrow \{0,1\}$, for some finite index set $X$. We call a Boolean function
+$f: \{0,1\}^X \rightarrow \{0,1\}$ \emph{symmetric} if for all $\sigma \in
+\sym_X$ and $\vec{a} \in \{0,1\}^X$, $f (\vec{a} \sigma) = f(\vec{a})$. It
+follows that a Boolean function is symmetric if, and only if, the output of the
+function is entirely determined by the number of ones in the input. We say a
+Boolean function $f : \{0,1\}^{*} \rightarrow \{0,1\}$ is \emph{symmetric} if
+its restriction to inputs of size $n$ is symmetric for all $n \in \nats$.
+
+\subsection{Circuits}
+
+It the literature a basis is usually taken to be a finite sequence of
+(symmetric) functions from $\{0,1\}^*$ to $\{0,1\}$. In this paper we depart
+slightly from this definition, and instead define a \emph{Boolean basis} (or
+\emph{basis}) to be a (potentially infinite) set of finite Boolean functions. We
+always denote a basis by $\BB$. We note that any function $f:\{0,1\}^* \ra
+{0,1}$ is uniquely defined by a set of functions $\{f[n] : n \in \nats\}$, where
+for all $n \in \nats$, $f[n]:\{0,1\}^n \ra \{0,1\}$ is the restriction of $f$ to
+input strings of length $n$. It follows that any finite sequence of such
+functions defines a basis given by taking the union of the associated sets of
+finite functions. We denote the basis \emph{generated} by a sequence of
+functions $f_1, \ldots, f_k : \{0,1\}^* \ra \{0,1\}$ by $\langle f_1, \ldots,
+f_k \rangle := \bigcup_{i \in [k]} \{f_i[n] : n \in \nats\}$.
+
+Given some of the generalisations used in this paper, we find it more convenient
+to work over infinite sets of finite functions rather than the (equivalent)
+unbounded fan-in functions. As such, we associate the usual logical operators
+with infinite families of functions rather than a single unbounded fan-in
+function. For each $n \in \nats$ we let $\AND[n], \OR[n], \NAND[n], \MAJ[n] :
+\{0,1\}^n \rightarrow \{0,1\}$ be the usual logical operators, and with
+$\MAJ[n]$ being the majority function for input strings of length $n$ (the
+majority function outputs a one if, and only if, more than half of bits in the
+inputs string are ones). We let $\AND := \{\AND[n] : n \in \nats\}$, and define
+$\OR$, $\NAND$ and $\MAJ$ similarly. We write $\BS := \AND \cup \OR \cup \NAND
+\cup \MAJ$ to denote the \emph{standard basis} and $\BM := \BS \cup \MAJ$ to
+denote the \emph{majority basis}.
+
+Let $\BB$ be a basis. A \emph{Boolean circuit} $C$ defined over $\BB$ is a
+labelled directed acyclic graph (DAG) with designated input gates $x_1, \ldots,
+x_n$, each with in-degree $0$, internal gates labelled by elements of $\BB$, and
+a single internal gate with out-degree $0$ designated as the output gate. We say
+a circuit with $n$ input gates has \emph{order $n$}. The evaluation of circuit
+$C$ of order $n$ for the input $\vec{a} \in \{0,1\}^n$ is denoted by
+$C[\vec{a}]$ and computed by recursively evaluating the gates in the circuit. We
+denote the evaluation of a gate $g$ in $C$ for the input $\vec{a}$ by
+$C[\vec{a}](g)$. If $g$ is an input gate, then $g = x_i$ for some $i \in [n]$,
+and $C[\vec{a}](g) = a_i$. If $g$ is an internal gate then $g$ is labelled by a
+symbol denoting a Boolean operation, and $C[\vec{a}](g)$ is the result of
+applying that operation to the string formed from the evaluations of those gates
+input to $g$. If $g$ is the output gate, let $C[\vec{a}] = C[\vec{a}](g)$.
+
+The \emph{size} of a circuit $C$, denoted by $\vert C \vert$, is the number of
+gates in the circuit. The \emph{depth} of a gate $g$ is the longest path from an
+input gate to $g$, and the \emph{depth} if the circuit is the depth of the
+output gate. The \emph{width} of a circuit is the maximum size of a set of gates
+with the same depth.
+
+If $C$ is a circuit of order $n$, then $C$ computes a Boolean function $f_C :
+\{0,1\}^n \rightarrow \{0,1\}$ defined by $f_C(\vec{a}) = C[\vec{a}]$. Let
+$(C_n)_{n \in \nats}$ be a family of circuits, where $C_n$ has order $n$. We say
+$(C_n)_{n \in \nats}$ \emph{decides} a language $L : \{0,1\}^{*} \rightarrow
+\{0,1\}$ if for all $\vec{a} \in \{0,1\}^{*}$, $C_{\vert \vec{a} \vert}
+[\vec{a}] = L(\vec{a})$.
+
+
+\subsection{Circuit Classes}
+
+\subsection{Circuits for Structures}
+
+\subsection{Symmetric Circuits}
+
+
+ 
+\end{document}

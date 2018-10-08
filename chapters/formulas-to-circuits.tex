@@ -1,0 +1,2754 @@
+% !TEX root = ../main/thesis.tex
+\documentclass[../main/thesis.tex]{subfiles}
+\begin{document}
+We have from the Immerman-Vardi~\cite{} theorem that over linearly ordered
+structures $\FP$ captures polynomial time. But $\FP$ does not capture polynomial
+time over unordered structures. This motivated the introduction $\FP^{\nats}$
+which allows a formula to refer either to the domain of the structure (the
+element sort) or to a separate ordered copy of the domain of the structure (the
+number sort). This has lead to the study of logics that relate these two domains
+in some way, for example $\FPC$ extends $\FP^{\nats}$ with an operator that
+defines a number term from a formula, with the number term denoting the
+cardinality of the set defined by the formula.
+
+In this chapter we introduce \emph{generalised operators}. In the same way
+Lindestr\"{o}m quantifiers generalise existential and universal quantifiers,
+generalised operators generalise counting and rank operators. As such,
+generalised operators act on a sequence of number terms and formulas and define
+a number term. Generalised operators also allow for the inclusion of a
+parameter, similar to the parameter given in the definition of a rank operator
+by Gradel and Pakusa~\cite{}.
+
+We know that each formula in $\FP$ is equivalent to a formula in
+$\mathcal{L}^{\omega}$ and each formula in $\FPC$ is equivalent to a formula in
+$\mathcal{C}^{\omega}$. These translations from fixed-point logics to infinitary
+logics have been crucial for proving almost all key separation results
+(see~\cite{}). In this chapter we define what we call \emph{substitution
+  programs} and show that formulas of $\FP^{\nats}$ extended by a family of
+operators may be translated to appropriate $\PT$-uniform families of
+substitution programs. These $\PT$-uniform families of substitution programs may
+in turn be translated into formula in an extension of $\mathcal{L}^{\omega}$ by
+a corresponding family of \emph{extended quantifiers}.
+
+We also show that these $\PT$-uniform substitution programs may be translated to
+$\PT$-uniform families of transparent symmetric circuits. This result gives us a
+complete translation from extension of $\FP^{\nats}$ by operators to
+$\PT$-uniform families of symmetric circuits. In the final section of this
+chapter we discuss some special cases.
+
+
+
+
+
+% The translation from fixed-point logics to
+
+% We show that each set of operators (or quantifiers) may be translated to a In
+% the final section of this chapter we show that formulas of extensions of
+% $\FP^{\nats}$ by generalised operators may be translated to a $\PT$-uniform
+% family of transparent symmetric circuits over an appropriate basis.
+
+
+
+% that the extension of $\FP^{\nats}$ by rank operators that take a prime as a
+% parameter define a strictly more expressive logic than the extension by rank
+% operators without such a parameter. As such,
+
+% These general operators are intended to inspired by the generalised
+% quantifiers of Lindestrom. However,
+
+
+
+
+
+% As such, $\FP^{\nats}$ can
+
+% We have from the Immerman-Vardi~\cite{} theorem that over linearly ordered
+% structures $\FP$ captures polynomial time. But $\FP$ does not capture
+% polynomial time over unordered structures as it can not, for example, express
+% the $\parity$ query. The contrast between the expressive power over ordered
+% and unordered structures motivates the introduction $\FP^{\nats}$.
+% $\FP^{\nats}$ extends $\FP$ with a number-sort, allowing the logic to reason
+% over the universe of the structure (the element sort) or over a separate
+% linearly-ordered number domain (the number sort) with the same cardinality as
+% the structure. As such $\FP^{\nats}$ can solve polynomial-time problems over
+% it's number domain (and so can express $\parity$), but, importantly, the logic
+% has no mechanism for relating the (unordered) domain of the structure with the
+% ordered number domain. $\FPC$ extends $\FP^{\nats}$ with a counting operator
+% that provide We can understand the many of the logics of interest, including
+% $FPC$ and $\FPR$, as extending $\FP^{\nats}$ by operators that provide such a
+% mechanism.
+
+
+% by introducing operators that act on a sequence of formulas and number terms
+% and evaluates to an element of the number sort. In the case of $\FPC$ this
+% operator acts on a formula and evaluates to the cardinality of the set defined
+% by that formula, and in the case of $\FPR$ this operator acts on a number-term
+% and evaluates to the rank of the matrix over the appropriate field.
+
+% Importantly, in the case of $\FPC$ we can associate this counting operator
+% with
+
+% In the same way Lindstr-om quantifiers provide a general mechanism for
+% extending a logic by a quantifier, in this chapter we introduce the notion of
+% a \emph{generalised operators} that provide a general mechanism for extending
+% a logic by an operator. We show that each generalised operator may be
+% assosiated with a family of quantifiers.
+
+% In this chapter we provide a formal notion of a general operator and define
+% what it means to extend a logic with such an operator. A general operator
+% differs from a general quantifier in that (i) a general operator can evaluate
+% to a number-term, (ii) a general operator
+
+
+% that acts as a mechanism for
+
+% as extenas introducing a mechanism for relating the unordered element domain
+% with the ordered number domain. For example, $\FPC$ extends $\FP^{\nats}$ by
+% introducing counting operators, operators that act on formulas and evaluate to
+% the cardinality of the set define by the formula.
+
+% In this chapter we will introduce a general framework
+
+
+% an operator that
+
+% that allows one to relate the element domain
+
+
+% extends $\FP^{\nats}$ by introducing a counting
+
+
+
+
+% `order on the side', allowi to refer to the structure or over a separate
+% number domain
+
+
+% , which extends $\FP$ with the ability to quantify over a second-order
+
+
+% cases, where $\FP$ has the full power of a polynomial-time bounded Turing
+% machine, and the unordered cases, where $\FP$ cannot express seemingly trivial
+% queries, motivated the study of logics which introduce an `order on the side'.
+% that allow for reasoning both of the structure and over a separate ordered
+% number domain.
+
+
+
+% In particular, $\FP^{\nats}$ can use the number domain to express
+% polynomial-time queries for which membership depends just on the size of the
+% structure. However, in $\FP^{\nats}$ there is no mechanism for relating the
+% unordered domain of the structure and the associated ordered number-domain.
+
+% Many of the logics that arise in the finite model theory extend $\FP^{\nats}$
+% (or $\FO^{\nats}$) with operators that relate the element domain and the
+% number domain. For example, $\FPC$ and extends $\FP^{\nats}$ with a counting
+% operator that allows one to define defines the cardinality of a set (of either
+% domain)
+
+
+
+
+
+% the ordered and unordered domains. A natural extension of $\FP$ considered in
+% the literature is $\FP^{\nats}$to extend the logic
+
+
+
+% Instead of requiring an order on the structure $\FP$
+
+% The logic $\FP^{\nats}$ is an extension of $\FP$ that allows references not
+% just to the structure but also over a separate linearly ordered number domain.
+% This `order on the side' allows us to express in $\FP^{\nats}$ any
+% polynomial-time decidable query for which membership depends only on the size
+% of the structure (e.g.\ parity).
+
+
+% We cannot express all polynomial time decidable queries because in
+% $\FP^{\nats}$ the domain of the structure and the number domain are treated as
+% completely separate, and there is no mechanism for relating these two domains.
+
+
+% In this extension, using the Immerman-Vardi~\cite{} theorem, allows us to
+% express
+
+
+
+% In the ordered domain allows us to express in $\FP^{\nats}$ polynomial-time
+% decidable query such that membership depends only on the size of the structure
+% (including parity).
+
+
+
+
+
+% This has lead to the study of logics that allow for reasoning over
+
+
+% This has lead to the study of logics such as $\FP^{\nats}$ which extend $\FP$
+% allowing for reasoning over the domain of the structure and over a separate
+% ordered number domain. If we could identify the domain of the structure with
+% the number domain
+
+% and extensions of $\FP^{\nats}$, e.g.\ $\FPC$ and $\FPR$. These extensions
+% introduce operators that relate the domain of the structure with this ordered
+% number-domain.
+
+
+% The natural approach,
+
+
+% In particular, we are interested in logics that extend $\FP^{\nats}$ with
+% operators and quantifiers that allow us to relate the element-sort and
+% number-sort
+
+% In such a logic we have access not only to a structure but to an `order on the
+% side', and t
+
+
+% This has lead to study of extesnions logics that allow for reasoning both over
+% the domain of the structure and a separate associated linearly-ordered
+% number-sort (e.g.\ $\FP^{\nats}$).
+
+% This lead to the study of extensions of $\FP$ with a number sort, allowing one
+% to reason either over the domain of the structure (the element-sort) or over
+% an ordered domain associated with the structure (the number-sort). In
+% particular, we are interested in logics tha
+
+
+% If we could define in the logic a bijection between these separate sorts, then
+% we could order the domain and apply the Immerman-Vardi theorem. Research has
+% thus focused on extensions of $\FP$
+
+% Supposing we cou define a bijection between the element and number sort in
+% such , then we could define linearly order the structure and the logic would
+% capture polynomial-time.
+
+% This has lead to the study of logics with counting (e.g.\ $\FOC$ and $\FPC$).
+% These logics do not impose an order on the structure, but do argument the
+% structure with an (ordered) number domain.
+
+% In this chapter we introduce a general notion of an operator and show that a
+% formula from a fixed-point logics extended with these operators
+
+% \section{Substitution Programs}
+% \begin{definition}
+%   Let $L$ be a logic and $\tau$ be a vocabulary. For each $i > 0$ let $R_i$ be
+%   a distinct relation symbol not in $\tau$ with arity $r_i$. We say a sequence
+%   of formulas $\Phi := (\phi_1(\vec{y}_1), \ldots, \phi_k(\vec{y}_k))$ is a
+%   \emph{substitution program} on $L$ if for each $i \in [k]$ we have that
+%   $\phi_i$ is an $L[\tau_i]$-formula, where $\tau_i = \tau \uplus \{R_j : i <
+%   j \leq k\}$, and each $\vec{y}_i$ has length $r_i$.
+% \end{definition}
+
+
+% \input{../figures/test/drawing.pdf_tex}
+% \input{../figures/formulas_to_circuits.tex}
+
+\section{Structures with Number-Valued Functions}
+In order to define a Lindestrom quantifier we begin with a class of structures
+$\mathcal{C}$ over some relational vocabulary $\rho$. An application of a
+Lindestrom quantifier acts on a sequence of formulas which together define a
+$\rho$-interpretation, and hence determine a $\rho$-structure. A formula with
+the quantifier at its head evaluates to true if, and only if, the defined
+$\rho$-structure is in $\mathcal{C}$ (for details see~\ref{}). In contrast with
+Lindestrom quantifiers, generalised operators act on a sequence of number terms
+(as rank operators do) and formulas (as counting operators do). As such, we
+define a generalised operator from a class of (many-sorted) structures
+consisting of both relations and number-valued functions. In this section we
+generalise the notion of a vocabulary so as to allow for such structures and
+correspondingly generalise the notion of an interpretation.
+
+\begin{definition}
+  A \emph{many-sorted vocabulary with number-valued functions} is a tuple $\tau
+  := (R, F, S, \zeta)$ where $R$ is a sequence of relation symbols, $F$ is a
+  sequence of function symbols, $S$ is a sequence of sort symbols, and $\zeta$
+  is a function that assigns each $H \in R \cup F$ of arity $h$ to a tuple of
+  sort symbols $(s_1, \ldots, s_h)$.
+
+  We say that $\mathcal{A}$ is a $\tau$-structure if $\mathcal{A} = (\uplus_{s
+    \in S} A_s; (R^{\mathcal{A}}_i)_{R_i \in R} ; (F^{\mathcal{A}}_i)_{F_i \in
+    F})$ where
+  \begin{myitemize}
+  \item for each $s \in S$, $A_s$ is a non-empty set,
+  \item for each $R_i \in R$, $R^{\mathcal{A}}_i \subseteq A_{\zeta(R_i)(1)}
+    \times \ldots \times A_{\zeta(R_i)(\ar(R_i))}$, and
+  \item for each $F_i \in R$, $F^{\mathcal{A}}_i : A_{\zeta(R_i)(1)} \times
+    \ldots \times A_{\zeta(R_i)(\arity(R_i))} \ra \nats$.
+  \end{myitemize}
+
+  Let $\mathcal{A}$ and $\mathcal{B}$ be $\tau$-structures. We call $h : A \ra
+  B$ a \emph{homomorphism} if (i) $h$ preserves sorts, (ii) for all $R_i \in R$
+  and $a \in R^{\mathcal{A}}_i$ we have $h(a) \in R^{\mathcal{B}}_i$, and (iii)
+  for all $F_i \in F$ and $a \in \dom (F^{\mathcal{A}}_i)$ we have
+  $F^{\mathcal{A}}_i(a) = F^{\mathcal{B}}_i(h(a))$. If $h$ is a bijection we
+  call $h$ an \emph{isomorphism}.
+\end{definition}
+
+
+We now define a many-sorted interpretation with number-valued functions.
+
+\begin{definition}
+  Let $L$ be a logic with a number sort. Let $\rho$ be a vocabulary. Let $\tau =
+  (R, F, S, \zeta)$ be a many-sorted vocabulary with number-valued functions,
+  where $R = \{R_1, \ldots, R_{r}\}$, $F = \{ F_1, \ldots, F_{f} \}$, and $S =
+  \{s_1, \ldots, s_{q}\}$. For each $i \in [r]$ and $j \in [f]$ let $r_i$ denote
+  the arity of $R_i$ and $f_j$ be the arity of $F_j$.
+
+  Let $k \in \nats$ and let $\ar : S \times [2] \ra \nats$. A \emph{many-sorted
+    $L [\rho, \tau]$-interpretation} with \emph{width} $\ar$ and \emph{free
+    variables} $\vec{w}$ (of mixed sort) is a sequence $\mathcal{I} :=
+  (\vec{\phi}^D, \vec{\phi}^{\approx}, (\phi_i)_{i \in [r]}, (\eta_j)_{j \in
+    [f]})$ of $L[\rho]$-formulas such that
+  \begin{myenum}
+  \item $\vec{\phi}^D = (\phi^D_1, \ldots, \phi^D_q)$, and for each $i \in [q]$,
+    $\phi^D_i(\vec{x}, \vec{\mu}; \vec{w})$ where $\vert \vec{x} \vert =
+    \ar(s_i, 1)$ and $\vert \vec{\mu} \vert = \ar(s_i, 2)$;
+  \item $\vec{\phi}^{\approx} = (\phi^{\approx}_1, \ldots, \phi^{\approx}_q)$,
+    and for each $i \in [q]$ $\phi^{\approx}_i(\vec{x}_1\vec{\mu}_1, \vec{x}_2
+    \vec{\mu}_2 ; \vec{w})$ where $\vert \vec{x}_1 \vert = \vert \vec{x}_2 \vert
+    = \ar(s_i, 1)$ and $\vert \vec{\mu}_1 \vert = \vert \vec{\mu}_2 \vert =
+    \ar(s_i, 2)$;
+  \item for each $i \in [r]$, $\phi_i (\vec{x}^i_1 \vec{\mu}^i_1, \ldots,
+    \vec{x}^{i}_{r_i} \vec{\mu}^{i}_{r_i} ; \vec{w})$ where for each $j \in
+    [r_i]$, $\vert \vec{x}^i_j\vert = \ar(\zeta(R_i)(j), 1)$ and $\vert
+    \vec{\mu}^i_j \vert = \ar(\zeta(R_i)(j), 2)$; and
+  \item for each $i \in [f]$, $\nu_i (\vec{x}^i_1 \vec{\mu}^i_1, \ldots,
+    \vec{x}^{i}_{f_i} \vec{\mu}^{i}_{f_i} ; \vec{w})$ where for each $j \in
+    [f_i]$, $\vert \vec{x}^i_j \vert = \ar(\zeta(R_i)(j), 1)$ and $\vert
+    \vec{\mu}^i_j \vert = \ar(\zeta(R_i)(j), 2)$.
+  \end{myenum}
+
+  Let $\mathcal{A} \in \fin[\rho]$ and let $n := \vert \mathcal{A} \vert$. Let
+  $\beta$ be an assignment to $\vec{w}$ in $\mathcal{A}$. For each $i \in [q]$
+  let $(\phi^D_i)^{(\mathcal{A}, \beta)} := \{ \vec{a}\vec{m} \in A^{\ar(s_i,
+    1)} \times \nats^{\ar(s_i, 2)}: \mathcal{A} \models \phi^D_i[\beta \cup
+  \alpha^{\vec{a}, \vec{m}}_{\vec{x}, \vec{\mu}}] \}$. We say that $\mathcal{I}
+  (\mathcal{A}, \beta)$ is defined if there exists $\mathcal{B} \in \fin[\tau]$
+  with universe $B = \uplus_{i \in [q]} B_i$ and a sort-preserving surjection $h
+  : \uplus_{i \in [q]} (\phi^D_i)^{(\mathcal{A}, \beta)} \ra \uplus_{i \in [q]}
+  B_i$ such that
+    
+  \begin{myenum}
+  \item for each $i \in [q]$ the relation $\approx_i$ on $B_i$ defined such that
+    for each $\vec{a}_1\vec{m}_1, \vec{a}_2\vec{m}_2 \in
+    (\phi^D_i)^{(\mathcal{A}, \beta)}$ we have $\vec{a}_1\vec{m}_1 \approx_i
+    \vec{a}_2\vec{m}_2$ if, and only if, $\mathcal{A} \models
+    \phi^{\approx}_i[\beta, \alpha^{\vec{a}_1\vec{m}_1,
+      \vec{a}_2\vec{m}_2}_{\vec{x}_1 \vec{\mu}_1, \vec{x}_2 \vec{\mu}_2}]$ is an
+    equivalence relation;
+  \item let $\approx = \uplus_{i \in [q]}\approx_i$ be an equivalence relation
+    on $B$, then for $a , b \in \uplus_{i \in [q]}(\phi^D_i)^{(\mathcal{A},
+      \beta)}$ if $a \approx b$ then $h(a) = h(b)$;
+  \item for each $i \in [r]$ and $j \in [r_i]$ let $\vec{a}^i_j\vec{m}^i_j \in
+    (\phi^D_{\zeta(R_i)(j)})^{(\mathcal{A}, \beta)}$ we have
+    \begin{align*}
+      h(\vec{a}^i_1 \vec{m}^i_1 , \ldots , \vec{a}^i_{r_i}\vec{m}^i_{r_i})
+      \in R^{\mathcal{B}}_i \iff \mathcal{A} \models \phi_i
+      [\beta, \alpha^{\vec{a}_1\vec{m}_1, \ldots, \vec{a}_{r_i} \vec{m}_{r_i}}_{\vec{x}^i_1 \vec{\mu}^i_1 , \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i}}];
+    \end{align*}
+  \item for each $i \in [f]$ and $j \in [f_i]$ let $\vec{a}^i_j\vec{m}^i_j \in
+    (\phi^D_{\zeta(F_i)(j)})^{(\mathcal{A}, \beta)}$ we have
+    \begin{align*}
+      F^{\mathcal{B}}_i(h(\vec{a}^i_1 \vec{m}^i_1 , \ldots , \vec{a}^i_{r_i}\vec{m}^i_{r_i})) = \eta^{(\mathcal{A}, \gamma)}_j \text{ where }\gamma := \beta \cup \alpha^{\vec{a}_1\vec{m}_1, \ldots,
+      \vec{a}_{r_i} \vec{m}_{r_i}}_{\vec{x}^i_1 \vec{\mu}^i_1 , \ldots,
+      \vec{x}^i_{r_i} \vec{\mu}^i_{r_i}}.
+    \end{align*}
+  \end{myenum}
+
+  In this case we write $\mathcal{B} = \mathcal{I} (\mathcal{A}, \beta)$ and say
+  that \emph{$\mathcal{I}$ interprets $\mathcal{B}$ in $(\mathcal{A}, \beta)$}
+  or \emph{$\mathcal{I}$ interprets $\mathcal{B}$ in $\mathcal{A}$ under
+    $\beta$}.
+\end{definition}
+
+
+% \section{A Framework for Operators and Quantifiers}
+
+
+% Lindestrom quantifiers are defined by a class of structures, with the syntax
+% of the quantifier is specified so as to define an interpretation, with the
+% quantifier's evaluation depending on whether In the same way Lindestrom
+% quantifiers are defined from a class of structures, generalised operators are
+% similarly defined from a class of structures.
+
+
+% We first need to generalise the notion of a many-sorted vocabulary in order to
+% include function symbols that are intended to be interpreted as number-valued
+% functions.
+
+% \begin{definition}
+%   Let $L$ be a logic ($\FO$ or $\FP$) and let $\tau$ be a many-sorted
+%   vocabulary with function and constant symbols and $N: \fin \ra \fin[\tau]$
+%   be a function that maps isomorphic structures to isomorphic structures. Let
+%   $S = \{s_1, \ldots, s_q\}$ be the sorts in $\tau$. Let $\rho$ be a
+%   vocabulary. Let $\tau \uplus \rho$ be the vocabulary formed by interpreting
+%   $\rho$ as a many-sorted vocabulary with a single sort. We refer to the
+%   single sort of $\rho$ as the \emph{element sort}. Let $L^{\tau, N}[\rho] =
+%   L[\tau \uplus \rho]$ and for $\theta \in L^{\tau, N}[\rho]$ and $\mathcal{A}
+%   \in \fin[\rho]$ let $\mathcal{A} \models_{L^{\tau, N}[\rho]} \theta$ if, and
+%   only if, $(\mathcal{A} \uplus N(\mathcal{A})) \models_{L[\tau \uplus \rho]}
+%   \theta$.
+% \end{definition}
+
+% Let $L^{\tau, N}[\rho]$ be a logic. We say $N$ is \emph{uniform} if for any
+% $\mathcal{A}, \mathcal{B} \in \fin$ such that $\vert \mathcal{A} \vert = \vert
+% \mathcal{B} \vert$ we have $N(\mathcal{A}) = N(\mathcal{B})$. In this case for
+% each $n \in \nats$ we write $N(n)$ to abbreviate $N(\mathcal{A})$ for any
+% $\mathcal{A} \in \fin$ of size $n$. We say $N$ is \emph{$\PT$-uniform} if $N$
+% is uniform and $n \mapsto N(n)$ is computable in time polynomial in $n$.
+
+% \begin{definition}
+%   A \emph{many-sorted vocabulary with number-valued functions} is a tuple
+%   $\tau := (R, F, S, \zeta)$ where $R$ is a sequence of relation symbols, $F$
+%   is a sequence of function symbols, $S$ is a sequence of sort symbols, and
+%   $\zeta$ is a function that assigns each $H \in R \cup F$ of arity $h$ to a
+%   tuple of sort symbols $(s_1, \ldots, s_h)$.
+% \end{definition}
+
+% There is an obvious notion of a $\tau$-structure and isomorphism between
+% $\tau$-structures.
+
+% \begin{definition}
+%   Let $L$ be a logic with a number sort. Let $\rho$ be a vocabulary. Let $\tau
+%   = (R, F, S, \zeta)$ be a many-sorted vocabulary with number-valued
+%   functions, where $R = \{R_1, \ldots, R_{r}\}$, $F = \{ F_1, \ldots, F_{f}
+%   \}$, and $S = \{s_1, \ldots, s_{q}\}$. For each $i \in [r]$ and $j \in [f]$
+%   let $r_i$ denote the arity of $R_i$ and $f_j$ be the arity of $F_j$.
+
+%   Let $\ar : S \times [2] \ra \nats$. A \emph{many-sorted $L [\rho,
+%   \tau]$-interpretation} of \emph{width} $(\ar)$ is a sequence $\mathcal{I} :=
+%   (\vec{\phi}^D, \vec{\phi}^{\approx}, (\phi_i)_{i \in [r]}, (\eta_j)_{j \in
+%   [f]})$, where
+
+%   \begin{myenum}
+%   \item $\vec{\phi}^D = (\phi^D_1, \ldots, \phi^D_q)$, and for each $i \in
+%     [q]$, $\phi^D_i(\vec{x}, \vec{\mu})$ where $\vert \vec{x} \vert = \ar(s_i,
+%     1)$ and $\vert \vec{\mu} \vert = \ar(s_i, 2)$,
+%   \item $\vec{\phi}^{\approx} = (\phi^{\approx}_1, \ldots, \phi^{\approx}_q)$,
+%     and for each $i \in [q]$ $\phi^{\approx}_i(\vec{x}_1\vec{\mu}_1, \vec{x}_2
+%     \vec{\mu}_2)$ where $\vert \vec{x}_1 \vert = \vert \vec{x}_2 \vert =
+%     \ar(s_i, 1)$ and $\vert \vec{\mu}_1 \vert = \vert \vec{\mu}_2 \vert =
+%     \ar(s_i, 2)$,
+%   \item for each $i \in [r]$, $\phi_i (\vec{x}^i_1 \vec{\mu}^i_1, \ldots,
+%     \vec{x}^{i}_{r_i} \vec{\mu}^{i}_{r_i})$ where for each $j \in [r_i]$,
+%     $\vert \vec{x}^i_j\vert = \ar(\zeta(R_i)(j), 1)$ and $\vert \vec{\mu}^i_j
+%     \vert = \ar(\zeta(R_i)(j), 2)$, and
+%   \item for each $i \in [f]$, $\nu_i (\vec{x}^i_1 \vec{\mu}^i_1, \ldots,
+%     \vec{x}^{i}_{f_i} \vec{\mu}^{i}_{f_i})$ where for each $j \in [f_i]$,
+%     $\vert \vec{x}^i_j \vert = \ar(\zeta(R_i)(j), 1)$ and $\vert \vec{\mu}^i_j
+%     \vert = \ar(\zeta(R_i)(j), 2)$.
+%   \end{myenum}
+
+%   Let $\mathcal{A} \in \fin[\rho]$ and for all $i \in [q]$ let
+%   $(\phi^D_i)^{\mathcal{A}} := \{ \vec{a}\vec{m} \in A^{\ar(s_i, 1)} \times
+%   \nats^{\ar(s_i, 2)}: \mathcal{A} \models \phi^D_i[\vec{a}\vec{m}] \}$. We
+%   say that $\mathcal{I} (\mathcal{A})$ is defined if there exists $\mathcal{B}
+%   \in \fin[\tau]$ with universe $B = \uplus_{i \in [q]} B_i$ and a sort
+%   preserving surjection $h : \uplus_{i \in [q]} (\phi^D_i)^{\mathcal{A}} \ra
+%   \uplus_{i \in [q]} B_i$ such that:
+    
+%   \begin{myenum}
+%   \item for each $i \in [q]$ the relation $\approx_i$ on $B_i$ defined for
+%     each $\vec{a}_1\vec{m}_1, \vec{a}_2\vec{m}_2 \in (\phi^D_i)^{\mathcal{A}}$
+%     such that $\vec{a}_1\vec{m}_1 \approx_i \vec{a}_2\vec{m}_2$ if, and only
+%     if, $\mathcal{A} \models \phi^{\approx}_i[\vec{a}_1\vec{m}_1,
+%     \vec{a}_2\vec{m}_2]$ is an equivalence relation,
+%   \item let $\approx = \uplus_{i \in [q]}\approx_i$ be an equivalence relation
+%     $B$, then for $a , b \in \uplus_{i \in [q]}(\phi^D_i)^{\mathcal{A}}$ if $a
+%     \approx b$ then $h(a) = h(b)$,
+%   \item for each $i \in [r]$ and for all $j \in [r_i]$ and
+%     $\vec{a}^j_i\vec{m}^j_i \in (\phi^D_i)$ $\vec{a}$$h(a) \in R^h_i =
+%     \{(\vec{a}_1\vec{})\}$
+%   \end{myenum}
+% \end{definition}
+
+\section{Generalised Operators}
+We are now ready to define a generalised operator and what it means to extend a
+logic by a generalised operator. 
+
+\subsection{Generalised Many-Sorted Operators}
+Let $\tau = (R, F, S, \zeta)$ be a many-sorted vocabulary with number-valued
+functions, where $R = \{R_1, \ldots, R_{r}\}$, $F = \{ F_1, \ldots, F_{f} \}$,
+and $S = \{s_1, \ldots, s_{q}\}$. For each $i \in [r]$ and $j \in [f]$ let $r_i$
+denote the arity of $R_i$ and $f_j$ be the arity of $F_j$.
+
+Let $m \in \nats$ and let $E : \nats^{m} \times \fin[\tau] \ra \nats$. We say
+that $E$ is \emph{closed under isomorphism} if for all $\mathcal{A}, \mathcal{B}
+\in \fin[\tau]$, $\vec{p} \in \nats^{m}$ if $\mathcal{A} \simeq \mathcal{B}$
+then $E(\vec{p}, \mathcal{A}) = E(\vec{p}, \mathcal{B})$. Let $\ar : S \times
+[2] \ra \nats$ be a function. We associate with the pair $(E, \ar)$ a
+\emph{number-valued generalised operator} $\Omega_{(E, \ar)}$. We say the
+\emph{vocabulary} of the operator is $\tau$, the \emph{arity} is $\ar$, the
+\emph{evaluation function} is $E$, and the \emph{parameter-width} is $m$.
+
+For a logic $L$ the extension $L(\Omega_{E, \ar})$ is the closure of the set of
+formulae in $L$ over the following formula formation rule:
+
+
+Let $\vec{w}$ be mixed-sort sequence of variables. Let $\vec{\pi}$ be a sequence
+of number terms in $L(\Omega_{E, \ar})$ with free variables among $\vec{w}$. Let
+$\mathcal{I} := (\vec{\phi}^D, \vec{\phi}^{\approx}, (\phi_i)_{i \in [r]},
+(\eta_j)_{j \in [f]})$ be an interpretation with formulas and number-terms from
+$L(\Omega_{E, \ar})$ with width $\ar$ and free variables among $\vec{w}$. The
+following is a number-term
+\begin{align*}
+  \gamma (\vec{w}) = \Omega_{E, \ar} [\vec{\pi}] [\vec{\phi}^D, \vec{\phi}^{\approx}]  [((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\chi_i))_{i \in [r]}((\vec{y}^j_1 \vec{\nu}^j_1, \ldots, \vec{y}^j_{f_j} \vec{\nu}^j_{f_j})(\eta_j))_{j \in [f]}].
+\end{align*}
+Let $\mathcal{A}$ be a structure and $\beta$ be an assignment to $\vec{w}$ in
+$\mathcal{A}$. Let $\vec{p} = (\pi^{(\mathcal{A}, \beta)}_1, \ldots,
+\pi^{(\mathcal{A}, \beta)}_m)$. If $\mathcal{I}(\mathcal{A}, \beta)$ is not
+defined let $\gamma^{(\mathcal{A}, \beta)} := 0$ and otherwise let $\mathcal{B}
+:= \mathcal{I}(\mathcal{A}, \beta)$ and let $\gamma^{(\mathcal{A}, \beta)} := E
+(\vec{p}, \mathcal{B})$.
+
+We can similarly define a \emph{Boolean-valued generalised operator}. The
+definition is analogous, but in the case the evaluation function is of the form
+$E : \nats^{m} \times \fin[\tau] \ra \{0,1\}$. The extension of a logic by a
+Boolean-valued operator is defined similarly, but in this case an application of
+an operator is a formula rather than a number-term.
+
+We usually denote a set of generalised operators by $\setop$. We write
+$\setop_E$ to denote the set of all operators with evaluation function $E$.
+
+
+% We have $\gamma^{(\mathcal{A}, \beta)}$ if, and only if, $\mathcal{B} =
+% \mathcal{I}(\mathcal{A}, \beta)$ and $E$
+
+
+
+
+
+
+% $\ar$ $mathcal{I} = $ $\vec{\phi}^D$ and $\vec{\phi}^{\approx}$ be sequences
+% of formulas in $L(\Omega_{E, \ar})$ and for each $i \in [r]$ and $j \in [f]$
+% let $\chi_i$ be a formula and $\eta_j$ a number-term in $L(\Omega_{E, \ar})$.
+% Let
+
+
+
+% Let $\vec{\pi}$ be a sequence of number terms in $L(\Omega_{E, \ar})$. Let
+% $\vec{\phi}^D$ and $\vec{\phi}^{\approx}$ be the $q$-sequences of formulas
+% such that for each $i \in [q]$, $\phi^D_i$ has exactly $\ar(s_i, 1)$ free
+% element ,ariables and $\ar(s_i, 2)$ free number variables and
+% $\phi^{\approx}_i$ has exactly $2\cdot\ar(s_i, 1)$ free element variables and
+% $2\cdot\ar(s_i, 2)$ free number variables. Let $(\chi_i)_{i \in [r]}$ and
+% $(\eta_i)_{i \in [f]}$ be sequences of formulas and number-terms,
+% respectively. For each $i \in [r]$ and $l \in [r_i]$ let $s = \zeta (R_i)(l)$
+% and let $\vec{x}^i_l$ be an $\ar(s, 1)$-length tuple of element variables and
+% $\vec{\mu}^i_l$ be an $\ar(s, 2)$-length tuple of number variables. For each
+% $j \in [f]$ and $k \in [f_j]$ let $s = \zeta (F_i)(k)$ and let $\vec{y}^j_k$
+% be an $\ar(s, 1)$-length tuple of element variables and $\vec{\nu}^j_k$ be an
+% $\ar(s, 2)$-length tuple of number variables. The following is a number term:
+% \begin{align*}
+%   \gamma = \Omega_{E, \ar} [\vec{\pi}] [\vec{\phi}^D, \vec{\phi}^{\approx}]  [((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\chi_i))_{i \in [r]}((\vec{y}^j_1 \vec{\nu}^j_1, \ldots, \vec{y}^j_{f_j} \vec{\nu}^j_{f_j})(\eta_j))_{j \in [f]}].
+% \end{align*}
+% The semantics of this operator is defined as follows: Let $\mathcal{I} :=
+% (\vec{\phi}^D, \vec{\phi}^{\approx}, \vec{\chi}, \vec{\eta})$ and
+% $\gamma^{\mathcal{A}} = E(\vec{\pi}^{\mathcal{A}}, \mathcal{I}(\mathcal{A}))$.
+
+
+Let $\setop$ be a set of operators. Let $L(\widetilde{\setop})$ be the set of
+all formulas and number-terms in $L(\setop)$ such that each application of a
+generalised operator in $\setop$ that appears as a sub-formula or
+sub-number-term has domain formulas that are valid and equality formulas that
+simply test for equality. In other words, each application of an operator
+defines an interpretation that involves no restriction of the domain and no
+quotienting. In this case, since the domain and equality formulas have no effect
+on the semantics, we omit them when applying the generalised operator.
+
+\begin{definition}
+  Let $\setop$ be a set of operators. We say a logic $L(\setop)$ is \emph{closed
+    under $\setop$-quotients} if $L(\widetilde{\setop}) = L(\setop)$. If the set
+  of operators $\setop$ is clear from context we say that $L(\setop)$ is
+  \emph{closed under operator quotients}.
+\end{definition}
+
+It can be shown that many of the logics of interest are closed under operator
+quotients.
+
+\begin{lem}
+  The logics $\FPC$ and $\FPR$ are closed under operator quotients.
+  \label{lem:logics-operator-quotients}
+\end{lem}
+
+We have not included a bound on function expressed by an generalised operator.
+We are particularly interested in logics whose formulas cannot define numbers
+that are super-polynomial in the size of the structure over which they are being
+evaluated. In this case each number-term denotes a value that be held by a
+fixed-length tuple of number variables.
+
+\begin{definition}
+  Let $L$ be a logic with a number sort. Let $\rho$ be a vocabulary. Let
+  $\theta$ be a formula or number-term in $L[\rho]$. For each $n \in \nats$ let
+  $e_{\theta}(n)$ be the maximal value denoted by a sub-number-term in $\theta$
+  when $\theta$ is evaluated for any structure $\mathcal{A} \in \fin[\rho, n]$
+  and assignment to the free variables of $\theta$ in $\mathcal{A}$.
+
+  We call the function $e_{\theta}$ the \emph{numeric bound} of $\theta$. We say
+  $\theta$ has \emph{constant numeric-width} if there exists $k \in \nats$ such
+  that $e_{\theta}(n) \leq n^k$ for all $n \in \nats$. In this case we call $k$
+  the \emph{numeric-width} of $\theta$. We say the logic $L$ has \emph{constant
+    numeric-width} if for any vocabulary $\rho$ each formula in $L[\rho]$ has
+  constant numeric-width.
+\end{definition}
+
+It can be shown that many commonly used logics with number-sorts have constant
+number-width.
+
+\begin{lem}
+  The logics $\FO^{\nats}$, $\FP^{\nats}$, $\FPC$, and $\FPR$ have constant
+  number-width.
+  \label{lem:logics-constant-number-width}
+\end{lem}
+
+We introduce some language for generalised operators with particular properties.
+
+\begin{definition}
+  Let $\Omega$ be a generalised operator. We say $\Omega$ \emph{operates on
+    formulas} if there are no function symbols in the vocabulary of $\Omega$. We
+  say that $\Omega$ \emph{has no parameters} if the parameter-width is zero. We
+  say $\Omega$ is \emph{operates over the structure} if it operates on formulas
+  and for all $s \in S$, $\ar(s, 2) = 0$. A Boolean generalised operator that
+  operators over the structure is called a \emph{normal generalised quantifier}.
+\end{definition}
+
+We now show that if we extend a logic with generalised operators with constant
+numeric-width then we may assume, without a loss of generality, that the
+operators operate on formulas.
+
+\begin{prop}
+  Let $\tau := (R, F, S, \zeta)$ be a many-sorted vocabulary with number-valued
+  functions. Let $E : \nats^m \times \fin[\tau] \ra \nats$ be an evaluation
+  function. Let $L$ be an extension of $\FO^{\nats}$ and suppose $L(\setop_E)$
+  has constant numeric-width. There is a many-sorted vocabulary $\tau' = (R',
+  S', \zeta')$ and evaluation function $E' : \nats^m \times \fin[\tau] \ra
+  \nats$ such that
+  \begin{myenum}
+  \item \label{obj:const-width}$L(\setop_{E'})$ has constant numeric-width,
+  \item \label{obj:left-right} $L(\setop_{E}) \leq L(\setop_{E'})$, and
+  \item \label{obj:FOC-right-left} if $\FOC \leq L$ then $L(\setop_{E'}) \leq
+    L(\setop_{E})$.
+    % \item \label{obj:FP-right-left} if $\FP^{\nats} \leq L$ then
+    %   $L(\setop_{E'})
+    %   \leq L(\setop_E)$.
+  \end{myenum}
+  It follows that if $\FOC \leq L$ then $L(\setop_{E}) \equiv L(\setop_{E'})$.
+  \label{prop:op-to-op-on-formulas}
+\end{prop}
+\begin{proof}
+  Let $\{R_1, \ldots, R_{r}\} := R$, $\{ F_1, \ldots, F_{f} \} := F$, and
+  $\{s_1, \ldots, s_{q}\} := S$. For each $i \in [r]$ and $j \in [f]$ let $r_i$
+  be the arity of $R_i$ and $f_j$ be the arity of $F_j$. Let $\tau' := (R', S',
+  \zeta')$ where
+  \begin{myitemize}
+  \item $R' = R \uplus \{R_{r + 1}, \ldots, R_{r + f}\}$,
+  \item $S' = S \uplus \{s_{q+1}\}$, and
+  \item for all $R_i \in R'$ if $i \leq r$ then $\zeta' (R_i) = \zeta(R_i)$,
+    otherwise let $\zeta'(R_{i}) = (s_{i, 1}, \ldots, s_{i, f_{i - r}}, s_{i,
+      f_{i - r} + 1})$, where $(s_{i, 1}, \ldots, s_{i, f_{i -r}}) = \zeta(F_{i
+      - r})$ and $s_{i, f_{i - r}+1} = s_{q+1}$.
+  \end{myitemize}
+  Let $r' = r + f$ and for all $i \in [r']$ let $r_i$ be the arity of $R_i$. Let
+  $T : \fin[\tau'] \ra \fin[\tau]$ be defined such that for each $\mathcal{B}'
+  \in \fin[\tau']$ with universe $B' = \uplus_{i \in [q + 1]}B_i'$ we have that
+  \begin{myitemize}
+  \item $T(\mathcal{B}')$ has universe $\uplus_{i \in [q]}B_i'$,
+  \item for all $R_i \in R$, $R^{T(\mathcal{B}')}_i = R^{\mathcal{B}'}_i$, and
+  \item for all $F_j \in F$, $F^{T(\mathcal{B}')}_j(b_1, \ldots, b_{f_j}) =
+    \vert \{ b \in B_{q+1}': (b_1, \ldots, b_{f_j}, b) \in R^{\mathcal{B}'}_{r +
+      j}\} \vert$.
+  \end{myitemize}
+  Let $E': \nats^m \times \fin[\tau'] \ra \nats$ be defined such that
+  $E'(\vec{p}, \mathcal{B}') = E(\vec{p}, T(\mathcal{B}'))$ for all $(\vec{p},
+  \mathcal{B}') \in \nats^m \times \fin[\tau']$.
+
+  % Let $k \in \nats$. Let $T' : \fin[\tau] \ra \fin[\tau']$ be defined such
+  % that
+  % for each $\mathcal{B} \in \fin[\tau]$ with universe $B = \uplus_{i \in [q +
+  % 1]}B_i$ we have that
+  % \begin{myitemize}
+  % \item $T'(\mathcal{B})$ has universe $(\uplus_{i \in [q]}B_i) \uplus
+  %   B_{q+1}$,
+  %   where $B_{q+1} = [(n + 1)^t - 1]$,
+  % \item for all $R_i \in R'$, $R^{T'(\mathcal{B})}_i = R^{\mathcal{B}}_i$, and
+  % \item for all $F_j \in F$, $F^{\mathcal{B)}}_j(b_1, \ldots, b_{f_j}) = \vert
+  %   \{ b \in B_{q+1}': (b_1, \ldots, b_{f_j}, b) \in R^{T'(\mathcal{B})}_{r +
+  %   j}\} \vert$.
+  % \end{myitemize}
+
+  % Let $\mathcal{B} \in \fin[\tau]$. For each $F_j \in F$ we have
+  % $F^{T(T'(\mathcal{B}))}(b_1, \ldots, b_{f_j} = \vert \{ b \in B_{q+1}':
+  % (b_1,
+  % \ldots, b_{f_j}, b) \in R^{T'(\mathcal{B})}_{r + j}\} \vert =
+  % F^{\mathcal{B}}_j(b_1, \ldots, b_{f_j})$. It follows that
+  % $T(T'(\mathcal{B}))
+  % = \mathcal{B}$. We also have that $R_i \in R'$, if $i \in [r]$ then
+  % $R^{T(T'(\mathcal{B}))}_i = R^{T'(\mathcal{B})}_i = R^{\mathcal{B}}_i$ and
+  % if
+  % $i \not\in [r]$ then $R^{T(T'(\mathcal{B}))}_i = $
+
+  % For each $R \in R'$ we have $F^{T'(t)}$
+
+  We now prove statement~\ref{obj:left-right}. Let $\gamma$ be a number-term or
+  formula of $L(\setop_{E})$. We show that there is a corresponding number-term
+  or formula $\gamma' \in L(\setop_{E'})$ that translates $\gamma$ by induction
+  on the structure of $\gamma$. The only interesting case is the application of
+  an operator. Suppose
+  \begin{align*} \gamma = \Omega_{E, \ar} [\vec{\pi}] [\vec{\phi}^D,
+    \vec{\phi}^{\approx}] [((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i}
+    \vec{\mu}^i_{r_i})(\phi_i))_{i \in [r]}((\vec{y}^j_1 \vec{\nu}^j_1, \ldots,
+    \vec{y}^j_{f_j} \vec{\nu}^j_{f_j})(\eta_j))_{j \in [f]}],
+  \end{align*}
+  where $\ar : S \times [2] \ra \nats$ is the arity, $\vec{\pi} = (\pi_1,
+  \ldots, \pi_m)$ is a sequence of number-terms, and $(\vec{\phi}^D,
+  \vec{\phi}^{\approx}, (\phi_i)_{i \in [r]}, (\eta_j)_{j \in [f]})$ defines an
+  $L(\setop_E)[\rho, \tau]$-interpretation. Let $\vec{w}$ be the free variables
+  in $\gamma$ and let $t$ be the numeric-term width. From the inductive
+  hypothesis there is a translation for each sub-formula and sub-number-term of
+  $\gamma$. Let
+  \begin{align*}
+    \gamma' = \Omega_{E', \ar'}[\vec{\epsilon}\,][\vec{\psi}^D, \vec{\psi}^{\approx}] ((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\psi_i))_{i \in [r']},
+  \end{align*}
+  where
+  \begin{myitemize}
+  \item $\ar' : S' \times [2] \ra \nats$ be defined such that $\ar'(s, i) =
+    \ar(s,i)$ for all $(s, i) \in S \times [2]$, $\ar'(s_{q+1}, 1) = 0$ and
+    $\ar(s_{q+1}, 2) = t$;
+  \item $\vec{\epsilon} = (\epsilon_1, \ldots, \epsilon_m)$, where for each $j
+    \in [m]$, $\epsilon_j$ is the translation of $\pi_j$;
+  \item $\vec{\psi}^D = (\psi^D_1, \ldots, \psi^D_{q}, \psi^D_{q+1})$, where for
+    each $i \in [q]$, $\psi^D_i$ is the translation of $\phi^D_i$ and
+    $\psi^D_{q+1}$ is a valid formula;
+  \item $\vec{\psi}^{\approx} = (\psi^{\approx}_1, \ldots, \psi^{\approx}_q,
+    \psi^{\approx}_{q+1})$, where for all $i \in [q]$, $\psi^{\approx}_i$ is the
+    translation of $\phi^D_i$ and $\psi^{\approx}_{q+1}(\vec{\nu}_1,
+    \vec{\nu}_2) = (\vec{\nu}_1 = \vec{\nu}_2)$; and
+    % \item for each $i \in [r']$, and $j \in [r_i]$, $\vec{x}^i_j$ is an
+    %   $\ar'(\zeta'(R_i)(j), 1)$-sequence of element variables $\vec{\mu}^i_j$
+    %   is a
+    %   $\ar'(\zeta'(R_i)(j), 2)$-sequence of number variables, and
+  \item for each $i \in [r']$ if $i \leq r$ then $\psi_i$ is the translation of
+    $\phi_i$, otherwise let $\eta_{i - r}'$ be the translation of $\eta_{i - r}$
+    and let $\psi_i = ((\sum_{l \in [\vert \vec{\mu}^i_{r_i} \vert]}
+    \vec{\mu}^i_{r_{i}}(l)(n+1)^{l-1}) < \eta_{i-r}')$.
+  \end{myitemize}
+
+  Let $\mathcal{A} \in \fin[\rho]$ and let $\beta$ be an assignment to $\vec{w}$
+  in $\mathcal{A}$. Let $n = \vert \mathcal{A} \vert$. Let $\mathcal{I} :=
+  (\vec{\phi}^D, \vec{\phi}^{\approx}, (\phi_i)_{i \in [r]}, (\eta_j)_{j \in
+    [f]})$ be the $L(\Omega_{E, \ar})[\rho, \tau]$-interpretation defined in
+  $\gamma$ and let $\mathcal{I}' := (\vec{\psi}^D, \vec{\psi}^{\approx},
+  (\psi_i)_{i \in [r']})$ be the corresponding $L(\Omega_{E', \ar'})[\rho,
+  \tau']$-interpretation defined in $\gamma'$. We now prove $\gamma'$ translates
+  $\gamma$ using the following two claims.
+
+  % We
+  % $\mathcal{I}(\mathcal{A}, \beta)$ is defined if, and only if,
+  % $\mathcal{I}'(\mathcal{A}, \beta)$ is defined, and, second, if
+  % $\mathcal{I}(\mathcal{A}, \beta)$ is defined then $\mathcal{I}(\mathcal{A},
+  % \beta) = T(\mathcal{I}'(\mathcal{A}, \beta))$.
+
+  \begin{claim}
+    If $\mathcal{B} = \mathcal{I}(\mathcal{A}, \beta)$ then
+    $\mathcal{I}'(\mathcal{A}, \beta)$ is defined and $\mathcal{B} =
+    T(\mathcal{I}'(\mathcal{A}, \beta))$.
+    \label{claim:not-to-dash}
+  \end{claim}
+  \begin{proof}
+    Let $h$ be the coordinate map that witnesses $\mathcal{B} =
+    \mathcal{I}(\mathcal{A}, \beta)$. Let $B = \uplus_{i \in [q]} B_i$ be the
+    universe of $\mathcal{B}$. Let $\mathcal{B}'$ be the $\tau'$-structure with
+    universe $B' = (\uplus_{i \in [q]} B_i) \uplus B_{q + 1}$, where $B_{q+1} =
+    [(n+1)^t - 1]_0$, and such that for each $i \in [r']$ if $i \leq r$ then
+    $R^{\mathcal{B}'}_i = R^{\mathcal{B}}_i$, otherwise $R^{\mathcal{B}'}_i =
+    \{(a_1, \ldots, a_{f_{i - r}}, a_{r_i}) : a_{r_i} < F^{\mathcal{B}}_{i -
+      r}(a_1, \ldots, a_{f_{i - r}}) \}$. Let $h' : \uplus_{i \in [q+1]}
+    (\psi^D_i)^{(\mathcal{B}', \beta)} \ra \mathcal{B}'$ be defined such that
+    for each $\vec{b} \in \uplus_{i \in [q+1]} (\psi^D_i)^{(\mathcal{B}',
+      \beta)}$ if $\vec{b} \in B$ then $h'(\vec{b}) = h(\vec{b})$, otherwise
+    $\vec{b} \in (\psi^D_{q+1})^{(\mathcal{B}', \beta)} = [n]^t_0$ we have that
+    $h'(a) = \sum_{i \in [\vert \vec{b} \vert]} b_i (n+1)^{i-1}$.
+
+    It follows that $h'$ is sort-preserving and surjective. We now show that
+    $\mathcal{B}' = \mathcal{I}'(\mathcal{A}, \beta)$ with coordinate map $h'$.
+    Let $i \in [q+1]$ and let $\approx_i'$ be the relation defined by evaluating
+    $\psi^{\approx}_i$ on $\mathcal{B}'$ with assignment $\beta$. If $i = q + 1
+    $ then $\psi^\approx_i$ defines equality between the two tuples and hence
+    $\approx_i'$ is an equivalence relation. Otherwise, $i \leq q$ and so
+    $\approx_i = \approx_i'$. It follows that each $\approx_i'$, and hence
+    $\approx' := \uplus_{i \in [q+1]} \approx_i'$, are equivalence relations.
+    Let $\vec{a}, \vec{b} \in \uplus_{i \in [q + 1]}(\psi^D_i)^{(\mathcal{A},
+      \beta)}$ if $h'(\vec{a}) = h'(\vec{b})$ then there exists $i \in [q + 1]$
+    such that $\vec{a}, \vec{b} \in (\psi^D_i)^{(\mathcal{A}', \beta)}$. Suppose
+    $\vec{a} \approx_i' \vec{b}$. If $i = q + 1$ then, since $\vec{a} \approx_i'
+    \vec{b}$ implies $\vec{a} = \vec{b}$, we have $h'(\vec{a}) = h'(\vec{b})$.
+    Otherwise, $i \leq q$ and so, since $\vec{a} \approx_i' \vec{b}$ implies
+    $\vec{a} \approx_i \vec{b}$, we have $h'(\vec{a}) = h(\vec{a}) = h(\vec{b})
+    = h'(\vec{b})$.
+
+    It remains to show that $\approx_i'$ is a congruence. Let $i \in [r']$. If
+    $i \leq r$ then this follows trivially. Suppose $i > r$. For each $j \in
+    [r_i]$ let $k \in [q + 1]$ such that $s_{k} = \zeta(R_i)(j)$ and let
+    $\vec{a}^i_j\vec{m}^i_j \in (\phi^D_{k})^{(\mathcal{A}, \beta)}$. It follows
+    that $r_i = f_{i - r} + 1$ and $\ar'(\zeta'(R_i)(r_i), 1) = 0$ and so
+    \begin{align*}\setlength{\jot}{3ex}
+      ((h'(\vec{a}^i_1 \vec{m}^i_1) , \ldots , h'(\vec{a}^i_{r_i}\vec{m}^i_{r_i})) \in
+      R^{\mathcal{B}'}_i & \iff (h(\vec{a}^i_1 \vec{m}^i_1) , \ldots , h(\vec{a}^i_{f_{i - r}}\vec{m}^i_{f_{i - r}}), h'(\vec{m}^i_{r_i})) \in
+                           R^{\mathcal{B}'}_i \\[11pt]
+                         & \iff F^{\mathcal{B}}_{i - r}(h(\vec{a}^i_1 \vec{m}^i_1) , \ldots,
+                           h(\vec{a}^i_{f_{i - r}}\vec{m}^i_{f_{i - r}})) >  h'(\vec{m}^i_{r_i}) = \sum_{l \in [t]} \vec{m}^i_{r_{i}}(l)(n+1)^{l-1} \\
+                         & \iff  (\eta_{i - r})^{(\mathcal{A}, \gamma)} > \sum_{l \in [t]}
+                           \vec{m}^i_{r_{i}}(l)(n+1)^{l-1} \text{ where } \gamma = \beta \cup \alpha^{\vec{a}_1\vec{m}_1, \ldots,
+                           \vec{a}_{f_{i - r}} \vec{m}_{f_{i -r}}, \vec{m}_{r_i}}_{\vec{x}^i_1 \vec{\mu}^i_1 , \ldots,
+                           \vec{x}^i_{f_{i - r}} \vec{\mu}^i_{f_{i - r}}, \vec{\mu}^i_{r_i}} \\
+                         & \iff \mathcal{A} \models \psi_i [\beta, \gamma] \text{ where } \gamma = \alpha^{\vec{a}_1\vec{m}_1, \ldots,
+                           \vec{a}_{f_{i - r}} \vec{m}_{f_{i -r}}, \vec{m}_{r_i}}_{\vec{x}^i_1 \vec{\mu}^i_1 , \ldots,
+                           \vec{x}^i_{f_{i - r}} \vec{\mu}^i_{f_{i - r}}, \vec{\mu}^i_{r_i}}.
+    \end{align*}
+
+    % \begin{align*}
+    %   h'(\vec{a}^i_1 \vec{m}^i_1 , \ldots , \vec{a}^i_{r_i}\vec{m}^i_{r_i}) \in
+    %   R^{\mathcal{B}'}_i & \iff (h'(\vec{a}^i_1 \vec{m}^i_1) , \ldots
+    %                        , h'(\vec{a}^i_{r_i -1}\vec{m}^i_{r_i - 1}), h'(\vec{m}^i_{r_i})) \in R^{\mathcal{B}'}_i \\
+    %                      & \iff (h(\vec{a}^i_1 \vec{m}^i_1) , \ldots ,
+    %                        h(\vec{a}^i_{f_{i -r}}\vec{m}^i_{f_{i-r}}), \sum_{l \in [t]}
+    %                        \vec{m}^i_{r_i - 1}(l)(n+1)^{i-1}) \in R^{\mathcal{B}'}_i \\
+    %                      & \iff F_{i - r}(h(\vec{a}^i_1 \vec{m}^i_1) , \ldots ,
+    %                        h(\vec{a}^i_{r_{i} -1}\vec{m}^i_{r_{i} - 1})) = \sum_{l \in [t]}
+    %                        \vec{m}^i_{r_{i}}(l)(n+1)^{l-1} \\
+    %                      & \iff  (\eta_{i - r})^{(\mathcal{A}, \gamma)} = \sum_{l \in [t]}
+    %                        \vec{m}^i_{r_{i}}(l)(n+1)^{l-1} \text{ where } \gamma = \beta \cup \alpha^{\vec{a}_1\vec{m}_1, \ldots,
+    %                        \vec{a}_{f_{i - r}} \vec{m}_{f_{i -r}}, \vec{m}_{r_i}}_{\vec{x}^i_1 \vec{\mu}^i_1 , \ldots,
+    %                        \vec{x}^i_{f_{i - r}} \vec{\mu}^i_{f_{i - r}}, \vec{\mu}^i_{r_i}} \\
+    %                      & \iff \mathcal{A} \models \psi_i [\beta, \gamma] \text{ where } \gamma = \beta \cup \alpha^{\vec{a}_1\vec{m}_1, \ldots,
+    %                        \vec{a}_{f_{i - r}} \vec{m}_{f_{i -r}}, \vec{m}_{r_i}}_{\vec{x}^i_1 \vec{\mu}^i_1 , \ldots,
+    %                        \vec{x}^i_{f_{i - r}} \vec{\mu}^i_{f_{i - r}}, \vec{\mu}^i_{r_i}}.
+    % \end{align*}
+
+    It follows that $\mathcal{B}' = \mathcal{I}'(\mathcal{A}, \beta)$. It
+    remains to show that $\mathcal{B} = T(\mathcal{B}')$, but this follows from
+    the following three observations
+    \begin{myitemize}
+    \item $\uplus_{i \in [q]} B_i$ is the universe of both $\mathcal{B}$ and
+      $T(\mathcal{B}')$;
+    \item for each $R_i \in R$, $R^{\mathcal{B}}_i = R^{\mathcal{B}'}_i =
+      R^{T(\mathcal{B}')}_i$; and
+    \item for each $F_i \in F$, $(b_1, \ldots, b_{i}) \in \dom
+      (F^{\mathcal{B}}_{i - r})$, and $b \in B_{q+1}$ we have
+      $F^{\mathcal{B}}_i(b_1, \ldots, b_{f_i}) > b$ if, and only if, $(b_1,
+      \ldots, b_{f_{i}}, b) \in R^{\mathcal{B}'}_{i + r}$, and so
+      $F^{\mathcal{B}}_i(b_1, \ldots, b_{f_i}) = \{(b \in B_{q+ 1} : (b_1,
+      \ldots, b_{f_{i}}, b) \in R^{\mathcal{B}'}_{i + r}\} =
+      F^{T(\mathcal{B}')}_i(b_1, \ldots, b_{f_i})$.
+    \end{myitemize}
+  \end{proof}
+  
+  \begin{claim}
+    If $\mathcal{I}'(\mathcal{A}, \beta)$ is defined then
+    $\mathcal{I}(\mathcal{A}, \beta)$ is defined.
+    \label{claim:dash-to-not}
+  \end{claim}
+  \begin{proof}
+    Let $\mathcal{B}' := \mathcal{I}'(\mathcal{A}, \beta)$ with coordinate map
+    $h'$ and universe $B' = \uplus_{i \in [q + 1]} B_i$. Let $\mathcal{B}$ be
+    the $\tau$-structure with universe $B = \uplus_{i \in [q]}B_i$ and such that
+    for each $R_i \in R$ we have $R^{\mathcal{B}}_i = R^{\mathcal{B}'}_i$ and
+    for each $F_i \in F$ we have $F^{\mathcal{B}} (b_1, \ldots, b_{f_i}) = \vert
+    \{b \in B_{r_{r + i}} : (b_1, \ldots, b_{f_i}, b) \in R^{\mathcal{B}'}_{r +
+      i}\} \vert$. Let $h$ be the restriction of $h'$ to $\uplus_{i \in [q]}
+    (\psi^D_i)^{(\mathcal{B}', \beta)}$. It remains to show that $\mathcal{B} =
+    \mathcal{I}(\mathcal{A}, \beta)$ with coordinate map $h$. This follows from
+    a very similar argument as in Claim~\ref{claim:not-to-dash}.
+  \end{proof}
+
+
+  % From Claims~\ref{} and~\ref{} it follows that $\mathcal{I}'(\mathcal{A},
+  % \beta)$ is defined if, and only if, $\mathcal{I}(\mathcal{A}, \beta)$ is
+  % defined, and if $\mathcal{I}'(\mathcal{A}, \beta)$ is defined then
+  % $\mathcal{I}(\mathcal{A}, \beta) = T(\mathcal{I}'(\mathcal{A}, \beta))$.
+
+  Suppose $\mathcal{I}(\mathcal{A}, \beta)$ is not defined. Then, from
+  Claim~\ref{claim:dash-to-not}, $\mathcal{I}'(\mathcal{A}, \beta)$ is not
+  defined and so $\gamma^{(\mathcal{A}, \beta)} = 0 = (\gamma')^{(\mathcal{A},
+    \beta)}$. Otherwise, $\mathcal{I}(\mathcal{A}, \beta)$ is defined and so,
+  from Claim~\ref{claim:not-to-dash}, $\mathcal{I}'(\mathcal{A}, \beta)$ is
+  defined and $\mathcal{I}(\mathcal{A}, \beta) = T(\mathcal{I}'(\mathcal{A},
+  \beta))$. Then $(\gamma')^{(\mathcal{A}, \beta)} =
+  E'(\vec{\epsilon}^{(\mathcal{A}, \beta)}, \mathcal{I}'(\mathcal{A}, \beta)) =
+  E(\vec{\pi}^{(\mathcal{A}, \beta)}, T(\mathcal{I}'(\mathcal{A}, \beta))) =
+  E(\vec{\pi}^{(\mathcal{A}, \beta)},\mathcal{I}(\mathcal{A}, \beta)) =
+  \gamma^{(\mathcal{A}, \beta)} $, where $\vec{\pi}^{(\mathcal{A}, \beta)} =
+  (\pi^{(\mathcal{A}, \beta)}_1, \ldots, \pi^{(\mathcal{A}, \beta)}_m)$ and
+  $\vec{\epsilon}^{(\mathcal{A}, \beta)} = (\epsilon^{(\mathcal{A}, \beta)}_1,
+  \ldots, \epsilon^{(\mathcal{A}, \beta)}_m)$, and from the inductive
+  hypothesises, $\vec{\pi}^{(\mathcal{A}, \beta)} =
+  \vec{\epsilon}^{(\mathcal{A}, \beta)}$. This concludes the proof of
+  statement~\ref{obj:left-right}.
+  
+  % that if is defined if, and only if, $\mathcal{I}' (\mathcal{A}, \beta)$ is
+  % defined. Suppose $\mathcal{I}(\mathcal{A}, \beta)$ is defined. Let
+  % $\mathcal{B} = \mathcal{I} (\mathcal{A}, \beta)$ with coordinate map $h$. It
+  % is not hard to verify that $T(\mathcal{B}) = \mathcal{I}'(\mathcal{A},
+  % \beta)$
+  % with coordinate map $h$. Suppose $\mathcal{I}' (\mathcal{A}, \beta)$ is
+  % defined and $\mathcal{B}' = \mathcal{I}'(\mathcal{A}, \beta)$.
+
+  % $h$
+
+
+  % It follows that if $\mathcal{I}(\mathcal{A}, \beta)$ is not defined then
+  % $\gamma^{(\mathcal{A}, \beta)} = (\gamma')^{(\mathcal{A}, \beta)}$. Suppose
+  % $\mathcal{I}(\mathcal{A}, \beta)$ is defined. Then
+  
+  % It can be shown that $\gamma'$ translates $\gamma$. Statement (1) follows.
+
+  We next prove statement~\ref{obj:FOC-right-left}. The proof is by a similar
+  induction. Let $\gamma'$ be a number-term or formula of $L(\setop_{E'})$. We
+  show that there is corresponding number-term or formula $\gamma \in
+  L(\setop_{E})$ that translates $\gamma$. Again, the only interesting case is
+  the application of an operator. Suppose
+  \begin{align*}
+    \gamma' = \Omega_{E', \ar'}[\vec{\epsilon}\,][\vec{\psi}^D, \vec{\psi}^{\approx}] ((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\psi_i))_{i \in [r']},
+  \end{align*}
+  for some $\ar' : S' \times [2] \ra \nats$. Let
+  \begin{align*}
+    \gamma := \Omega_{E, \ar} [\vec{\pi}] [\vec{\phi}^D, \vec{\phi}^{\approx}]  [((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\phi_i))_{i \in [r]}&((\vec{x}^{r + j}_1 \vec{\mu}^{r + j}_1, \ldots, \vec{x}^{r + j}_{f_j} \vec{\mu}^{r+j}_{f_j})(\eta_j))_{j \in [f]}],
+  \end{align*}
+  where
+  \begin{myitemize}
+  \item $\ar : S \times [2] \ra \nats$ and $\ar = \restr{\ar'}{S \times [2]}$;
+  \item $\vec{\pi} = (\pi_1, \ldots, \pi_m)$ and for each $j \in [m]$, $\pi_j$
+    is the translation $\epsilon_j$;
+  \item $\vec{\phi}^D = (\phi^D_1, \ldots, \phi^D_{q})$, where for all $i \in
+    [q]$, $\phi^D_i$ is the translation of $\psi^D_i$;
+  \item $\vec{\phi}^{\approx} = (\phi^{\approx}_1, \ldots, \phi^{\approx}_q)$,
+    where for all $i \in [q+1]$, $\phi^{\approx}_i$ is the translation of
+    $\psi^\approx_i$;
+  \item for all $i \in [r']$, $\phi_i$ is the translation of $\psi_i$; and
+  \item for all $i \in [f]$ and $j \in [f_j]$, $\eta_i := \#_{\vec{x}^{r +
+        i}_{f_i + 1}\vec{\mu}^{r + i}_{f_i + 1}}[\phi^D_{q+1},
+    \phi^\approx_{q+1}] \cdot \phi_{r+i}$.
+  \end{myitemize}
+  
+  It remains to show that $\gamma$ translates $\gamma'$. Let $\mathcal{A} \in
+  \fin[\rho]$ and let $\beta$ be an assignment to $\vec{w}$ in $\mathcal{A}$.
+  Let $\mathcal{I} = (\vec{\phi}^D, \vec{\phi}^{\approx}, (\phi_i))_{i \in [r]},
+  (\eta_j))_{j \in [f]})$ be the $L(\Omega_{E, \ar})[\rho, \tau]$-interpretation
+  defined in $\gamma$ and let $\mathcal{I}'$ be the corresponding $L(\Omega_{E,
+    \ar})[\rho, \tau']$-interpretation defined in $\gamma'$. Following the same
+  approach as for statement~\ref{obj:left-right}, we need to show (i) if
+  $\mathcal{I}(\mathcal{A}, \beta)$ is defined then $\mathcal{I}'(\mathcal{A},
+  \beta)$ is defined and $\mathcal{I}(\mathcal{A}, \beta) =
+  T(\mathcal{I}'(\mathcal{A}, \beta))$ and (ii) if $\mathcal{I}'(\mathcal{A},
+  \beta)$ is defined then $\mathcal{I}(\mathcal{A}, \beta)$ is defined.
+
+  Suppose $\mathcal{B} := \mathcal{I}(\mathcal{A}, \beta)$ with coordinate map
+  $h$. We aim to show that $\mathcal{I}'(\mathcal{A}, \beta)$ is defined and
+  $T(\mathcal{I}'(\mathcal{A}, \beta)) = \mathcal{B}$. Let $B = \uplus_{i \in
+    [q]}B_i$ be the universe of $\mathcal{B}$. Let $B_{q + 1} = [(n + 1)^{t} -
+  1]_0$. Let $\mathcal{B}'$ be the $\tau'$-structure with universe $B' =
+  \uplus_{i \in [q+1]} B_i$ and such that for all $i \in [r']$ if $i \leq r$
+  then $R^{\mathcal{B}'}_i = R^{\mathcal{B}}_i$ and otherwise
+  $R^{\mathcal{B}'}_i = \{(b_1, \ldots, b_{r_i} ) : F^{\mathcal{B}} (b_1,
+  \ldots, b_{r_i - 1}) > b_{r_i}\}$. Let $h' : \uplus_{i \in [q +
+    1]}(\phi^D_i)^{(\mathcal{B}', \beta)} \ra \uplus_{i \in [q+1]} B_i$ be
+  defined for $\vec{a} \in \uplus_{i \in [q + 1]}(\phi^D_i)^{(\mathcal{B}',
+    \beta)}$ such that if $\vec{a} \in \uplus_{i \in
+    [q]}(\phi^D_i)^{(\mathcal{B}', \beta)}$ then $h'(\vec{a}) = h(\vec{a})$ and
+  otherwise $h'(\vec{a}) = \sum_{l \in [\vert \vec{a} \vert]} a_l (n + 1)^{l -
+    1}$. It remains to show that $\mathcal{B}' = \mathcal{I}'(\mathcal{A},
+  \beta)$ with coordinate map $h'$ and that $T(\mathcal{B}') = \mathcal{B}$.
+  Both of these statements follow from a very similar argument as in
+  Claim~\ref{claim:not-to-dash}.
+
+  Suppose $\mathcal{B}' = \mathcal{I}'(\mathcal{A}, \beta)$ with coordinate map
+  $h'$. We aim to show that $\mathcal{I}(\mathcal{A}, \beta)$ is defined. Let
+  $B' = \uplus_{i \in [q+1]} B_i$ be the universe of $\mathcal{B}'$. Let
+  $\mathcal{B}$ be the $\tau$-structure with universe $B := \uplus_{i \in [q]}
+  B_i$ and such that for all $R_i \in R$, $R^{\mathcal{B}}_i =
+  R^{\mathcal{B}'}_i$ and for all $F_i \in F$, $F^{\mathcal{B}}_i (b_1, \ldots,
+  b_{f_i})= \vert \{b \in B_{q + 1} : (b_1, \ldots, b_{f_i}, b) \in
+  R^{\mathcal{B}'}_{i + r}\}\vert$. Let $h = \restr{h'}{B}$. It is easy to see
+  that $T(\mathcal{B}) = \mathcal{B}'$. Again, it can be shown, following a
+  similar argument as in Claim~\ref{claim:not-to-dash}, that $\mathcal{B} =
+  \mathcal{I}(\mathcal{A}, \beta)$.
+
+  It follows then that if $\mathcal{I}(\mathcal{A}, \beta)$ is not defined then
+  $\mathcal{I}'(\mathcal{A}, \beta)$ is not defined, and if
+  $\mathcal{I}(\mathcal{A}, \beta)$ is defined then $\mathcal{I}(\mathcal{A},
+  \beta) = T(\mathcal{I}'(\mathcal{A}, \beta))$. It follows that
+  $(\gamma')^{(\mathcal{A}, \beta)} = \gamma^{(\mathcal{A}, \beta)}$. This
+  concludes the proof of statement~\ref{obj:FOC-right-left}, and the
+  proposition.
+  
+  % We aim to show that $\mathcal{B} = \mathcal{I}(\mathcal{A}, \beta)$ and
+  % $T(\mathcal{B}) = \mathcal{I}(\mathcal{A}, \beta)$. Let $\mathcal{B}' :=
+  % \mathcal{I}'(\mathcal{A}, \beta)$ with universe $B' = \uplus_{i \in [q +1]}
+  % B_i$ and coordinate map $h'$. Let $\mathcal{B}$ be the $\tau$-structure with
+  % universe $B := \uplus_{i \in [q ]} B_i$ and such that for each $R_i \in R$,
+  % $R^{\mathcal{B}}_i = R^{\mathcal{B}'}_i$ and for all $F_i \in F$ we have
+  % $F^{\mathcal{B}}(b_1, \ldots, b_{f_i}) = \vert \{b \in B_{q + 1} : (b_1,
+  % \ldots, b_{f_i}, b) \in \} \vert$
+
+  % be the coordinate
+  
+  % Let $T' : \fin[\tau] \ra \fin[\tau']$ be defined such that for each
+  % $\mathcal{B} \in \fin[\tau]$ with universe $B = \uplus_{i \in [q + 1]}B_i$
+  % we
+  % have that
+  % \begin{myitemize}
+  % \item $T'(\mathcal{B})$ has universe $(\uplus_{i \in [q]}B_i) \uplus
+  %   B_{q+1}$,
+  %   where $B_{q+1} = [(n + 1)^t - 1]$,
+  % \item for all $R_i \in R'$, $R^{T'(\mathcal{B})}_i = R^{\mathcal{B}}_i$, and
+  % \item for all $F_j \in F'$, $F^{T'(\mathcal{B})}_j(b_1, \ldots, b_{f_j}) =
+  %   \vert \{ b \in B_{q+1}': (b_1, \ldots, b_{f_j}, b) \in R^{\mathcal{B}}_{r
+  %   +
+  %   j}\} \vert$.
+  % \end{myitemize}
+  % It can be shown that $T'$ is the inverse of $T$. It is not hard to show,
+  % following a broadly similar strategy to the one in Claims~\ref{} and~\ref{},
+  % that if $\mathcal{I}'(\mathcal{A}, \beta)$ is not defined then
+  % $\mathcal{I}(\mathcal{A}, \beta)$ is not defined, and if
+  % $\mathcal{I}'(\mathcal{A}, \beta)$ is defined then
+  % $\mathcal{I}'(\mathcal{A},
+  % \beta) = T'(\mathcal{I}(\mathcal{A}, \beta))$. In either case, following the
+  % same argument, we get $(\gamma')^{(\mathcal{A}, \beta)} =
+  % \gamma^{(\mathcal{A}, \beta)}$. This concludes the proof of (5).
+
+  % is defined and is not defined. Then, from Claim~\ref{claim:not-to-dash},
+  % $\mathcal{I}'(\mathcal{A}, \beta)$ is not defined and so
+  % $\gamma^{(\mathcal{A}, \beta)} = 0 = (\gamma')^{(\mathcal{A}, \beta)}$.
+  % Otherwise, $\mathcal{I}(\mathcal{A}, \beta)$ is defined and so, from
+  % Claim~\ref{claim:dash-to-not}, $\mathcal{i}'(\mathcal{a}, \beta)$ is
+  % defined
+  % and $\mathcal{I}(\mathcal{A}, \beta) = T(\mathcal{I}'(\mathcal{A},
+  % \beta))$.
+  % Then $(\gamma')^{(\mathcal{A}, \beta)} = E'(\vec{p},
+  % \mathcal{I}'(\mathcal{A},
+  % \beta)) = E(\vec{p}, T(\mathcal{I}'(\mathcal{A}, \beta))) =
+  % E(\vec{p},\mathcal{I}(\mathcal{A}, \beta)) = \gamma^{(\mathcal{A}, \beta)}
+  % $,
+  % where $\vec{p} = (p_1, \ldots, p_m)$ and for each $i \in [m]$ we have $p_i
+  % =
+  % \pi^{(\mathcal{A}, \beta)}_i$. This concludes the proof of (3).
+
+  % It It is easy to show that $\gamma'$ and $\gamma$ have the same free
+  % variables
+  % and the same semantics, and so statement (3) follows. Statement (2) follows
+  % from a very similar proof, except in this case we have that for each $j \in
+  % [f]$, and $R_{j+r}'$ the sort $\zeta'(R_{j+r})(f_i + 1)$ is defined using
+  % only
+  % numbers. It follows that we can replace the application of the counting
+  % operator above with a formula that includes a fixed-point operator.
+  % Statement
+  % (4) follows from statement (1) and (3).
+\end{proof}
+
+\begin{lem}
+  Let $L$ be an extension of $\FOC$ and let $\setop$ be a set of generalised
+  operators. Suppose $L(\setop)$ has constant number-width. It follows that
+  there is a family of Boolean-valued generalised operators that act on formulas
+  $\setop'$ such that $L(\setop) \equiv L(\setop')$.
+\end{lem}
+
+\begin{proof}
+  From Lemma~\ref{lem:op-to-op-on-formulas} we may assume, without a loss of
+  generality, that the operators in $\setop_E$ acts on formulas. Let $E' :
+  \nats^{m + 1} \times \fin[\tau] \ra \{0,1\}$ be defined such that $E'(\vec{a},
+  b, \mathcal{A}) = 1$ if, and only if, $E(\vec{a}, \mathcal{A}) = b$ for all
+  $\vec{a} \in \nats^m$, $b \in \nats$, $\mathcal{A} \in \fin[\tau]$.
+
+  We first show that $L(\setop_E) \leq L(\setop_{E'})$. Let $\theta(\vec{x}) \in
+  L(\setop_E)$. We prove this result by induction on the structure of
+  $\theta(\vec{x})$. Let $\gamma$ be a sub-formula or sub-number-term in
+  $\theta(\vec{x})$. The interesting case is where $\gamma$ is an application of
+  an operator in $\setop_E$. Suppose then
+  \begin{align*}
+    \gamma = \Omega_{E, \ar}[\vec{\pi}][\vec{\phi}^D, \vec{\phi}^{\approx}] ((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\phi_i))_{i \in [r]}.
+  \end{align*}
+  is a number term, and let $\psi(\vec{x})$ be a formula that contains $\gamma$
+  and such that $\psi$ does not strictly contains a formula that contains
+  $\gamma$. It follows that $\psi$ is of the form $\gamma X \delta$, where
+  $\delta$ is a number term and $X$ is either `$=$' or `$\leq$'. Let
+  $\vec{\epsilon}$ be a $t$-length vector of variables not in $\theta$ and
+  assume we have already defined a number-term $\delta' \in L(\setop_{E'})$,
+  that translates $\delta$. Let $\psi' = \exists \vec{\epsilon} \, \gamma' \land
+  \, \vec{\epsilon} X \delta'$, where $\gamma'$ is a formula defined such that
+  \begin{align*}
+    \gamma' = \Omega_{E', \ar}[\vec{\pi}', (\epsilon_1 \cdot M + \ldots + \epsilon_t \cdot M^{t-1})][\vec{\psi}^D, \vec{\psi}^{\approx}] ((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\psi_i))_{i \in [r]}
+  \end{align*}
+  where
+  \begin{myitemize}
+  \item $\vec{\pi}$ is a translation of $\vec{\pi}'$,
+  \item $M = \#_x (x = x)$ and $M^{i}$ is the $i$th power of $M$,
+  \item $\vec{\psi} = (\psi^D_1, \ldots, \psi^D_{q})$, where for all $i \in
+    [q]$, $\psi^D_i$ is the translation of $\phi^D_i$,
+  \item $\vec{\psi}^{\approx} = (\psi^{\approx}_1, \ldots, \psi^{\approx}_q)$,
+    where for all $i \in [q]$, $\psi^{\approx}_i$ is the translation of
+    $\phi^D_i$, and
+  \item for all $i \in [r]$, $\psi_i$ is the translation of $\phi_i$.
+  \end{myitemize}
+  It can be shown that $\psi'$ translates $\psi$. It remains to show that
+  $L(\setop_{E'}) \leq L(\setop_{E})$. The idea is to simply replace any
+  application of a (Boolean-valued) operator in $\setop_{E'}$ with formula that
+  tests for the equality. We omit the details here.
+\end{proof}
+
+It follows from Lemmas~\ref{} and~\ref{} that we may assume, without a loss of
+generality, that so long as we are interested in logics that are extensions of
+$\FOC$, any given set of generalised operators $\setop$ is normal.
+
+% We have defined the extension of a logic by an operator so as to allow for the
+% inclusion of man the operator we may also specify formulas (e.g.\
+% $\vec{\phi}^D, \vec{\phi}^{\approx}$) that may be used to restrict the domain
+% and introduce a quotienting operator.
+
+
+% The definition of extending a logic by a family of operators the possibility
+% of defining a many-sort interpretation as part of the application of the
+% operator. In many cases extension of a logic by a family of Lindstr\"{o}m
+% quantifiers does not allow for the taking of interpretations. We can similarly
+% define for a logic $L$ and set of operators $\setop$ an extension
+% $L^{~}(\setop)$ that is defined similarly, but that does not allow for any
+% definition of a
+
+% \begin{definition}
+%   We say a logic $L(\setop)$ is \emph{closed under operator quotients} if
+%   $L^{~}(\setop) = L(\setop)$.
+% \end{definition}
+
+% We state the following easy to prove lemma.
+
+% \begin{lem}
+%   The logics $\FP^{\nats}$, $\FPC$, and $\FPR$ are closed under operator
+%   quotients.
+%   \label{lem:logics-operator-quotients}
+% \end{lem}
+
+
+
+% For each $i \in [q]$ let $B_i = \phi^D_i / \phi^{\approx}_i$. Let $i \in
+% [l_1]$. For each $j \in [r_i]$ let $e_j \in B_{\zeta(R_i)(j)}$. We define
+% $R^B_i$ by $(e_1, \ldots, e_{r_i}) \in R^{B}_i$ if, and only if, there exists
+% $(\vec{a}_1 \vec{m}_1, \ldots , \vec{a}_{r_i} \vec{m}_{r_i})$ where $\vec{a}_j
+% \vec{m}_j \in e_j$ for all $j \in [r_i]$ and $\mathcal{A} \models \theta_i
+% [\vec{a}_1\vec{m}_1, \ldots, \vec{a}_{r_i} \vec{m}_{r_i}]$. We define
+% $F^{B}_j$ such that $F^B_j (e_1, \ldots, e_{f_j}) = k$ there exists
+% $(\vec{a}_1, \vec{m}_1, \ldots , \vec{a}_{r_i} \vec{m}_{r_i})$ such that
+% $\vec{a}_j \vec{m}_j \in e_j$ for all $j \in [f_i]$ where $\mathcal{A} \models
+% (k = \nu_i [\vec{a}_1, \vec{m}_1, \ldots , \vec{a}_{r_i} \vec{m}_{r_i}])$. Let
+% $\mathcal{B}$ be the structure defined from the above. We have $\mathcal{A}
+% \models (k = ...)$ if, and only if, $E(\vec{\pi}^{\mathcal{A}},
+% \vec{\phi}^{\mathcal{A}}, \mathcal{B}) = k$.
+
+
+% \begin{definition}
+%   Let $\Omega_{E, \ar}$ be a many-sorted operator. We say $\Omega_{E, \ar}$
+%   \emph{operates on formulas} if there are no function symbols in the
+%   vocabulary of $\Omega_{E, \ar}$. We say that $\Omega_{E, \ar}$ \emph{has no
+%   parameters} if the parameter-width is zero. We say $\Omega_{E, \ar}$ is
+%   \emph{numberless} if it operates on formulas and for all $s \in S$, $\ar(s,
+%   2) = 0$. We call a numberless Boolean operator a \emph{many-sorted
+%   quantifier}.
+% \end{definition}
+
+% \begin{lem}
+%   Let $L$ be a logic and $\setop$ be a set of operators. There is a set of
+%   operators $\setop^*$ each of which operate on formulas such that $L(\setop)
+%   \equiv L(\setop^*)$.
+% \end{lem}
+% \begin{proof}
+  
+% \end{proof}
+
+% It follows that we may assume, without a loss of generality, that a given set
+% of operators act on formulas.
+
+
+% We say that $L(\setop)$ is \emph{closed under operator quotients} if each
+% query in $L(\setop)$ can be expressed in
+
+% $\equiv L(\setop^-)$.
+
+% We
+
+% \begin{definition}
+%   Let $\Omega$ be an operator. Let $\setop$ be a set of operators. Let
+%   $\setop^- = \{\Omega^- : \Omega \in \setop\}$. We say that $L(\setop)$ is
+%   \emph{closed under operator quotients} if $L(\setop) \equiv L(\setop^-)$.
+% \end{definition}
+
+% \begin{lem}
+%   $\FPR$ and $\FPC$ are closed under operator quotients.
+% \end{lem}
+
+% \begin{lem}
+  
+% \end{lem}
+
+% \subsection{Boolean-Valued Operators}
+% We can add a number term parameter and the operator evaluates to a value equal
+% to this number term.
+
+% \subsection{Operators on Formulas}
+% We can replace each number term with a formula with an extra type. Summation
+% over this extra type gets you back to the previous formula.
+
+% We may thus assume, without a loss of generality, that the operators only
+% operate on formulas and are Boolean valued.
+
+\subsection{Extended Quantifiers}
+Many of the logics that are of interest to us, including $\FPC$ and $\FPR$, can
+be defined as extension of $\FP^{\nats}$ by generalised operators. The study of
+these logics often reduces to the study of a corresponding bounded-variable
+infinitary logic without number sorts (e.g.\ $\mathcal{C}^\omega$).
+
+We aim to develop a general way of associating with each logic extended by a set
+of generalised operators with an appropriate infinitary logic. Before we do so,
+we need to show how to associate a set of operators with an appropriate set of
+quantifiers that make no reference to a number sort. In this subsection we
+introduce \emph{extended quantifiers}.
+
+Let $\tau = (R, S, \zeta)$ be a many-sorted vocabulary where $R = \{R_1, \ldots,
+R_{r}\}$, and $S = \{s_1, \ldots, s_{q}\}$. For each $i \in [r]$ let $r_i$
+denote the arity of $R_i$. Let $m \in \nats$, $E : \nats^{m} \times \fin[\tau]
+\ra \{0,1\}$ be isomorphism-closed, and let $\ar : S \times [2] \ra \nats$. We
+associate with the pair $(E, \ar)$ and tuple $(\vec{p}, n) \in \nats^{m} \times
+\nats$ an \emph{extended quantifier} $Q^{E, \ar}_{\vec{p},n}$. For a logic $L$
+the extension $L(Q^{E, \ar}_{\vec{p},n})$ is defined by extending the
+formula-formation rule for $L$ as follows:
+\begin{textbox}[13.8cm]
+  For each $i \in [r]$, $l \in [r_i]$ let $s^i_l = \zeta (R_i)(l)$ and let
+  $c^i_l = \ar(s^i_l, 2)$. Let $T^i_n := [n]^{c^i_l} \times , \ldots, \times
+  [n]^{c^i_{r_i}}$ and let $T_n$ be the function that maps $i \in [r]$ to
+  $T^i_n$. Let $\Upsilon_i : T^i_n \ra L(Q^{E, \ar}_{\vec{p}, n})$ and let
+  $\vec{x}^i_l$ be an $\ar(s^i_l, 1)$-length tuple of element variables. Then
+  $\phi := Q^{E, \ar}_{\vec{p}, n} [(\vec{x}^i_1, \ldots, \vec{x}^i_{r_i}) \cdot
+  \Upsilon_i]_{i \in [r]}$ is a formula in $L(Q^{E, \ar}_{\vec{p}, n})$. Let
+  $\free{\phi} := \bigcup_{i \in [r], a \in
+    \dom(\Upsilon_i)}(\free{\Upsilon_i(a)} \setminus (\bigcup_{j \in
+    [r_i]}\vec{x}^i_j))$.
+\end{textbox}
+The semantics of the formula $\phi$ is defined for a structure $\mathcal{A} \in
+\fin[\rho]$ and assignment $\alpha$ to the free variables in $\phi$ as follows:
+\begin{textbox}[13.8cm]
+  For each $i \in [r]$ let
+  \begin{align*} \chi_i (\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i}
+    \vec{\mu}^i_{r_i}) = \bigvee_{\vec{a}_1, \ldots,
+      \vec{a}_{r_i}}[(\bigwedge_{j \in [r_i]} \vec{\mu}^i_j= \vec{a}_j) \land
+    \upsilon_i(\vec{a}_1, \ldots, \vec{a}_{r_i})(\vec{x}^i_1, \ldots,
+    \vec{x}^i_{r_i})].
+  \end{align*}
+  Let $\mathcal{I}$ be the interpretation, with trivial domain and equality
+  formulas, and with relations formulas $(\chi_i)_{i \in [r]}$. Let $\mathcal{A}
+  \models \phi$ if, and only if, $E(\vec{p}, (\mathcal{I}(\mathcal{A}), \alpha))
+  = 1$.
+\end{textbox}
+
+*****NEED TO ADD A NOTION OF AN INTERPRETATION WITH AN ASSIGNMENT
+
+We may associate a set of operators with a set of extended quantifiers. Let
+$\setop$ be a set of generalised operators. Let $\setquant$ be the set of
+extended quantifiers such that $Q \in \setquant$ if, and only if, there exists
+$\Omega_{E, \ar} \in \setop$ with parameter-width $m$, $\vec{p} \in \nats^m$,
+and $n \in \nats$ such that $Q = Q^{E, \ar}_{\vec{p}, n}$. We say that
+$\setquant$ is the set of extended quantifiers corresponding to $\setop$.
+
+
+****SEPARABLE QUANTIFIERS
+
+\section{Translating Formulas to Substitution Programs}
+We now introduce the notion of a substitution program. A substitution program is
+a finite sequence of formulas such that each formula may contain second-order
+variables that correspond to formulas that come later in the sequence. The idea
+is that a substitution program is a `compact' way of writing a formula, one that
+allows formulas to repeatedly apply a formula without having to rewrite it each
+time. We use substitution programs as a step towards our translation to
+circuits. We also show that each substitution program can be translated to an
+equivalent formula of an infinitary logic.
+
+\begin{definition}
+  Let $L$ be a logic and $\rho$ be a vocabulary. A $L[\rho]$-\emph{substitution
+    program} is a sequence of formulas $\Phi := (\phi_1(\vec{y}_1, \vec{\mu}_1;
+  \boldsymbol{V}_1), \ldots, \phi_k(\vec{y}_k, \vec{\mu}_i;\boldsymbol{V}_k))$,
+  such that there is a sequence $V_1, \ldots, V_k$ of second-order variables and
+  for each $i \in [k]$:
+  \begin{myitemize}
+  \item $\phi_i$ is a formula in $L[\rho]$,
+  \item $\vec{y}_i$ and $\vec{\mu}_i$ are sequences of element and number
+    variables, respectively,
+  \item $V_i$ has the same type as $(\vec{y}_i, \vec{\mu}_i)$, and
+  \item $\boldsymbol{V}_i \subseteq \{V_j : i < j \leq k\}$.
+  \end{myitemize}
+  For each $i \in [k]$ the \emph{flattening} of $\Phi$ at $i$ is defined
+  recursively as follows. If $i = k$ then the flattening of $\Phi$ at $i$ is
+  $\phi_i$. If $i < k$ the flattening of $\Phi$ at $i$ is defined by replacing
+  each second-order variable $V_j$ appearing in $\phi_i$ with the flattening of
+  $\Phi$ at $j$. The \emph{flattening} of $\Phi$ is the flattening of $\Phi$ at
+  $1$.
+
+  Let $\alpha$ be an assignment to the variables $\vec{y}_1$ and $\vec{\mu}_1$.
+  Let $\mathcal{A} \in \fin[\tau]$. We write $\mathcal{A} \models \Phi[\alpha]$
+  to abbreviate $\mathcal{A} \models \phi[\alpha]$, where $\phi$ is the
+  flattening of $\Phi$. The \emph{formula-length} of a substitution program
+  $\Phi$ is the maximal length (i.e.\ number of symbols) of the formulas in
+  $\Phi$. The \emph{variable-width} of a substitution program is the maximum
+  variable-width of a formula appearing in the program.
+\end{definition}
+
+We often work with substitution programs where the sequence is indexed by a
+finite linearly ordered set, rather than an initial segment of the natural
+numbers.
+
+The proof of the following result follows from the standard `unrolling' of the
+fixed-point operators. For more detail please see~\cite{}.
+
+\begin{lem}
+  Let $\setop$ be a set of generalised operators. Let $\setquant$ be the
+  associated family of extended quantifiers. If a query can be defined in
+  $\FP^{\nats} (\setop)$ then it can be defined by a $\PT$-uniform family of
+  $\FO^{\nats} (\setop)$-substitution programs with a constant bound on the
+  width and formula-length.
+  \label{lem:unroll-fixed-point}
+\end{lem}
+
+% \begin{lem}
+%   Let $\setop$ be a set of unrestricted operators. For each $n \in \nats$ let
+%   $\setquant$ be the corresponding set of number domain non-uniform
+%   number-domain non-quotienting quantifiers generated by $\setop$. Let
+%   $\theta(\vec{x}, \vec{\mu}) \in \FO^{\nats} (\setop)$ be a formula defined
+%   in terms of the mixed-sort relation variables $V_1, \ldots, V_k$. Let $m =
+%   \vert \vec{\mu} \vert$ and for each $i \in [k]$ let $v_i$ be the arity of
+%   the element sort and let $m_i$ be the arity of the number sort in $V_i$. Let
+%   $n \in \nats$. For each $i \in [k]$ and $\vec{b} \in [n]^{m_i}$ we define an
+%   element-sort relation variable $V_{\i, vec{b}}$ of arity $v_i$. There exists
+%   a sequence of $\FO(\setquant)$ formulas $\{\theta_{\vec{a}}(\vec{x}) :
+%   \vec{a} \in [n]^{m}\}$ where each $\theta_{\vec{a}}(\vec{x})$ is defined in
+%   terms of the relation variables $\bigcup_{i \in [k]} \{V_{i, \vec{b}} :
+%   \vec{b} \in [n]^{m_i}\}$.
+% \end{lem}
+% \begin{proof}
+%   We say that a number term $\eta(\vec{y}, \vec{\nu})$ in
+%   $\FO^{\nats}(\setop)$ has a \emph{translation for $n$} if there is a
+%   sequence of $\FO(\setquant)$-formulas $(\phi^{\eta}_{n, k;
+%   \beta}(\vec{y}))_{\beta \in [n]^{\vec{\nu}}}$ such that for each
+%   $\tau$-structure $\mathcal{A}$ of size $n$ and for each assignment $\alpha
+%   \in [n]^{\vec{y}}$ we have that $\mathcal{A} \models \phi^{\eta}_{n, k;
+%   \beta}[\alpha]$ if, and only if, $\mathcal{a} \models (\eta = k)[\alpha \cup
+%   \beta]$.
+
+%   We say a formula $\psi(\vec{y}, \vec{\nu})$ in $\FO^{\nats}(\setop)$ has a
+%   \emph{translation for $n$} if there is a sequence of
+%   $\FO(\setquant)$-formulas $(\phi_{n; \beta} (\vec{y}))_{\beta \in
+%   [n]^{\vec{\mu}}}$ such that each $\tau$-structure $\mathcal{A}$ of size $n$
+%   and each assignment $\alpha \in [n]^{\vec{y}}$, we have that $\mathcal{A}
+%   \models \phi_{n; \vec{\beta}}[\alpha]$ if, and only if, $\mathcal{A} \models
+%   \phi[\alpha \cup \beta]$.
+
+%   We aim to show that $\theta(\vec{x}, \vec{\mu})$ has a \emph{translation for
+%   $n$} by induction on the structure of the formula. It is easy to see that if
+%   $\eta(\vec{y}, \vec{\nu})$ is a number variable or a constant (i.e. $0$ or
+%   $1$) then $\eta$ has a translation for $n$. In the case that $\psi(\vec{y})$
+%   is a formula is a formula containing no number terms then there is an
+%   obvious translation for $n$. If $psi(\vec{y}, \vec{\nu}) = V_i(\vec{y},
+%   \vec{\nu})$ then the assignment $\psi_{n; \beta}(\vec{y}) = V_{i,
+%   \beta(\vec{\nu})}$ defines a translation.
+
+%   Let $\eta(\vec{y}, \vec{\nu})$ be a number term and suppose all sub-formulas
+%   and sub-number-terms of $\eta$ have a translation for $n$. Let $\beta \in
+%   [n]^{\vec{\nu}}$. Suppose $\eta(\vec{y}, \vec{\nu}) = \eta_1(\vec{y}_1,
+%   \vec{\nu}_1) \cdot \eta_2(\vec{y}_2, \vec{\nu}_2)$. Let $\beta_1 \in
+%   [n]^{\vec{nu}_1}$ and $\beta_2 \in [n]^{\vec{nu}_2}$ be assignments
+%   compatible with $\beta$. Let $\psi^{\eta}_{n, k ; \beta} (\vec{y}) =
+%   \underset{a, b \leq k, a \cdot b = k}{\bigvee}(\psi^{\eta)_1}_{n, a;
+%   \beta}(\vec{x}) \land \psi^{\eta_2}_{n, b; \beta}(\vec{x}))$. The other
+%   arithmetic cases are handled similarly.
+
+%   We now consider the application of an operator. Let $\Omega \in \setop$ and
+%   suppose
+
+%   \begin{align*}
+%   \eta(\vec{y}, \vec{\nu}) = \Omega_{E} [\vec{\pi}] [((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\chi_i))_{i \in [l]}].
+% \end{align*}
+% For each $i \in [l]$ let $T_i = [n]^{c_1} \times , \ldots, \times
+% [n]^{c_{r_i}}$. Let $T$ be a function that maps $i \in [l]$ to $T_i$. where
+% $c_{j}$ is the arity of ...
+% \begin{align*}
+%   \psi^{\eta}_{n, k; \beta}(\vec{x}) := \bigvee_{p_1, \ldots, p_{\vert \vec{\pi} \vert}, e \leq M}[&(\bigwedge_{i \leq \vert \vec{\pi}\vert} \psi^{\pi_{i}}_{n, p_i; \beta}(\vec{x})) \\ &\land Q_{E, T ; (p_1, \ldots, p_n); e} ((\vec{x}^{j, \vec{t}}_1, \ldots, \vec{x}^{j, \vec{t}}_{r_i}) \cdot (\chi_{i, \vec{t}})_{ n; \beta})_{j \in [l], \vec{t} \in T_j}]
+% \end{align*}
+% \end{proof}
+
+% \begin{lem}
+%   Let $\setop$ be a set of non-quotienting operators. Let $\setquant :=
+%   \setquant_{\setop}$ be the corresponding set of extended quantifiers. If a
+%   query can be defined by a $\PT$-uniform family of $\FO^{\nats} (\setop)$
+%   substitution programs formulas then it can be defined by a $\PT$-uniform
+%   family of $\FO (\setquant)$ substitution programs
+% \end{lem}
+% \begin{proof}
+%   Let $\rho$ be a vocabulary. Let $(f_n : [M_n] \ra \FO^{\nats} \ra
+%   \FO^{\nats}(\setop)[\tau])_{n \in \nats}$ be a $\PT$-uniform family of
+%   $\FO^{\nats}(\setop)[\tau]$ of substitution programs.
+% \end{proof}
+
+% The proof of the following result follows from the standard `unrolling' of the
+% fixed-point operators. For more detail please see~\cite{}.
+
+% \begin{lem}
+%   Let $\setop$ be a set of operators. If a query can be defined in
+%   $\FP^{\nats} (\setop)$ then it can be defined by a $\PT$-uniform family of
+%   $\FO^{\nats} (\setquant)$ substitution programs with constant program-width
+%   and relation-width.
+% \end{lem}
+
+Let $L$ be a logic with constant numeric-width. Let $\rho$ be a vocabulary. We
+say that a $\PT$-uniform family of $L[\rho]$-substitution programs $(\Phi_n)_{n
+  \in \nats}$ is \emph{bounded} if there is a constant $k \in \nats$ such that
+for each $n \in \nats$ the numeric-width and length of each formula in $\Phi_n$
+is less than $k$. We aim to show that every bounded $\PT$-uniform family of
+$\exlogic{\FO^{\nats}}{\setop}$-substitution programs can be translated to
+equivalent $\PT$-uniform families of $\FO(\setquant)$-substitution programs. We
+define a translation for a bounded $\PT$-uniform family of
+$\exlogic{\FO^{\nats}}{\setop}$-substitution programs $(\Theta_n)_{n \in \nats}$
+in two parts. We show in Lemma~\ref{} that for each $n \in \nats$ we can expand
+each formula in $\Theta_n$ into an equivalent sequence of
+$\FO(\setquant)$-formulas. We then show in Lemma~\ref{} that by expanding each
+formula in $\Theta_n$ and then concatenating the resultant sequence we can
+define a $\PT$-uniform family of $\FO(\setquant)$-substitution programs that
+defines the same query as $(\Theta_n)_{n \in \nats}$.
+
+We first define what it means to expand a formula in a substitution program into
+an equivalent sequence of formulas. Let $\rho$ be a vocabulary and let $\setop$
+be a set of operators. Let $\setquant$ be the corresponding set of extended
+quantifiers. Let $\theta (\vec{x}, \vec{\mu}; \vec{V})$ be a formula in
+$\exlogic{\FO^{\nats}}{\setop}[\rho]$ defined in terms of a sequence of
+mixed-sort second-order variables $\vec{V} = (V_1, \ldots, V_v)$. For each $i
+\in [v]$ let $v_i$ and $m_i$ be the arity of the element sort and number sort of
+$V_i$.
+
+Let $n \in \nats$. Let $\boldsymbol{\theta}_n = \{\theta_{n; \beta}(\vec{x};
+\vec{W}^n) : \beta \in [n]^{\vec{\mu}} \}$ in $\FO(\setquant)[\rho]$, where
+$\vec{W}^n = \{ V^n_{i, \vec{a}} : i \in [v], \vec{a} \in [n]^{m_i}\}$, and for
+each $i \in [v]$, $\vec{a} \in [n]^{m_i}$ we have that $V^n_{i, \vec{a}}$ is an
+element-sort second-order variable with arity $v_i$. We say
+$\boldsymbol{\theta}_n$ \emph{translates $\theta$ for $n$} if for all
+\begin{myenum}
+\item $\mathcal{A} \in \fin[\rho, n]$,
+\item assignments $\alpha \in A^{\vec{x}}$ and $\beta \in [n]^{\vec{\mu}}$, and
+\item assignments $\gamma$ and $\gamma'$ to the second-order variables, where
+  $\gamma$ maps $V_i$ to a relation $V^{\gamma}_i \subseteq A^{v_i} \times
+  [n]^{m_i}$ and $\gamma'$ maps $V^n_{i, \vec{c}}$ to the relation $V^{n,
+    \gamma'}_{i, \vec{c}} \subseteq A^{v_i}$ such that $(\vec{a}, \vec{c}) \in
+  V^{\gamma}_{i}$ if, and only if, $\vec{a} \in V^{n, \gamma'}_{i, \vec{c}}$
+  then
+\end{myenum}
+\vspace{-2.8mm}
+\begin{align*}
+  \mathcal{A} \models \theta [\alpha , \beta, \gamma]  \iff \mathcal{A} \models \theta_{n;\beta} [\alpha, \gamma'].
+\end{align*}
+
+We say $\boldsymbol{\theta} = (\boldsymbol{\theta}_n)_{n \in \nats}$ translates
+$\theta$ if $\boldsymbol{\theta}_n$ translates $\theta$ for all $n \in \nats$.
+We similarly define a \emph{translation} for number-terms. Let $\eta(\vec{x},
+\vec{\mu}; \vec{V})$ be a number term and let $n \in \nats$. We say that
+$\boldsymbol{\theta}^{\eta}_n = \{\theta^{\eta}_{n, k; \beta}(\vec{x},
+\vec{V}^n_1, \ldots, \vec{V}^n_{v}) : k \in \nats, \beta \in [n]^{\vec{\mu}} \}$
+\emph{translates} $\eta$ for $n$ if for all $k \in \nats$ and all $\mathcal{A}$,
+$\alpha$, $\beta$, $\gamma$, and $\gamma'$ defined as above we have
+\begin{align*}
+  \eta^{(\mathcal{A}; \alpha, \beta, \gamma)} = k \iff \mathcal{A} \models \theta^{\eta}_{n, k; \beta}[\alpha, \gamma'].
+\end{align*}
+
+We are now ready to prove that a formula that appears in a
+$\exlogic{\FO^\nats}{\setop}$-substitution program may be translated to a
+sequence of $\FO(\setquant)$-formulas, where $\setquant$ is the set of extended
+quantifiers associated with $\setop$. Moreover, we show that this translation
+can be constructed by an algorithm that runs within a prescribed time.
+
+\begin{lem}
+  \label{lem:translate-program-line}
+  Let $\rho$ be a vocabulary. Let $\setop$ be a set of normal operators and let
+  $\setquant$ be the corresponding set of extended quantifiers. Suppose
+  $\exlogic{\FO^{\nats}}{\setop}$ has constant numeric-width. Let
+  $\theta(\vec{x}, \vec{\mu}; \vec{V}) \in \exlogic{\FO^{\nats}}{\setop}[\rho]$
+  be a formula defined in terms of the mixed-sort second-order variables
+  $\vec{V} = (V_1, \ldots, V_v)$. Let $t$ be the numeric-width and $w$ be the
+  number-variable width of $\theta$.
+  
+  There exists a set of formulas $\boldsymbol{\theta} = \{\theta_{n;
+    \beta}(\vec{x}; \vec{W}^n) : n \in \nats, \beta \in [n]^{\vec{\mu}} \}$ in
+  $\FO(\setquant)[\rho]$ that translates $\theta$. We also have that each
+  formula in $\boldsymbol{\theta}$ has variable-width less than the
+  element-variable width of $\theta$. Moreover, the function that maps $(n,
+  \theta)$ to $(\theta_{n, \beta})_{\beta \in [n]^{\vec{\mu}}}$ is computable in
+  time $c^{\vert \cl{\theta} \vert} \cdot n^{c \cdot \vert \cl{\theta} \vert
+    \cdot (t + w)}$ for some constant $c$.
+\end{lem}
+\begin{proof}
+  Let $n \in \nats$. We aim to recursively define a translation for $n$ for each
+  formula and number-term in $\theta$. That is, for a sub-formula or
+  sub-number-term $\gamma(\vec{y}, \vec{\nu} ; \vec{V})$ of $\theta$ we define a
+  translation of $\gamma$ for $n$ given translations of the sub-formulas and
+  sub-number-terms of $\gamma$ for $n$. More precisely, if $\gamma$ is a
+  number-term we will define a sequence of $\FO(\setquant)[\rho]$-formulas
+  $\boldsymbol{\phi}^{\gamma}_n = \{\phi^{\gamma}_{n, k; \beta}(\vec{y};
+  \vec{W}^n) : \beta \in [n]^{\vec{\nu}}, k \leq n^t \}$ that translates
+  $\gamma$ for $n$ and if $\gamma$ is a formula we will define a sequence
+  $\boldsymbol{\phi}^{\gamma}_n = \{\phi^{\gamma}_{n ; \beta}(\vec{y};
+  \vec{W}^n): \beta \in [n]^{\vec{\nu}} \}$ that translates $\gamma$ for $n$. In
+  these formulas $\vec{W}^n = \{ V^n_{i, \vec{a}} : i \in [v], \vec{a} \in
+  [n]^{m_i}\}$. We prove this result by considering cases. In each case we let
+  $\gamma_1, \gamma_2, \ldots$ denote the sub-formulas or sub-number-terms of
+  $\gamma$ and we let $\beta$ denote an arbitrary assignments to the free number
+  variables in $\gamma$.
+
+  We first consider the base cases. Suppose $\gamma$ is a number-variable or a
+  constant (i.e.\ $0$ or $1$). If $\gamma$ evaluates to $k$ under the assignment
+  $\beta$ let $\phi^{\gamma}_{n, k; \beta}$ be a tautology and otherwise let
+  $\phi^{\gamma}_{n, k; \beta}$ be a contradiction. Suppose $\gamma$ is an
+  atomic formula or (non-number) term. If the free variables in $\psi$ are all
+  element variables then let $\phi^{\gamma}_{n; \beta} = \gamma$. If
+  $\gamma(\vec{y}, \vec{\nu}; \vec{V}) = V_i(\vec{y}, \vec{\nu})$ for some $i
+  \in [v]$ let $\phi^{\gamma}_{n; \beta}(\vec{y}) = V^n_{i, \beta(\vec{\nu})}$.
+  This suffices to give a translation of $\gamma$ for $n$ in this case.
+
+  We now consider the multiplication case. The other arithmetic functions may be
+  handled similarly. Suppose $\gamma(\vec{y}, \vec{\nu}; \vec{V})$ is a number
+  term and suppose $\gamma(\vec{y}, \vec{\nu}; \vec{V}) = \gamma_1(\vec{y}_1,
+  \vec{\nu}_1; \vec{V}) \cdot \gamma_2(\vec{y}_2, \vec{\nu}_2; \vec{V})$. Let
+  $\beta_1 \in [n]^{\vec{\nu}_1}$ and $\beta_2 \in [n]^{\vec{\nu}_2}$ be
+  compatible with $\beta$, then for each $k \leq n^{t}$ let
+  \begin{align*}
+    \phi^{\gamma}_{n, k ; \beta} =
+    \uset{a, b \leq k}{ a \cdot b = k}{\bigvee}(\phi^{\gamma_1}_{n, a;
+    \beta_1} \land \phi^{\gamma_2}_{n, b; \beta_2}).
+  \end{align*}
+
+  We now handle the less-than relation for number-terms. The equality relation
+  may be handled similarly. Suppose $\gamma(\vec{y}, \vec{\nu}; \vec{V}) =
+  \gamma_1(\vec{y}_1, \vec{\nu}_1; \vec{V}) \leq \gamma_2 (\vec{y}_2,
+  \vec{\nu}_2 ; \vec{V})$. Let $\beta_1 \in [n]^{\vec{\nu}_1}$ and $\beta_2 \in
+  [n]^{\vec{\nu}_2}$ be compatible with $\beta$, and let
+  \begin{align*}
+    \phi^{\gamma}_{n; \beta} = \uset{a, b \leq n^t}{a \leq
+    b}{\bigwedge} (\phi^{\gamma_1}_{n, a; \beta_1} \land \phi^{\gamma_2}_{n, b;
+    \beta_2}).
+  \end{align*}
+  
+  We now handle conjunction between formulas. The other logical connectives may
+  be handled similarly. Suppose $\gamma(\vec{y}, \vec{\nu}; \vec{V}) =
+  \gamma_1(\vec{y}_1, \vec{\nu} ; \vec{V}) \land \gamma_2 (\vec{y}_2,
+  \vec{\nu}_2 ; \vec{V})$. Let $\beta_1 \in [n]^{\vec{\nu}_1}$ and $\beta_2 \in
+  [n]^{\vec{\nu}_2}$ be compatible with $\beta$. Let $\phi^{\gamma}_{n ; \beta}
+  = \phi^{\gamma_1}_{n ; \beta_1} \land \phi^{\gamma_2}_{n ; \beta_2}$.
+
+  We now handle the operator case. Let $\Omega_{E, \ar} \in \setop$ and suppose
+  \begin{align*}
+    \gamma(\vec{y}, \vec{\nu}; \vec{V}) = \Omega_{E, \ar} [\vec{\pi}] [((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\chi_i))_{i \in [r]}].
+  \end{align*}
+  For each $i \in [r]$, $l \in [r_i]$ let $s^i_l = \zeta(R_i)(l)$ and $c^i_l =
+  \ar(s^i_l, 2)$. Let $T^i_n := [n]^{c^i_l} \times , \ldots, \times
+  [n]^{c^i_{r_i}}$. Let $\Upsilon_i : T^n_i \ra \FO(\setquant)[\rho]$ be defined
+  by $\Upsilon_i (\vec{m}_1, \ldots, \vec{m}_{r_i}) = \phi^{\chi_i}_{n ;
+    \beta_i}$, where $\beta_i$ is an assignments to all the free number
+  variables in $\chi_i$ such that (i) $\beta_i$ agrees with $\beta$ for each
+  variable in $\vec{\nu}$ not bound by the operator and (ii) $\beta_i$ assigns
+  $\vec{\mu}^i_{j}$ to $\vec{m}_j$ for each $j \in [r_i]$. For each $i \in
+  [\vert \pi \vert]$ let $\alpha_i$ be an assignment to the free number
+  variables in $\vec{\pi}(i)$ compatible with $\beta$. Let
+  \begin{align*}
+    \phi^{\gamma}_{n; \beta} := \bigvee_{p_1, \ldots, p_{\vert \vec{\pi} \vert} \leq n^t}[(\bigwedge_{i \in [\vert \vec{\pi}\vert]} \phi^{\pi(i)}_{n, p_i; \alpha_i}) \land Q^{E, \ar}_{n, (p_1, \ldots, p_{\vert \vec{\pi} \vert})} ((\vec{x}^{j}_1, \ldots, \vec{x}^{j}_{r_j}) \cdot \Upsilon_j)_{j \in [r]}].
+  \end{align*}
+  
+  We can think of the $\forall$ and $\exists$ quantifiers as generalised
+  operators, and so these case are subsumed by the operator case. There is an
+  obvious recursive algorithm implementing the construction above. It can be
+  shown by reviewing each of the above cases that the cost of computing the
+  translation for a sub-formula or sub-number-term $\gamma (\vec{y}, \vec{\nu} ;
+  \vec{V})$ is at most $(c_1 \cdot n^{c_2 \cdot (t_{\gamma} + w_{\gamma} )}
+  \cdot X)$, where $c_1$ and $c_2$ are constants, $t_{\gamma}$ and $w_{\gamma}$
+  are the numeric-width of $\gamma$ and number-variable width, respectively, and
+  $X$ is the maximal cost of translating a sub-formula or sub-number-term of
+  $\gamma$. It follow that for a given $n$ and $\theta$ we can construct a
+  family of formulas $\boldsymbol{\theta}_n$ that translates $\theta$ for $n$ in
+  at most $c^{\vert \cl{\theta} \vert}_1 \cdot n^{c_2 \vert \cl{\theta} \vert
+    \cdot (t + w)}$. The result follows.
+\end{proof}
+
+% \begin{lem}
+%   Let $\setop$ be a set of non-quotienting operators. Let $\setquant :=
+%   \setquant_{\setop}$ be the corresponding set of extended quantifiers. If a
+%   query can be defined by a $\PT$-uniform family of $\FO^{\nats} (\setop)$
+%   substitution programs with constant program-width and relation-width then it
+%   can be defined by a $\PT$-uniform family of $\FO (\setquant)$ substitution
+%   programs.
+% \end{lem}
+% \begin{proof}
+%   Let $\rho$ be a vocabulary. Let $I = (I_n : [M_n] \ra \FO^{\nats} \ra
+%   \FO^{\nats}(\setop)[\tau])_{n \in \nats}$ be a $\PT$-uniform family of
+%   substitution programs. Let $n \in \nats$. For each $w \in [M_n]$ let
+%   $\theta_w (\vec{x}) := I_n(w)$. For each mixed-sort second-order variable
+%   $V_i$ with arity $(v_i, m_i)$ we define a family of element-sort
+%   second-order variables $\mathbb{V}_i = \{V_{i, \vec{a}} : \vec{a} \in
+%   [n]^{m_i}\}$ such that $v_{i, \vec{a}}$ is the arity of $V_{i, \vec{a}}$.
+
+%   Fix $w \in [M_n]$ and let $\theta_{n,w} (\vec{x}, \vec{\mu}) := I_n(w)$. We
+%   aim to define for each number term $\eta(\vec{y}, \vec{\nu})$ appearing in
+%   $\theta_w(\vec{x}, \vec{\mu})$ a sequence of $\FO(\setquant)[\rho]$-formulas
+%   $\{\phi^{\eta}_{n, w; k; \beta}(\vec{y}))_{\beta \in [n]^{\vec{\nu}}}) :
+%   \beta \in [n]^{\vec{\nu}}, k \in \nats\}$.
+  
+%   We say that a number term $\eta(\vec{y}, \vec{\nu})$ in
+%   $\FO^{\nats}(\setop)$ has a \emph{translation for $n$} if there is a
+%   sequence of $\FO(\setquant)$-formulas $(\phi^{\eta}_{n, k;
+%   \beta}(\vec{y}))_{\beta \in [n]^{\vec{\nu}}}$ such that for each
+%   $\rho$-structure $\mathcal{A}$ of size $n$ and for each assignment $\alpha
+%   \in [n]^{\vec{y}}$ we have that $\mathcal{A} \models \phi^{\eta}_{n, k;
+%   \beta}[\alpha]$ if, and only if, $\mathcal{a} \models (\eta = k)[\alpha \cup
+%   \beta]$.
+
+%   We say a formula $\psi(\vec{y}, \vec{\nu})$ in $\FO^{\nats}(\setop)$ has a
+%   \emph{translation for $n$} if there is a sequence of
+%   $\FO(\setquant)$-formulas $(\phi_{n; \beta} (\vec{y}))_{\beta \in
+%   [n]^{\vec{\mu}}}$ such that each $\tau$-structure $\mathcal{A}$ of size $n$
+%   and each assignment $\alpha \in [n]^{\vec{y}}$, we have that $\mathcal{A}
+%   \models \phi_{n; \vec{\beta}}[\alpha]$ if, and only if, $\mathcal{A} \models
+%   \phi[\alpha \cup \beta]$.
+
+%   We aim to show that $\theta(\vec{x}, \vec{\mu})$ has a \emph{translation for
+%   $n$} by induction on the structure of the formula. It is easy to see that if
+%   $\eta(\vec{y}, \vec{\nu})$ is a number variable or a constant (i.e. $0$ or
+%   $1$) then $\eta$ has a translation for $n$. We also have that if
+%   $\psi(\vec{y})$ is a formula then $\psi(\vec{y})$ is its own translation for
+%   $n$. If $psi(\vec{y}, \vec{\nu}) = V_i(\vec{y}, \vec{\nu})$ then the
+%   assignment $\psi_{n; \beta}(\vec{y}) = V_{i, \beta(\vec{\nu})}$ defines a
+%   translation for $n$.
+
+%   Let $\eta(\vec{y}, \vec{\nu})$ be a number term and suppose all sub-formulas
+%   and sub-number-terms of $\eta$ have a translation for $n$. Let $\beta \in
+%   [n]^{\vec{\nu}}$. Suppose $\eta(\vec{y}, \vec{\nu}) = \eta_1(\vec{y}_1,
+%   \vec{\nu}_1) \cdot \eta_2(\vec{y}_2, \vec{\nu}_2)$. Let $\beta_1 \in
+%   [n]^{\vec{nu}_1}$ and $\beta_2 \in [n]^{\vec{nu}_2}$ be assignments
+%   compatible with $\beta$. Let $\psi^{\eta}_{n, k ; \beta} (\vec{y}) =
+%   \underset{a, b \leq k, a \cdot b = k}{\bigvee}(\psi^{\eta)_1}_{n, a;
+%   \beta}(\vec{x}) \land \psi^{\eta_2}_{n, b; \beta}(\vec{x}))$. The other
+%   arithmetic cases are handled similarly.
+
+%   We now consider the application of an operator. Let $\Omega \in \setop$ and
+%   suppose
+
+%   \begin{align*}
+%   \eta(\vec{y}, \vec{\nu}) = \Omega_{E} [\vec{\pi}] [((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\chi_i))_{i \in [l]}].
+% \end{align*}
+% For each $i \in [l]$ let $T_i = [n]^{c_1} \times , \ldots, \times
+% [n]^{c_{r_i}}$. Let $T$ be a function that maps $i \in [l]$ to $T_i$. where
+% $c_{j}$ is the arity of ...x
+% \begin{align*}
+%   \psi^{\eta}_{n, k; \beta}(\vec{x}) := \bigvee_{p_1, \ldots, p_{\vert \vec{\pi} \vert}, e \leq M}[&(\bigwedge_{i \leq \vert \vec{\pi}\vert} \psi^{\pi_{i}}_{n, p_i; \beta}(\vec{x})) \\ &\land Q_{E, T ; (p_1, \ldots, p_n); e} ((\vec{x}^{j, \vec{t}}_1, \ldots, \vec{x}^{j, \vec{t}}_{r_i}) \cdot (\chi_{i, \vec{t}})_{ n; \beta})_{j \in [l], \vec{t} \in T_j}]
+% \end{align*}
+
+
+% \end{proof}
+Let $L$ be a logic with constant numeric-width. Let $\rho$ be a vocabulary. We
+say that a $\PT$-uniform family of $L[\rho]$-substitution programs $(\Phi_n)_{n
+  \in \nats}$ is \emph{bounded} if there is a constant $k \in \nats$ such that
+for each $n \in \nats$ the numeric-width and length of each formula in $\Phi_n$
+is less than $k$.
+
+\begin{lem}
+  Let $\rho$ be a vocabulary and let $\setop$ be a set of normal operators such
+  that $\FO^{\nats}(\setop)$ has constant numeric-width. Let $\setquant$ be the
+  corresponding set of quantifiers. If a query can be defined by a bounded
+  $\PT$-uniform family of $\FO^{\nats} (\setop)[\rho]$-substitution programs
+  then it can be defined by a $\PT$-uniform family of $\FO
+  (\setquant)[\rho]$-substitution programs with constant width.
+  \label{lem:translate-sub-operators-to-queries}
+\end{lem}
+\begin{proof}
+  Let $\Theta := (\Theta_{n})_{n \in \nats}$ be a bounded $\PT$-uniform family
+  of $\FO^{\nats}(\setop)[\rho]$-substitution programs. For each $n \in \nats$
+  let $M_n := \dom(\Theta_n)$. For each $n \in \nats$, $i \in M_n$ let
+  $\vec{x}^n_i$ and $\vec{\mu}^n_i$ be the free element variables and number
+  variables in $\Theta_n(i)$. Let $V^n_i$ be a mixed-sort second-order variable
+  with type $(\vec{x}^n_i, \vec{\mu}^n_i)$. We think of $V^n_i$ as the
+  second-order variable associated with the formula $\Theta_n(i)$. For each $n
+  \in \nats$, $i \in M_n$, and $\vec{a} \in [n]^{\vert \vec{\mu}^n_i \vert}$ let
+  $V^n_{i ; \vec{a}}$ be an element-sort second-order variable with arity $\vert
+  \vec{x}^n_i\vert$. Let $\theta_{n, i}(\vec{x}^n_i, \vec{\mu}^n_i; \vec{V}^n_i)
+  := \Theta_n(i)$, where $\vec{V}^n_i = (V^n_j)_{j > i}$. Let
+  $\boldsymbol{\theta}_{n, i} := \{\theta_{n, i; \beta} (\vec{x}^n_i
+  ,\vec{\mu}^n_i ; \vec{W}^n_{i}) : \vec{a} \in [n]^{\vert \vec{\mu}^n_i
+    \vert}\}$ be a translation of $\theta_{n, i}$ for $n$, where $\vec{W}^n_i =
+  \{V^{n}_{j; \vec{a}} : j \in M_n, j > i, \vec{a} \in [n]^{\vert \vec{\mu}^n_j
+    \vert}\}$. Importantly, it follows from
+  Lemma~\ref{lem:translate-program-line} and the fact that $\Theta$ is bounded
+  that there is a an algorithm that runs in time polynomial in $n$ that takes a
+  formula $\theta_{n, i}$ and outputs the translation $\boldsymbol{\theta}_{n,
+    i}$ for $n$.
+
+  Let $M_n' = \{(i, \vec{a}) : i \in M_n, \vec{a} \in [n]^{\vert \vec{\mu}^n_i
+    \vert}\}$. Let $\Theta_n' : M_n' \ra \FO(\setquant)[\rho]$ be defined by
+  $\Theta_n' (i, \vec{a}) := \theta_{n, i; \beta}$, where $\beta$ maps
+  $\vec{\mu}^n_i$ to $\vec{a}$, for each $(i, \vec{a}) \in M_n'$. Let $\Theta' =
+  (\Theta_n')_{n \in \nats}$. Since $M_n'$ is a product of two linearly ordered
+  sets, we can define a lexographical order on $M_n'$. Let $i, j \in M_n$ and
+  suppose $i > j$. Then, from the definition of a substitution program,
+  $\theta_{n, i}$ does not contain the second-order variable $V^n_{j}$. It
+  follows from the definition of a translation that for all $\vec{a} \in
+  [n]^{\vert \vec{\mu}^n_i \vert}$ and $\vec{b} \in [n]^{\vert \vec{\mu}^n_j
+    \vert}$ the translation $\theta_{n, i ; \beta}$, where $\beta$ is the
+  assignment that maps $\vec{\mu}^n_i$ to $\vec{a}$, does not contain any
+  second-order variable $V^n_{j ; \vec{b}}$. Moreover, for a fixed $n \in \nats$
+  and $i \in M_n$ all of the formulas in $\boldsymbol{\theta}_{n, i}$ are
+  defined in terms of the same set of second-order variables. It follows that
+  for all $(i, \vec{a}), (j, \vec{b}) \in M_n'$, $(i, \vec{a}) < (j, \vec{b})$
+  $\Theta_n'(i, \vec{a})$ does not contain the second-order variable $V^n_{j;
+    \vec{b}}$. In other words, $\Theta_n'$ is a well-formed substitution
+  program.
+
+  \begin{claim}
+    For each $n \in \nats$ let $\theta_n(\vec{x}^n_1, \vec{\mu}^n_1)$ be the
+    flattening of $\Theta_n$ and for each $\vec{c} \in [n]^{\vert
+      \vec{\mu}^n_1\vert}$ let $\theta_{n, \vec{c}}'(\vec{x}^n_1)$ be the
+    flattening of $\Theta_n'$ at $(1, \vec{c})$. Let $\mathcal{A} \in \fin[\rho,
+    n]$. Let $\alpha \in A^{\vec{x}^n_1}$ and let $\beta \in
+    [n]^{\vec{\mu}^n_1}$. Then $\mathcal{A} \models \theta_n [\alpha, \beta]$
+    if, and only if, $\mathcal{A} \models \theta_{n,
+      \beta(\vec{\mu}^n_1)}[\alpha]$.
+  \end{claim}
+  \begin{proof}
+    Let $n \in \nats$. For each $i \in M_n$ and $\vec{c} \in [n]^{\vert
+      \vec{\mu}^n_i\vert}$ let $\phi_{n, i}$ be the flattening of $\Theta_n$ at
+    $i$ and let $\phi_{n, (i, \vec{c})}'$ be the flattening of $\Theta_n'$ at
+    $(i, \vec{a})$. Let $\mathcal{A} \in \fin[\rho, n]$. We will prove by
+    backwards induction that for each $i \in M_n$, $\vec{c} \in [n]^{\vert
+      \vec{\mu}^n_i\vert}$, and assignments $\alpha \in A^{\vec{x}^n_i}$ and
+    $\beta$ that maps $\vec{\mu}^n_i$ to $\vec{c}$, we have that $\mathcal{A}
+    \models \phi_{n, i}[\alpha, \beta]$ if, and only if, $\mathcal{A} \models
+    \phi_{n, (i, \vec{c})}[\alpha]$.
+
+    % Let $n \in \nats$, $(i, \vec{a}) \in M_n'$ let $M_{n, (i, \vec{a})}' =
+    % \{(j,
+    % \vec{b}) : (i, \vec{a}) \leq (j, \vec{b})\}$ and let $M_{n, i} = \{j : i
+    % \leq j\}$. Let $\Psi_{n, (i, \vec{a})}'$ be the restriction of $\Theta_n'$
+    % to $M_{n, (i, \vec{a})}$ and let $\Psi_{n, i}$ be the restriction of
+    % $\Theta_n$ to $M_{n, i}$. We now prove that for each $(i, \vec{a}) \in
+    % M_n'$
+    % the flattening of $\Psi_{n, \vec(i, \vec{a})}'$ defines the same query as
+    % the flattening of $\Psi_{n, i}$ with the assignment that $\vec{\mu}^n_i$
+    % to
+    % $\vec{a}$. The proof is by backwards induction. Let $i \in M_n$ and let
+    % $\vec{a} \in [n]^{\vert \vec{\mu}^n_i \vert}$. Let $\phi_{n, i}$ be the
+    % flattening of $\Phi_{n, i}$ and let $\phi_{n, (i, \vec{a})}$ be the
+    % flattening of $\Phi_{n, (i, \vec{a})}$. Let $\mathcal{A} \in \fin[\rho,
+    % n]$
+    % and suppose we have assignments $\alpha \in A^{\vec{x}^n_i}$ and $\beta$
+    % that maps $\vec{\mu}^n_i$ to $\vec{a}$.
+
+    We begin with the base case. Suppose $i$ is the maximum value in $M_n$. Then
+    no second-order variables appear in $\Theta_n(i)$ and hence, from the
+    definition of a translation for $n$, no second-order variables in
+    $\Theta_n'(i, \vec{c})$. It follows that $\phi_{n, i} = \Theta_n(i)$ and
+    $\phi_{n, (i, \vec{c})}' = \Theta_{n}(i, \vec{c})$. Moreover, from the
+    definition of a translation for $n$, we have that $\mathcal{A} \models
+    \Theta_{n}(i)[\alpha, \beta]$ if, and only if, $\mathcal{A} \models
+    \Theta_{n}'(i, \vec{c}) [\alpha, \beta]$. The base case follows.
+
+    Suppose $i$ is not the maximal value in $M_n$ and the inductive proposition
+    holds for all $j > i$. Let $\gamma$ an assignment that maps each mixed-sort
+    second-order variable $V^n_j$ to the relation defined by $(\phi_{n,
+      j})^{\mathcal{A}}$ for each $j > i$. Let $\gamma'$ be the assignment that
+    maps each element-sort second-order variable $V^n_{j, \vec{c}}$ to the
+    relation defined by $(\phi_{n, (j, \vec{c})})^{\mathcal{A}}$ for each $j >
+    i$ and $\vec{c} \in [n]^{\vert \vec{\mu}^n_j \vert}$.
+
+    Let $j > i$, $\vec{c}\in [n]^{\vert \vec{\mu}^n_j \vert}$, $\alpha \in
+    A^{\vec{\mu}^n_j}$ and $\beta = \beta^{\vec{\mu}^n_j}_{\vec{c}}$. We notice
+    the following. From the induction hypothesis we have that $\mathcal{A}
+    \models \phi_{n, (j, \vec{c})}' [\alpha]$ if, and only if, $\mathcal{A}
+    \models \phi_{n, j}[\alpha, \beta]$, where $\beta$ maps $\vec{\mu}^n_j$ to
+    $\vec{c}$. It follows from the definition of $\gamma$ and $\gamma'$ that
+    $(\vec{a}, \vec{c}) \in V^n_{j}$ if, and only if, $\vec{a} \in V^n_{j,
+      \vec{c}}$. We have
+    \begin{align*}
+      \mathcal{A} \models \phi_{n, i} [\alpha, \beta] \iff \mathcal{A} \models \theta_{n, i}[\alpha, \beta, \gamma] \iff \mathcal{A} \models \theta_{n, i ; \beta}[\alpha, \gamma'] \iff \mathcal{A} \models \phi_{n, (i, \vec{c})}[\alpha],
+    \end{align*}
+    where the first and third equivalences follow from the definition of a
+    flattening and the second equivalence follows from the definition of a
+    translation for $n$. The result follows by induction.
+  \end{proof}
+
+  We have for each $n \in \nats$ that $\Theta_n(1)$ has no free number
+  variables. Let $\theta_n$ and $\theta_n'$ be the flattening of $\Theta_n$ and
+  $\Theta_n'$. It follows that no free number variables appear in $\theta_n$ and
+  $\theta_n'$. Then, from the claim, we have that $\mathcal{A} \models
+  \theta_n[\alpha]$ if, and only if $\mathcal{A} \models \theta_n'[\alpha]$ for
+  each $\mathcal{A} \in \fin[\rho, n]$ and assignment $\alpha \in
+  A^{\vec{x}^n_1}$. It follows that $\Theta'$ defines the same query as
+  $\Theta$.
+
+  Since $\Theta$ is $\PT$-uniform the function that maps $n$ to $\Theta_n$ is
+  computable in time polynomial in $n$. Moreover, the function that maps any
+  $\Theta_n(i)$ (for $n \in \nats$, $i \in M_n$) to the translation of
+  $\Theta_n(i)$ for $n$ is computable in time polynomial in $n$. It follows that
+  the function $n \mapsto \Theta_n'$ is computable in time polynomial in $n$. We
+  also have from Lemma~\ref{lem:translate-program-line} that there is a constant
+  bound on the width of $\Theta'$. In summary, we have that $\Theta'$ is a
+  $\PT$-uniform family of $\FO(\setquant)[\rho]$-substitution programs with
+  constant width and $\Theta'$ defines the same query as $\Theta$. The result
+  follows.
+\end{proof}
+
+\subsection{Infinitary Logics}
+Let $\setquant$ be a set of extended quantifiers. We define the extension of
+$\mathcal{L}$ by $\setquant$ by extending the formula formation rules for
+$\mathcal{L}$ with the following rule:
+
+\begin{textbox}[14.0cm]
+  Let $Q^{E, \ar}_{\vec{a}, n} \in \setquant$, $i \in [r]$, $l \in [r_i]$ let
+  $c^i_l = \ar(\zeta(R_i)(l), 2)$ and let $T^i_n := [n]^{c^i_l} \times , \ldots,
+  \times [n]^{c^i_{r_i}}$. Let $T_n$ be the function that maps $i \in [r]$ to
+  $T^i_n$. Let $\Upsilon_i : T^i_n \ra L(Q^{E, \ar}_{\vec{p}, n})$. For each $i
+  \in [r]$ and $l \in [r_i]$ let $s = \zeta (R_i)(l)$ and let $\vec{x}^i_l$ be
+  an $\ar(s, 1)$-length tuple of element variables. Then $Q^{E, \ar}_{\vec{p},
+    n} [(\vec{x}^i_1, \ldots, \vec{x}^i_{r_i}) \cdot \Upsilon_i]_{i \in [r]}$ is
+  a formula in $\mathcal{L}(\setquant)$.
+\end{textbox}
+
+\begin{prop}
+  Let $\rho$ be a vocabulary and $\setop$ be a set of operators. Let $\setquant$
+  be the corresponding set of extended quantifiers. Then each query definable in
+  $\FP^{\nats}(\setop)[\rho]$ can be defined by a bounded $\PT$-uniform family
+  of $\FO(\setquant)[\rho]$ substitution programs and each query definable by a
+  $\PT$-uniform family of $\FO(\setquant)[\rho]$ is definable by a formula of
+  $\mathcal{C}^{\omega}(\setquant)[\rho]$.
+\end{prop}
+\begin{proof}
+  The first part of the result follows from Lemma~\ref{}. Let $(\Phi_n)_{n \in
+    \nats}$ be a $\PT$-uniform family of $\FO(\setquant)[\rho]$-substitution
+  programs with constant width. Let $(\phi_n)_{n \in \nats}$ be such that
+  $\phi_n$ is the flattening of $\Phi_n$ for all $n \in \nats$. We can rename
+  variables such that there exists a sequence of element variables $\vec{x}$
+  such that for each $n \in \nats$ the free element variables in $\phi_n$ are
+  amoung those in $\vec{x}$. Let $\theta (\vec{x}) = \bigwedge_{n \in \nats}
+  (\exists^{=n} \, x = x) \land \phi_n (\vec{x})$. It follows from the fact that
+  $\Phi$ has constant width that $\theta \in \mathcal{L}^\omega(\setquant)$.
+  Moreover, $\theta$ and $(\Phi_n)_{n \in \nats}$ define the same query. The
+  second part of the result follows.
+  % **problem, we need some sort of width condition
+  % **problem, we need counting
+  % **problem, each $\phi_n$ must have the same set of free variables
+\end{proof}
+
+We should work through two examples. Let $\setop_C$ be the set of all counting
+operators.
+
+\section{Translating Formulas to Circuits}
+
+% \begin{lem}
+%   Let $\setquant$ be a set of quantifiers. There is a function that maps a
+%   $\FO(\setquant)$ formula $\theta(\vec{x})$ and $n \in \nats$ to a circuit
+%   $C_n$ that translates $\theta(\vec{x})$ for $n$. This function can be
+%   computed by an algorithm that runs in time $p(n^{\width(\theta)} \vert \cl
+%   (\theta)\vert)$, for some polynomial $p$.
+% \end{lem}
+
+% \begin{prop}
+%   Let $\rho$ be a vocabulary and let $\setquant$ be a family of quantifiers.
+%   Let $\BB^{\setquant}$ be the basis associated with $\setquant$. If a query
+%   can be defined by a $\PT$-uniform family of $\FO(\setquant)$ substitution
+%   programs then it can be defined by a $\PT$-uniform family of transparent
+%   symmetric $(\BB^{\setquant}, \rho)$-circuits that define $Q$.
+% \end{prop}
+% \begin{proof}
+% \end{proof}
+In this subsection we show that for each formula of a logic extended by a family
+of operators may define a $\PT$-uniform family of transparent symmetric circuits
+that defines the same query. We may associate a set of operators or
+extended-quantifiers with a Boolean basis. We will show in this subsection that
+a
+\begin{definition}
+  Let $\tau$ be a many-sorted vocabulary. Let $q$ be the number of sorts in
+  $\tau$. Let $m \in \nats$. Let $E : \nats^m \times \fin[\tau] \ra \{0,1\}$ be
+  an isomorphism-closed function and let $\vec{p} \in \nats^m$. Let $\BB_{E,
+    \vec{p}} := \{F_{E, \vec{p}}: \{0,1\}^{\ind(\tau, \vec{d})}\ra \{0,1\} :
+  \vec{d} \in \nats^{q}, \forall \mathcal{A} \in \str{\tau, \vec{d}}, F_{E,
+    \vec{p}}(\mathcal{A}) = E(\vec{p}, \mathcal{A})\}$.
+
+  Let $\setquant$ be a set of extended-quantifiers. Let $\BB_{\setquant}$ be the
+  union of all bases $\BB_{E', \vec{p}'}$ such that for some arity function
+  $\ar'$ and $n' \in \nats$ we have $Q^{E', \ar'}_{\vec{p}', n'} \in \setquant$.
+  We say that $\BB_{\setquant}$ is the basis \emph{corresponding} to
+  $\setquant$. Let $\setop$ be a set of operators and let $\setquant$ be the
+  corresponding set of quantifiers. We let $\BB_{\setop} := \BB_{\setquant}$ and
+  say that $\BB_{\setop}$ is the basis \emph{corresponding} to $\setop$.
+\end{definition}
+
+Let $\setquant$ be a set of quantifiers and let $\BB$ be the corresponding
+Boolean basis. Let $\rho$ be a vocabulary and let $C$ be a $(\BB,
+\rho)$-circuit. Let $\theta(\vec{x})$ be a $\FO(\setquant)[\rho]$-formula. We
+say that $C$ \emph{translates} $\theta(\vec{x})$ for $n \in \nats$ if $C$ is a
+transparent symmetric circuit of order $n$ and for all $\mathcal{A} \in
+\fin[\rho, n]$, $\gamma in [n]^{\underline{A}}$, and $\alpha \in A^{\vec{x}}$ we
+have that $\gamma (\alpha (\vec{x})) \in C[\gamma \mathcal{A}]$ if, and only if,
+$\mathcal{A} \models \theta[\alpha]$. We say a family of circuits $(C_n)_{n \in
+  \nats}$ \emph{translates} a $\theta(\vec{x})$ if $(C_n)_{n \in \nats}$ is
+$\PT$-uniform and for all $n \in \nats$, $C_n$ translates $\theta(\vec{x})$ for
+$n$.
+
+\begin{lem}
+  Let $\vec{V} := \{V_1, \ldots, V_v\}$ be a vocabulary. Let $\rho := \{R_1,
+  \ldots, R_r\}$ be a distinct non-empty vocabulary and let $\rho^* = \vec{V}
+  \cup \rho$. Let $\setquant$ be a set of extended quantifiers and let $\BB$ be
+  the corresponding basis. There is a function that takes as input a number $n
+  \in \nats$ and a $\FO(\setquant)[\rho^*]$-formula $\theta(\vec{x})$ and
+  outputs a $(\BB, \rho^*)$-circuit $C$ that translates $\theta$ for $n$. This
+  function is computable and there is a polynomial $p$ such that for an input
+  $(n, \theta)$ the algorithm computing this function terminates in at most
+  $p(\vert \cl{\theta} \vert (\vert \cl{\theta} \vert + \ewidth{\theta}) \cdot
+  n^{\ewidth{\theta}})$ many steps.
+  \label{lem:translating-FOquant-to-formulas}
+\end{lem}
+\begin{proof}
+
+  % Suppose first that $\rho^*$ is empty, so all of the
+  % atomic formulas in $\theta(\vec{x})$ are of the form $y_1 = y_2$, where
+  % $y_1$
+  % and $y_2$ are variables. It can be shown that for $\vec{a} \in n^k$, we can
+  % evaluate $[n] \models \theta[\alpha^{\vec{x}}_{\vec{a}}]$ in time polynomial
+  % in $n^{k} \vert \cl{\theta} \vert$. Let $f : [n]^k \rightarrow \{0,1\}$ be
+  % defined such that $f (\vec{a}) = 1$ if, and only if, $[n] \models
+  % \theta[\alpha^{\vec{x}}_{\vec{a}}]$. Let $C := \langle G, \Sigma, \Omega,
+  % \Lambda, L \rangle$, where
+  % \begin{myitemize}
+  % \item $G = \{g_0, g_1\} \cup \{g_{\vec{a}} : \vec{a} \in [n]^{k}\}$,
+  % \item $\Sigma (g_0) = 0$, $\Sigma (g_1) = 1$ and $\Sigma (g_{\vec{a}}) =
+  %   \AND[1]$ for all $\vec{a} \in [n]^k$,
+  % \item $\Omega : [n]^k \rightarrow G$ is defined by $\Omega(\vec{a}) =
+  %   g_{\vec{a}}$ for all $\vec{a} \in [n]^k$,
+  % \item $\Lambda = \emptyset$, and
+  % \item for $\vec{a} \in [n]^k$, $L(g_{\vec{a}}) : [1] \rightarrow G$ is
+  %   defined
+  %   by $L(g_{\vec{a}})(1) = g_{f(\vec{a})}$.
+  % \end{myitemize}
+  
+  % Since $C$ has symmetric gates, $C$ is transparent. Notice that, since
+  % $\theta(\vec{x})$ defines a query on structures over the empty vocabulary,
+  % we
+  % have for all $\vec{a} \in [n]^k$, $\sigma \in \sym_n$, $f(\sigma \vec{a}) =
+  % f(\vec{a})$. For $\sigma \in \sym_n$, let $\pi_\sigma : G \rightarrow G$ be
+  % a
+  % bijection that fixes the constant gates and such that $\pi_{\sigma}
+  % g_{\vec{a}} = g_{\sigma \vec{a}}$ for all $\vec{a} \in [n]^k$. Then
+  % $\pi_\sigma \Omega (\vec{a}) = \pi_\sigma g_{\vec{a}} = g_{\sigma \vec{a}} =
+  % \Omega (\sigma \vec{a})$. It follows that $\pi_\sigma$ is an automorphism of
+  % the circuit extending $\sigma$. We thus have that $C$ translates
+  % $\theta(\vec{x})$ for $n$.
+
+  Fix $n \in \nats$. We will first define from $\theta$ a formula $\lambda$ that
+  defines the same query and acts as a normal form for $\theta$. We then define
+  a circuit $C$ from $\lambda$ and prove that it translates $\theta$ for $n$. We
+  conclude by showing that we can construct $C$ with within the time bounds.
+
+  Before we define $\lambda$ we first define a few helper formulas. Let $T \in
+  \rho$. For a variable $y$ let $\op{no-op}(y) := (T(y, y) \lor (\neg T(y, y)))$
+  and let $\op{no-op-all}(y) = \forall y .\, \op{no-op}(y)$. Let $\vec{y}$ be a
+  (possibly empty) sequence of variables. If $\vec{y}$ is non-empty let $(y_1,
+  \ldots, y_m) := \vec{y}$ and let $\op{tag} (\vec{y}) := (\op{no-op}(y_1) \land
+  (\op{no-op}(y_2) \land ( \op{no-op}(y_2) \land ( \ldots \land
+  (\op{no-op}(y_m)) \ldots))\ldots ))$. If $\vec{y}$ is empty let $\op{tag}
+  (\vec{y}) = \forall u .\, ((u = u) \land (u = u)$. We define a similar helper
+  formula $\op{tag-num}$ for $e \in \nats$ and a variable $y$ by
+  \begin{align*}
+    \op{tag-num}(e, y) = (\bigwedge_{i \in [e]}\op{no-op}(y)) = \underbrace{(\op{no-op-all}(y) \land (\op{no-op-all}(y) \land (\ldots \land (\op{no-op-all}(y)) \ldots )))}_{e \text{ times}}.
+  \end{align*}
+  For a (possibly empty) sequence of natural numbers $\vec{e}$, if $\vec{e}$ is
+  non-empty let $ (e_1, \ldots, e_w) := \vec{e}$ and
+  \begin{align*}
+    \op{tag-num}(\vec{e}, y) &= (\bigwedge_{j \in [w]}\op{tag-num}(e_j, y)) \\&= (\op{tag-num}(e_1 , y) \land (\op{tag-num}(e_2, y) \land ( \ldots  \land (\op{tag-num}(e_w, y)) \ldots ))), 
+  \end{align*}
+  and if $\vec{e}$ is empty let $\op{tag-num}(\vec{e}, y) = \exists y. \, (y =
+  y) \lor (y = y)$. It is easy to see that $\op{tag}$ and $\op{tag-num}$ define
+  tautologies for any variable, sequence of variables, or sequence of numbers.
+  We define $\lambda$ from $\theta$ by recursively replacing sub-formulas of
+  $\theta$ with an application of a quantifier at the head with a logically
+  equivalent formula defined using these helper functions. Let $\psi (\vec{y})$
+  be a sub-formula of $\theta (\vec{x})$ of the form $Q^{E, \ar}_{\vec{p}, n}
+  [(\vec{y}^i_1, \ldots, \vec{y}^i_{l_i}) \Upsilon_i]_{i \in l}$, where $Q^{E,
+    \ar}_{\vec{p}, n} \in \setquant$, and let $\tau = (R^{\tau}, S^{\tau},
+  \zeta^{\tau})$ be the vocabulary of $Q^{E, \ar}_{\vec{p}, n}$, where $R^{\tau}
+  = \{R^{\tau}_1, \ldots R^{\tau}_l\}$. For each $i \in [l]$ let $l_i$ be the
+  arity of $R^{\tau}_i$ and let $\vec{y}^i := \vec{y}^i_1, \ldots,
+  \vec{y}^i_{l_i}$.
+
+  From $\psi$ we define the formula $\psi' (\vec{y}) := Q^{E, \ar}_{\vec{p}, n}
+  [(\vec{y}^i_1, \ldots, \vec{y}^i_{l_i}) \cdot \Upsilon_i']_{i \in l}$ where
+  for each $i \in [l]$, $\Upsilon_i'$ is a function with the same domain as
+  $\Upsilon_i$ and such that for each $\vec{b} \in \dom(\Upsilon_i')$,
+  $\Upsilon_i' (\vec{b}) = ((\forall u . u = u) \land \Upsilon_i(\vec{b})) \land
+  (\op{tag-num}(\vec{b}, z) \land \op{tag}(\vec{y}^i))$. Since $\psi'$ is
+  defined from $\psi$ by taking conjunctions with tautologies, it is easy to see
+  that $\psi$ and $\psi'$ define the same query. Let $\lambda$ be defined from
+  $\theta$ by recursively replacing each sub-formula $\psi$ in $\theta$ with the
+  corresponding formula $\psi'$. It can be shown by induction that, since we
+  always replace a sub-formula $\psi$ with a logically equivalent one, $\lambda
+  (\vec{x})$ and $\theta (\vec{x})$ define the same query.
+
+  % The intuition here is that $\op{tag}(\vec{y}_i)$ appends a tower of
+  % conjunctions of tautologies, with each tautology referencing a unique
+  % variable
+  % from $\vec{y}_i$. When we construct the circuit, this tower of tautologies
+  % will act to `tag' each input to the quantifier gate with a unique gadget. We
+  % will show that the presence of these gadgets ensures that no two inputs to a
+  % quantifier gate are syntactically-equivalent, and so the circuit is
+  % transparent.
+
+  It is easy to see that $\lambda(\vec{x})$ has the same variable-width as
+  $\theta(\vec{x})$. It can be shown that $\vert \cl{\lambda}\vert \leq c_1
+  \vert \cl{\theta} \vert (\vert \cl{\theta} \vert + \ewidth{\theta})$ for some
+  constant $c_1$.
+  
+
+  % Moreover, for each $i \in [l]$ and $\vec{b} \in \dom(\Upsilon_i)$ we have
+  % that $\vert \cl{Upsilon_i'(\vec{b})}\vert \leq \vert \cl{\leq Upsilon_i}
+  % \vert + 3 + 1 + \vert \cl{(\op{tag-num}(\vec{b}, z)} \vert + 1 + \vert
+  % \cl{\op{tag}(\vec{y}^i)} \vert$ and $\vert \cl{(\op{tag-num}(\vec{b},
+  % z)}\vert \leq 1 + \sum_{b \in \vec{b}} (1 + b) + \vert
+  % \cl{\op{no-op-all}(y)} \vert \leq 6 + \vert \vec{b} \vert +\sum_{b \in
+  % \vec{b}} b \leq 6 + 2 \vert \dom (\Upsilon_i' (\vec{b})) \vert$. We also
+  % have $\vert \cl{\op{tag}(\vec{y}^i)} \vert \leq 1 + \sum_{y \in \vec{y}^i}
+  % \vert \op{no-op}(y) \vert \leq 1 + \vert {\vec{y}^i}\vert 5$. It follows
+  % that $\vert \cl{Upsilon_i'(\vec{b})}\vert \leq 4 + \vert \cl{Upsilon_i}
+  % \vert + 6 + 2 \vert \dom (\Upsilon_i' (\vec{b})) \vert + 1 + 5\vert
+  % {\vec{y}^i}\vert \leq c_1 \vert \cl{\theta} \vert + c_2 \width{\theta}$ for
+  % constants $c_1$ and $c_2$.
+
+  % $\cl{\lambda}$ adds a constant number of sub-formuls of the sub-formulas in
+  % $\lambda(\vec{x})$ is at most $\vert \cl{\theta} \vert (5 +
+  % 4\width(\theta))$.
+  % We now construct a circuit $C$ and show that $C$ translates
+  % $\lambda(\vec{x})$
+  % (and hence $\theta(\vec{x})$) at $n$.
+
+  Let $\psi \in \FO(\setquant)[\rho^*]$ and $\alpha \in [n]^{\free {\psi}}$. We
+  let $\psi[\alpha]$ be the result of substituting each occurrence of the free
+  variable $y \in \free{\psi}$ in $\psi$ with $\alpha(y)$. If $\psi$ is of the
+  form $y_1 = y_2$, then $\psi [\alpha] = 1$ if $\alpha(y_1) = \alpha (y_2)$ and
+  $\psi[\alpha] = 0$ otherwise. We call $\psi[\alpha]$ a \emph{ground formula}.
+  For each $\psi \in \cl{\lambda}$ let $G_\psi := \{g_{\psi[\alpha]} : \alpha
+  \in [n]^{\free{\psi}} \}$. Let $G := \bigcup_{\psi \in \cl{\lambda}}
+  G_{\psi}$. Let $g := g_{\psi[\alpha]} \in G$. We define $\Sigma$, $\Lambda$
+  and $L$ as follows.
+  \begin{myitemize}
+  \item If $\psi[\alpha]$ is $0$ or $1$ let $\Sigma (g) = \psi[\alpha]$.
+  \item If $\psi[\alpha] = T(\vec{a})$ for some $T \in \rho^*$ and $\vec{a} \in
+    [n]^{\arty(T)}$, then $\Sigma (g) = T$ and $\Lambda_T (g) = \vec{a}$.
+  \item Suppose $\psi = Q^{E, \ar}_{\vec{p}, n} [(\vec{y}^i_1, \ldots,
+    \vec{y}^i_{l_i}) \cdot \Upsilon_i]_{i \in [l]}$ for some $Q^{E,
+      \ar}_{\vec{p}, n}$. Let $\Sigma (g_{\psi[\alpha]}) = F^{E}_{\vec{p}, n}$.
+    Let $\tau := (R^\tau, S^\tau, \zeta^\tau)$ be the vocabulary of $Q^{E,
+      \ar}_{\vec{p}, n}$, where $R^\tau = {R^\tau_1, \ldots, R^\tau_l}$. For
+    each $i \in [l]$ let $l_i$ be the arity of $R^\tau_i$. For each $i \in [l]$,
+    $j \in [l_i]$, and $z \in [2]$ let $e^z_{i, j} := \ar
+    (\zeta^\tau(R^\tau_i)(j), z)$ and let $D^z_i := [n]^{e^z_{i, 1}} \times
+    \ldots \times [n]^{e^z_{i, l_i}}$. Let $(\vec{d}, R^\tau_i) \in \ind
+    (F^{E}_{\vec{p}, n})$. There exists $\vec{a} = (\vec{a}_1, \ldots,
+    \vec{a}_{l_i}) \in D^1_i$ and $\vec{b} = (\vec{b}_1, \ldots, \vec{b}_{l_i})
+    \in D^2_i$ such that $\vec{d} = (\vec{a}_1 \vec{b}_1 , \ldots,
+    \vec{a}_{l_i}\vec{b}_{l_i})$. Let $L(g)(\vec{d}, R^\tau_i) =
+    g_{\Upsilon_i(\vec{b})[\beta]}$, where $\beta$ is the union of $\alpha$ and
+    $\alpha^{\vec{a}}_{\vec{x}^i_1, \ldots, \vec{x}^i_{l_i}}$.
+  \item If $\psi = Q z . \, \phi(\vec{y}, z)$, for $Q \in \{\forall, \exists\}$,
+    then if $Q = \forall$ we let $\Sigma (g) = \AND[n]$, otherwise let $\Sigma
+    (g) = \OR[n]$. Let $L(g) : [n] \rightarrow G$ be defined for $i \in [n]$ by
+    $L(g)(i) = g_{\psi[\beta]}$, where $\beta \in [n]^{\free{\phi}}$ is the
+    union of $\alpha$ and $\alpha^i_z$.
+  \item If $\psi = \phi_1 \land \phi_2$, then let $\Sigma(g) = \AND[2]$ and
+    $L(g) : [2] \rightarrow G$ be defined for $i \in [2]$ by $L(g)(i) =
+    g_{\phi_i[\beta_i]}$ where $\beta_i \in [n]^{\free{\phi_i}}$ is the
+    restriction of $\alpha$ to $\free{\phi_i}$. The same approach is used for
+    the disjunctive case.
+  \item If $\psi = \neg \phi$ let $\Sigma (g) = \NOT$ and $L(g): [1] \rightarrow
+    G$ be defined by $L(g)(1) = g_{\phi[\alpha]}$.
+  \end{myitemize}
+  Let $q = \vert \vec{x} = \vert$. Let $\Omega : [n]^{q} \rightarrow G$ be
+  defined for $\vec{a} \in [n]^q$ by $\Omega (\vec{a}) = g_{\lambda [\alpha]}$,
+  where $\alpha := \alpha^{\vec{a}}_{\vec{x}}$. Let $\vec{a} \in [n]^q$. We have
+  from our assumption that $\theta$ (and $\lambda$) contain at least one
+  relation symbol, and so it follows that $\lambda[\alpha]$ cannot be $0$ or
+  $1$. Let $\vec{b} \in [n]^q$ and suppose $\Omega (\vec{a}) = \Omega(\vec{b})$.
+  But then $g_{\lambda[\alpha^{\vec{a}}_{\vec{x}}]} =
+  g_{\lambda[\alpha^{\vec{b}}_{\vec{x}}]}$ and so
+  $\lambda[\alpha^{\vec{a}}_{\vec{x}}]$ and
+  $\lambda[\alpha^{\vec{b}}_{\vec{x}}]$ are equal as strings. But if
+  $\lambda[\alpha^{\vec{a}}_{\vec{x}}]$ and
+  $\lambda[\alpha^{\vec{b}}_{\vec{x}}]$ are equal then, since $\lambda$ contains
+  at least one relation symbol, it follows that $\alpha^{\vec{a}}_{\vec{x}} =
+  \alpha^{\vec{b}}_{\vec{x}}$ and so $\vec{a} = \vec{b}$. It follows that
+  $\Omega$ is injective. Let $T \in \tau$, and let $g_{\psi[\alpha]},
+  g_{\phi[\beta]} \in G$ be such that $\Lambda_T (g_{\psi[\alpha]}) = \Lambda_T
+  (g_{\phi[\beta]})$. Then we have $\vec{a} \in [n]^{\arty(T)}$ and $\vec{b} \in
+  [n]^{\arty(T)}$ such that $\psi[\alpha] = T(\vec{a})$ and $\phi[\beta] =
+  T(\vec{b})$. But then $\vec{a} = \Lambda_T (g_{\psi[\alpha]}) = \Lambda_T
+  (g_{\phi[\beta]}) = \vec{b}$, but then $\psi[\alpha] = \phi[\beta]$ and so
+  $g_{\psi[\alpha]} = g_{\phi[\beta]}$. It follows that $\Lambda_T$ is
+  injective. We thus have that $C := \langle G, \Omega, \Sigma, \Lambda, L
+  \rangle$ is a circuit of order $n$.
+
+\begin{claim}
+  The circuit $C$ is symmetric.
+\end{claim}
+\begin{proof}
+  Let $\sigma \sym_n$. Let $\pi_\sigma : G \rightarrow G$ be defined such that
+  $\pi_{\sigma} g_{\psi [\alpha]} = g_{\psi[\sigma \alpha]}$ for each
+  $g_{\psi[\alpha]} \in G$ . It is easy to see that $\pi_\sigma$ is a bijection.
+  We now show that $\pi_{\sigma}$ is an automorphism of $C$ extending $\sigma$.
+  We prove this by induction on the structure of the circuit.
+
+  Suppose $g_{\psi[\alpha]}$ is an input gate. If $g_{\psi[\alpha]}$ is a
+  constant gate then $\psi (y_1, y_2) = (y_1 = y_2)$. We have $\psi[\alpha] = 1$
+  if, and only if, $\alpha(y_1) = \alpha(y_2)$ if, and only if, $\sigma \alpha
+  (y_1) = \sigma \alpha(y_2)$ if, and only if, and $\psi[\sigma \alpha] = 1$. It
+  follows that $\pi_\sigma g_{\psi[\alpha]} = g_{\psi[\sigma \alpha]} =
+  g_{\psi[\alpha]}$. If $g_{\psi[\alpha]}$ is a relational gate, then $\psi
+  (\vec{y}) = T(\vec{y})$ for some relation symbol $T$ and $\Lambda_T
+  (g_{\psi[\alpha]}) = \alpha (\vec{y})$. It follows that $\Lambda_T
+  (\pi_{\sigma} g_{\psi[\alpha]}) = \Lambda_T( g_{\psi[\sigma \alpha]}) = \sigma
+  \alpha (\vec{y}) = \sigma \Lambda_T (g_{\psi[\alpha]})$.
+  
+  Suppose $g_{\psi[\alpha]}$ is an internal gate. Suppose $g_{\phi[\beta]}$ is a
+  child of $g_{\psi[\alpha]}$. From the definition of $C$ we have that $\phi$ is
+  an immediate sub-formula of $\psi$ and $\beta$ must be an assignment to the
+  free variables in $\phi$ compatible with $\alpha$. It follows that
+  $\sigma\beta$ and $\sigma\alpha$ are compatible and so $\pi_\sigma
+  g_{\phi[\beta]} = g_{\phi[\sigma\beta]}$ is a child of
+  $\pi_{\sigma}g_{\psi[\alpha]} = g_{\psi[\sigma \alpha]}$. We thus have
+  $H_{\pi_\sigma g_{\psi[\alpha]}} = \pi_\sigma H_{g_{\psi[\alpha]}}$. If
+  $g_{\psi[\sigma]}$ is a symmetric gate, then this is sufficient to conclude
+  that $\pi_{\sigma} L(g_{\psi [\alpha]})$ is isomorphic to $L(\pi_{\sigma}
+  g_{\psi[\alpha]})$.
+
+  Suppose $g$ is a non-symmetric gate. Then $\psi (\vec{y}) = Q^{E,
+    \ar}_{\vec{p}, n} [(\vec{y}^i_1, \ldots, \vec{y}^i_{l_i}) \cdot
+  \Upsilon_i]_{i \in [l]}$ for some $Q^{E, \ar}_{\vec{p}, n} \in \setquant$. Let
+  $\tau := (R^\tau, S^\tau, \zeta^\tau)$ be the vocabulary of $Q^{E,
+    \ar}_{\vec{p}, n}$, where $R^\tau = {R^\tau_1, \ldots, R^\tau_l}$. For each
+  $i \in [l]$ let $l_i$ be the arity of $R^\tau_i$. For each $i \in [l]$ let
+  $D^1_i$ and $D^2_i$ be defined as given in the definition of the circuit. For
+  each $(\vec{d}, R^{\tau}_i) \in \ind(g_{\psi[\alpha]})$ let $\vec{a} :=
+  (\vec{a}^i_1, \ldots, \vec{a}^i_{l_i}) \in D^1_i$ and $\vec{b} = (\vec{b}^i_1,
+  \ldots, \vec{b}^i_{l_i}\in D^i_i$ be given as in the definition of $C$, i.e.\
+  such that $\vec{d} = (\vec{a}^i_1\vec{b}^i_1, \ldots,
+  \vec{a}^i_{l_i}\vec{b}^i_{l_i})$. Let $\delta : \ind(g_{\psi[\alpha]}) \ra
+  \ind(g_{\psi[\alpha]})$ be defined such that $\delta (\vec{d}, R^\tau_i) =
+  (\vec{d}', R^{\tau}_i)$, where $\vec{d}' = ((\sigma \vec{a}^i_1)\vec{b}^i_1 ,
+  \ldots, (\sigma \vec{a}^i_{l_i}) \vec{b}^i_{l_i})$. The idea is that $\vec{d}$
+  is constructed from the sequences $\vec{a}$ and $\vec{b}$, where $\vec{a}$ is
+  an assignment to the variables bound by the operator and $\vec{b}$ is the
+  input to the function $\Upsilon_i$. The function $\delta$ maps $\vec{d}$ by
+  applying $\sigma$ only to $\vec{a}$, i.e.\ to those tuples that denote
+  assignment to the variables. It can be shown that $\delta \in
+  \aut(g_{\psi[\alpha]})$. We have that $\pi_{\sigma}
+  L(g_{\psi[\alpha]})(\vec{d}, R^\tau_i) = g_{\Upsilon_i (\vec{b})[\sigma
+    \beta]}$ where $\beta$ is the union of $\alpha$ and
+  $\alpha^{\vec{a}}_{\vec{y}^i_1, \ldots, \vec{y}^i_{l_i}}$. But then $\sigma
+  \beta$ is the union of $\sigma \alpha$ and $\alpha^{\sigma
+    \vec{a}}_{\vec{y}^i_1, \ldots, \vec{y}^i_{l_i}}$, and so $g_{\Upsilon_i
+    (\vec{b})[\sigma \beta]} = L(g_{\psi[\sigma \alpha]})(\vec{d}', R^\tau_i) =
+  L(\pi_\sigma g_{\psi [\sigma \alpha]})(\delta (\vec{d}, R^\tau_i))$.
+
+  Suppose $g_{\psi[\alpha]}$ is an output gate. Then $\psi = \lambda (\vec{x})$
+  and let $\vec{a} := \alpha(\vec{x})$. From the definition of $C$ we have that
+  $g_{\psi[\alpha]} = \Omega(\vec{a})$. It follows that $\pi_{\sigma} \Omega
+  (\vec{a}) = \pi_\sigma g_{\psi[\alpha]} = g_{\psi[\sigma \alpha]} =
+  \Omega(\sigma \vec{a})$. This concludes the proof of the claim.
+
+\end{proof}
+
+\begin{claim}
+  Let $\mathcal{A} \in \fin[\rho, n]$ be a structure and let $\gamma \in
+  [n]^{\underline{A}}$. For each $g_{\psi[\alpha]} \in G$ we have $\mathcal{A}
+  \models \psi[\gamma^{-1}\alpha]$ if, and only if, $C[\gamma
+  \mathcal{A}](g_{\psi[\alpha]}) = 1$.
+\end{claim}
+\begin{proof}
+  We prove this claim by structural induction on the circuit. Let
+  $g_{\psi[\alpha]} \in G$. If $g_{\psi[\alpha]}$ is an input gate then $\psi$
+  has at its head a relation symbol or equality. It is easy to prove the claim
+  in both cases. Suppose $g_{\psi[\alpha]}$ is an internal gate and the claim
+  holds for each child of $g_{\psi[\alpha]}$. It is easy to handle the case
+  where $g_{\psi[\alpha]}$ is labelled by an element of $\BS$. The only
+  non-trivial case is where $g_{\psi[\alpha]}$ is labelled by an element of
+  $\BB$. Suppose $g_{\psi[\alpha]}$ is an internal gate and $\psi (\vec{y}) :=
+  Q^{E, \ar}_{\vec{p}, n} [(\vec{y}^i_1, \ldots, \vec{y}^i_{l_i}) \cdot
+  \Upsilon_i]_{i \in [l]}$ for some $Q^{E, \ar}_{\vec{p}, n} \in \setquant$. Let
+  $\tau := (R^\tau, S^\tau, \zeta^\tau)$ be the vocabulary of $Q^{E,
+    \ar}_{\vec{p}, n}$, where $R^\tau = {R^\tau_1, \ldots, R^\tau_l}$. For each
+  $i \in [l]$ let $l_i$ be the arity of $R^\tau_i$. Let $(\vec{d}, R^\tau_i) \in
+  \ind(g_{\psi[\alpha]})$. As in the definition of the circuit we associate with
+  $\vec{d}$ a unique pair of tuples $(\vec{a}, \vec{b})$. Let $\beta$ be the
+  union of $\alpha$ and $\alpha^{\vec{a}}_{\vec{y}^i_1, \ldots,
+    \vec{y}^i_{l_i}}$. It follows from the inductive hypothesis that $L^{\gamma
+    \mathcal{A}}(g_{\psi[\alpha]})(\vec{d}, R^\tau_i) = 1$ if, and only if,
+  $C[\gamma \mathcal{A}](g_{\Upsilon_i(\vec{b})[\beta]}) = 1$ if, and only if,
+  $\mathcal{A} \models \Upsilon_i (\vec{b})[\gamma^{-1} \beta]$. Let
+  $\mathcal{B} := \mathcal{I}(\mathcal{A}, \gamma^{-1} \alpha)$, where
+  $\mathcal{I}$ is the interpretation defined by $Q^{E, \ar}_{\vec{p}, n}$.
+
+  From the definition of the interpretation and the above observation we have
+  that $\vec{d} \in (R^\tau_i)^{\mathcal{B}}$ if, and only if, $\mathcal{A}
+  \models \Upsilon_i (\vec{b})[\gamma^{-1} \beta]$ if, and only if, $L^{\gamma
+    \mathcal{A}}(g_{\psi[\alpha]})(\vec{d}, R^{\tau}_i) = 1$. It follows that
+  $\mathcal{B}$ is isomorphic to the structure defined by $L^{\gamma
+    \mathcal{A}}(g_{\psi [\alpha]})$, and so $\mathcal{A} \models
+  \psi[\gamma^{-1} \alpha]$ if, and only if, $E(\vec{p}, \mathcal{B}) = 1$ if,
+  and only if, $F^E_{\vec{p}, n}(L^{\gamma \mathcal{A}}(g_{\psi[\alpha]})) = 1$
+  if, and only if, $C[\gamma \mathcal{A}] (g_{\psi[\alpha]}) = 1$.
+\end{proof}
+Let $\mathcal{A} \in \fin[\rho, n]$, let $\gamma \in [n]^{\underline{A}}$ and
+let $\alpha \in A^{\vec{x}}$. Then $g_{\lambda [\gamma \alpha]} = \Omega (\gamma
+\alpha (\vec{x}))$. It follows from the above claim that $C [\gamma \mathcal{A}]
+(\Omega( \gamma \alpha (\vec{x})) = 1$ if and only if, $\mathcal{A} \models
+\lambda [\alpha]$. In other words, $C$ and $\theta(\vec{x})$ compute the same
+query for structures of size $n$.
+
+
+% Let $\mathcal{A}$ be a $\tau$-structure with universe $A$ of size $n$ and let
+% $\gamma \in [n]^{\underline{A}}$. It can be shown that for all $\psi \in
+% \cl{\lambda}$ and $\alpha \in A^{\free{\psi}}$, $\mathcal{A} \models
+% \psi[\alpha]$ if, and only if, $C[\gamma \mathcal{A}](g_{\psi[\gamma\alpha]})
+% = 1$. It follows that $\vec{a} \in A^k$ is an element of $Q(\theta(\vec{x}))$
+% if, and only if, $\mathcal{A} \models \lambda[\alpha^{\vec{x}}_{\vec{a}}]$ if,
+% and only if, $C[\gamma \mathcal{A}](g_{\lambda[\alpha^{\vec{x}}_{\gamma
+% \vec{a}}]}) = 1$. Since $g_{\lambda [\alpha^{\vec{x}}_{\gamma \vec{a}}]} =
+% \Omega (\gamma \vec{a})$, we have that $C$ computes the query defined by
+% $\theta(\vec{x})$ on structures of size $n$.
+
+\begin{claim}
+  The circuit $C$ is transparent.
+  \label{claim:circuit-translation-transparent}
+\end{claim}
+\begin{proof}
+  If $C$ has symmetric gates then $C$ is transparent. Suppose $C$ contains a
+  non-symmetric gate. Then there exists $g_{\psi[\alpha]}\in G$ where $\psi
+  (\vec{y}) := Q^{E, \ar}_{\vec{p}, n} [(\vec{y}^i_1, \ldots, \vec{y}^i_{l_i}) .
+  \Upsilon_i]_{i \in [l]}$. Let $\vec{y}^i := \vec{y}^i_1, \ldots,
+  \vec{y}^i_{l_i}$. Let $\tau := (R^\tau, S^\tau, \zeta^\tau)$ be the vocabulary
+  of $Q^{E, \ar}_{\vec{p}, n}$, where $R^\tau = {R^\tau_1, \ldots, R^\tau_l}$.
+  For each $i \in [l]$ let $l_i$ be the arity of $R^\tau_i$. Let $i \in [l]$ and
+  let $(\vec{d})_1, R^\tau_i), (\vec{d}_2, R^{\tau}_i) \in
+  \ind(g_{\psi[\alpha]})$. Let $D^1_i$ and $D^2_i$ be given as in the definition
+  of $C$. For $z \in [2]$, let $\vec{a}^z = (\vec{a}^z_1, \ldots,
+  \vec{a}^z_{l_i}) \in D^1_i$ and $\vec{b}^z = (\vec{b}^z_1, \ldots,
+  \vec{b}^z_{l_i}) \in D^2_i$ such that $\vec{d}_z = (\vec{a}^z_1\vec{b}^z_1,
+  \ldots, \vec{a}^z_{l_i}\vec{b}^z_{l_i})$. Let $\beta_z$ be the union of
+  $\alpha^{\vec{a}^z}_{\vec{y}^i}$ and $\alpha$. For each $z \in [2]$ let $h_z
+  := L(g_{\psi[\alpha]})(\vec{d})_z, R^\tau_i) =
+  g_{\Upsilon_i(\vec{b}^z)[\beta_z]}$. Suppose $h_1 \equiv h_2$.
+
+
+  From the definition of $\lambda$ we have for any $\vec{b} \in
+  \dom(\Upsilon_i)$ that $\Upsilon_i(\vec{b}) = \kappa^1_{ \vec{b}} \land
+  \kappa^2_{\vec{b}}$, where $\kappa^1_{\vec{b}} = ((\forall u. u = u) \land
+  \Upsilon_i'(\vec{b}))$, and $\kappa^2_{\vec{b}} = (\op{tag}(\vec{y}^i) \land
+  \op{tag-num}(\vec{b}, u))$, for some variable $u$. Let $z \in [2]$. Then
+  $H_{h_z} = \{g_{\kappa^1_{\vec{b}^z}[\beta_z]},
+  g_{\kappa^2_{\vec{b}^z}[\beta_z]}\}$. Let $w \in [2]$. We note that $u = u$ is
+  a sub-formula of an immediate sub-formula of $\kappa^1_{ \vec{b}^z}$ while
+  there is no sub-formula of an immediate sub-formula of $\kappa^2_{ \vec{b}^w}$
+  that has equality at the head of the formula. It follows that a child of a
+  child of $g_{\kappa^1_{ \vec{b}^z}[\beta_z]}$ is a constant gate while no
+  child of a child of $g_{\kappa^2_{ \vec{b}^w}[\beta_w]}$ is a constant gate.
+  We thus have that $g_{\kappa^1_{ \vec{b}^z}[\beta_z]} \not\equiv g_{\kappa^2_{
+      \vec{b}^2}[\beta_w]}$. It then follows from $h_1 \equiv h_1$ that
+  $g_{\kappa^1_{ \vec{b}^1}[\beta_1]} \equiv g_{\kappa^1_{ \vec{b}^2}[\beta_2]}$
+  and $g_{\kappa^2_{ \vec{b}^1} [\beta_1]} \equiv g_{\kappa^2_{ \vec{b}^2}
+    [\beta_2]}$.
+
+  Let $z \in [2]$. Let $\epsilon^1_z = \op{tag}(\vec{y})[\beta_z]$ and
+  $\epsilon^2_z = \op{tag-num}(\vec{b}^z, u))$. Let $w \in [2]$. We notice that
+  if $\vec{y}$ is empty then $g_{\epsilon^1_z}$ is an $\AND$-gate and has a
+  grandchild that is a constant gate. In contrast we have that
+  $g_{\epsilon^2_w}$ is either an $\OR$-gate or has no grandchildren that are
+  constant gates. In either case $g_{\epsilon^1_z} \not\equiv g_{\epsilon^2_w}$.
+  If $\vec{y}$ is non-empty then $g_{\epsilon^1_z}$ has a relational gate as a
+  grandchild, while $g_{\epsilon^2_w}$ does not. It follows that
+  $g_{\epsilon^1_z} \not\equiv g_{\epsilon^2_w}$. Then, from the fact that
+  $g_{\kappa^2_{ \vec{b}^1} [\beta_1]} \equiv g_{\kappa^2_{ \vec{b}^2}
+    [\beta_2]}$ we have that $g_{\epsilon^1_1} \equiv g_{\epsilon^1_2}$ and
+  $g_{\epsilon^2_1} \equiv g_{\epsilon^2_2}$. But from the definition of
+  $\op{tag}$ and the fact that $g_{\epsilon^1_1} \equiv g_{\epsilon^1_2}$ we
+  have that $\vec{beta}_1 = \vec{\beta}_2$. From the definition of
+  $\op{tag-num}$ and the fact that $g_{\epsilon^2_1} \equiv g_{\epsilon^2_2}$ we
+  have that $\vec{b}^1 = \vec{b}^2$. It follows that $h_1 =
+  g_{\Upsilon_i(\vec{b}^1)[\beta_1]} = g_{\Upsilon_i(\vec{b}^2)[\beta_2]} =
+  h_2$.
+
+  It follows that $L(g_{\psi[\alpha]})$ is injective and no two gates in the
+  same relation of $g_{\psi[\alpha]}$ are syntactically-equivalent. We conclude
+  that $g_{\psi[\alpha]}$ has unique labels, and so $C$ is transparent.
+\end{proof}
+
+We have already shown that $\vert \cl{\lambda} \vert \leq c_1\vert \cl{\theta}
+\vert (\vert \cl{\theta} \vert + \ewidth{\theta})$ and that $\ewidth{\lambda} =
+\ewidth{\theta}$. We can construct the set of gates by recursing over the
+sub-formulas of $\lambda$ and for each sub-formula $\psi$ and assignment $\alpha
+\in [n]^{\free{\psi}}$ defining a gate $g_{\psi[\alpha]}$. This can be done in
+time polynomial in $\vert \cl{\lambda} \vert \cdot \ewidth{\lambda}$, and we
+have $\vert \cl{\lambda} \vert \cdot \ewidth{\lambda} \leq \vert \cl{\theta}
+\vert (\vert \cl{\theta} \vert + \ewidth{\theta}) \cdot n^{\ewidth{\theta} +
+  1}$. We can define the rest of circuit $C$ in time polynomial in the number of
+gates, and so in time polynomial in $\vert \cl{\theta} \vert (\vert \cl{\theta}
+\vert + \ewidth{\theta}) \cdot n^{\ewidth{\theta} + 1}$.
+
+We have from the above three claims that $C$ translates $\lambda$ (and hence
+$\theta$) for $n$ and from the above argument that we may construct $C$ within
+the required time bounds. The result follows.
+
+
+% Moreover, it can be seen that $\lambda$ may be recursively constructed from
+% $\theta$ in time polynomial in $c_1\vert \cl{\theta} \vert (\vert \cl{\theta}
+% \vert + \width{\theta}) \cdot n^{\width{\theta}}$. By recursion on the
+% structure of the formula $\lambda$ we can define the set of gates in time
+% polynomial in $c_1\vert \cl{\theta} \vert (\vert \cl{\theta} \vert +
+% \width{\theta}) \cdot n^{\width{\theta}}$. We can define the circuit $C$ in
+% time polynomial in the set of gates, and hence in time polynomial in $c_1\vert
+% \cl{\theta} \vert (\vert \cl{\theta} \vert + \width{\theta}) \cdot
+% n^{\width{\theta}}$.
+
+% It is easy to see that $\lambda$ and $\theta$ have the same variable-width.
+% Moreover, we have defined $\lambda$ by adjo Moreover, from the construction of
+% $\lambda$ the
+
+% We note that $\vert C \vert \leq n^{\width(\lambda)} \vert \cl{\lambda} \vert
+% \leq n^{\width(\theta)} \vert \cl{\theta} \vert (5 + \width(\theta))$. It is
+% not hard to see that $C$ (and $\lambda(\vec{x})$) can be constructed in a
+% number of steps bounded by a polynomial in the size of $C$. This completes the
+% proof of the result.
+\end{proof}
+
+\begin{prop}
+  Let $\rho$ is a vocabulary. Let $\setquant$ be a set of extended quantifiers
+  and let $\BB$ be the associated basis. Each query definable by a $\PT$-uniform
+  family of $\FO(\setquant)[\rho]$-substitution programs with a constant bound
+  on width is definable by a $\PT$-uniform family of transparent symmetric
+  $(\BB, \rho)$-circuits $(C_n)_{n \in \nats}$.
+  \label{prop:translating-programs-to-circuits}
+\end{prop}
+\begin{proof}
+  Let $\Theta := (\Theta_n)_{n \in \nats}$ be a $\PT$-uniform family of
+  $\FO(\setquant)[\rho]$ substitution programs. Let $n \in \nats$. Let
+  $(\theta_{n, 1}, \ldots, \theta_{n, k}) := \Theta_n$. For each $i \in [k]$ let
+  $\vec{V}_i$ be the element-sort second-order variables that appear in
+  $\theta_{n, i}$. We treat these second-order variables as relation symbols,
+  and suppose, without a loss of generality, that the symbols that appear in
+  $\vec{V}_i$ do not appear in $\rho$ for each $i \in [k]$. For each $i \in [k]$
+  let $\rho_i = \vec{V}_i \cup \rho$. From
+  Lemma~\ref{lem:translating-FOquant-to-formulas} we may construct for each $i
+  \in [k]$ a $(\BB, \rho_i)$-circuit $C_{n, i}$ such that $C_{n, i}$ translates
+  the formula $\theta_{n, i}$ for $n$. We assume, without a loss of generality,
+  that in each of these circuits none of the input gates are also output gates
+  (if this is not the case, we can alter the circuit by adding in single-input
+  $\AND$-gates with each gate that is both an input and output gate taken as
+  input to the $\AND$-gate, and the $\AND$-gate then assigned to be an output
+  gate).
+
+  For each $i \in [k]$ let $\theta_{n, i}'$ be the flattening of $\Theta_n$ at
+  $i$. We now recursively define for each $i \in [k]$ a $(\BB, \rho)$-circuit
+  $C_{n, i}'$ that translates $\theta_{n, i}'$ for $n$. We recall that for each
+  $i \in [k]$ the formula $\theta_{n, i}'$ is defined from $\theta_{n, i}$ by
+  replacing each symbol $V_j$, for $j > i$, with the formula $\theta_{n, j}'$.
+  Similarly, we define $C_{n, i}'$ from $C_{n, i}$ by replacing each input gate
+  labelled by the symbol $V_j$ and tuple $\vec{a}$ with the output gate of
+  $C_{n, j}'$ labelled by $\vec{a}$.
+
+  For each $i \in [k]$ let $(G_i, \Omega_i, \Sigma_i, \Lambda_i, L_i) := C_{n,
+    i}$. We define the $(\BB,\rho)$-circuit $C_{n, i}' := (G_i', \Omega_i',
+  \Sigma_i', \Lambda_i', L_i')$ from the circuits $\{C_{n, j}' : j > i \}$ as
+  follows.
+  \begin{myitemize}
+  \item Let $G_i' = \{g \in G_i : \Sigma (g) \not\in \vec{V}_i\} \cup
+    \bigcup{V_{j} \in \vec{V}} G_{j}'$. We identify input gates labelled by the
+    same relation symbol and tuple so that there are no duplicate input gates.
+    
+  \item Let $\Lambda_i$ be defined for each relation symbol $T \in \rho$, tuple
+    $\vec{a} \in [n]^{\arty(T)}$, and $g \in G_i'$ such that $(\Lambda_i')_{T}
+    (g) = \vec{a}$ if, and only if, (i) $g \in G_i$ and $(\Lambda_i)_{T}(g) =
+    \vec{a}$ or (ii) there exists $j > i$ such that $g \in G_j'$ and
+    $(\Lambda_j')_T (g) = \vec{a}$.
+    
+  \item For each $g \in G_i'$ if $g \in G_i$ let $\Sigma_i' (g) = \Sigma_i (g)$
+    and otherwise there exists $j > i$ such that $g \in G_j'$ and let $\Sigma_i'
+    (g) = \Sigma_j' (g)$.
+    
+  \item Let $q$ be the arity of the query decided by $C_{n, i}$. Let $\Omega_i'$
+    be an injection from $[n]^{q}$ to $G_i'$ defined such that $\Omega_i'
+    (\vec{a}) = \Omega_i(\vec{a})$.
+    % if, and only if, $g \in G_i$, $\Omega_i (\vec{a}) = g$ and $\Sigma_i(g)
+    % \not\in \vec{V}_i$, or (ii) there exists $j > i$ such that $g \in G_j'$,
+    % $\Sigma_i (\Omega_i (\vec{a})) = V_j$, $(\Lambda_i)_{V_j}(\Omega_i
+    % (\vec{a})) = \vec{a}$, and $\Omega_j'(\vec{a}) = g$.
+    
+  \item Let $g \in G_i'$. We define $L_i' (g) : \dom (L_i(g)) \ra G_i$ for $a
+    \in \dom(L_i(g))$ as follows. Suppose $g \in G_i$. Let $L_i' (g)(a) =
+    L_i(g)(a)$ if $\Sigma_i (L_i (g)(a)) \not\in \vec{V}_i$ and otherwise let
+    $L_i'(g)(a) = \Omega_j((\Lambda_i)_{V_j}(L_i(g)(a)))$, where $j > i$ and
+    $\Sigma_i (L_i (g)(a)) = V_j$. Suppose $g \not\in G_i$. Then there exists $j
+    > i$ such that $g \in G_j'$ and let $L_i(g) = L_j'(g)$.
+  \end{myitemize}
+  
+  We now show by backwards induction that for all $i \in [k]$, $C_{n, i}'$
+  translates $\theta_{n, i}'$ for $n$. It is easy to see from the above
+  definition that $C_{n, k}' = C_{n, k}$, and so $C_{n, k}$ translates
+  $\theta_{n, k}' = \theta_{n, k}$ for $n$. Let $i \in [k]$ and suppose for each
+  $j > i$ we have that $C_{n, j}'$ translates $\theta_{n, j}'$ for $n$. We now
+  show that $C_{n, i}'$ translates $\theta_{n, i}'$ for $n$.
+
+\begin{claim}
+  The circuit $C_{n, i}'$ is symmetric.
+\end{claim}
+\begin{proof}
+  Let $\sigma \in \sym_n$. We have automorphisms $\pi_i$ of $C_{n, i}$ extending
+  $\sigma$ and for each $j > i$ an automorphism $\pi_j'$ of $C_{n, j}'$
+  extending $\sigma$. We define $\pi_i'$ for each $g \in G_i'$ as follows. If $g
+  \in G_i$ let $\pi_i' (g) := \pi_i (g)$, and otherwise let $\pi_i' (g) :=
+  \pi_j' (g)$, where $j > i$ such that $g \in G_j'$. It remains to show that
+  $\pi_i'$ is a valid automorphism. We note that for $j > i$ if $g$ is an input
+  gate in $C_{n, i}'$ then $\pi_i' (g) = \pi_i (g) = \pi_j'(g) = \sigma(g)$.
+
+  Let $g \in G_i'$. Suppose $g \not\in G_i$. Then $g \in G_j'$ for some $j > i$.
+  Since $C_{n, j}'$ is symmetric there exists $\lambda \in \aut(g)$ such that
+  $\pi_j' L_j'(g) = L_j(\pi_j' g)\lambda$. Then for all $a \in \ind(g)$ we have
+  $\pi_i' L_i' (g)(a) = \pi_j' L_j' (g)(a) = L_j'(\pi_j' g) (\lambda a) =
+  L_i'(\pi_i' g)(\lambda a)$. Suppose $g \in G_i$. Since $C_{n, i}$ is symmetric
+  there exists $\lambda \in \aut (g)$ such that $\pi_i L_i (g) = L_i (\pi_i g)
+  \lambda$. Let $a \in \ind(g)$. If $L_i' (g)(a) \in G_i$ and so $\pi_i L_i
+  (g)(a) \in G_i$ and $\pi_i' L_i' (g)(a) = \pi_i L_i (g)(a) = L_i (\pi_i g)
+  (\lambda a) = L_i' (\pi_i' g)(\lambda a)$. If $L_i'(g)(a) \not\in G_i$ then
+  $L_i'(g)(a) = \Omega_j'((\Lambda_i)_{V_j}(L_i(g)(a)))$ for some $j > i$ and
+  $\pi_i' L_i'(g)(a) = \pi_j' \Omega_j'((\Lambda_i)_{V_j}(L_i(g)(a))) =
+  \Omega_j' (\sigma (\Lambda_i)_{V_j}(L_i(g)(a))) = \Omega_j'
+  ((\Lambda_i)_{V_j}(\pi_i L_i(g)(a)) = \Omega_j'(((\Lambda_i)_{V_j}(L_i(\pi_i
+  g)(\lambda a))) = L_i'(\pi_i g)(\lambda a) = L_i'(\pi_i' g)(\lambda a)$. The
+  first second to last equities follows from the definition of the circuit. It
+  is easy to check the remaining requirements for the symmetry of $C_{n, i}'$.
+\end{proof}
+
+\begin{claim}
+  The circuit $C_{n, i}'$ is transparent.
+\end{claim}
+\begin{proof}
+  We now show that $C_{n, i}'$ is transparent. Let $g \in G_i'$ be a
+  non-symmetric gate. Suppose $g \in G_j'$ for some $j > i$. Then from the fact
+  that $C_{n, j}'$ is transparent if follows that $g$ has unique labels. Suppose
+  $g \in G_i$. From the translation in
+  Lemma~\ref{lem:translating-FOquant-to-formulas} (and from the proof of
+  Claim~\ref{claim:circuit-translation-transparent}) it follows that $g$ has
+  unique labels.
+\end{proof}
+
+\begin{claim}
+  Let $\mathcal{A} \in \fin[\rho, n]$ let $\vec{a}$ be an assignment to the free
+  variables in $\theta_{n,i}'$ and let $\gamma \in [n]^{\underline{U}}$. Then
+  $C_{n, i}'[\gamma \mathcal{A}](\Omega_i' (\gamma \vec{a})) = 1$ if, and only
+  if, $\mathcal{A} \models \theta_{n, i}' [\vec{a}]$.
+\end{claim}
+\begin{proof}
+  We first prove by induction on the structure of the circuit $C_{n, i}$ that
+  for each $g \in G_{n, i}$ if $g$ is an input gate labelled by some $V_j$ with
+  $j > i$ then $C_{n, i}[\gamma \mathcal{A}^*](g) = C_{n, j}'[\gamma
+  \mathcal{A}](\Omega_j'((\Lambda_i)_{V_j})(g))$ and otherwise $C_{n, i}[\gamma
+  \mathcal{A}^*](g) = C_{n, i}'[\gamma \mathcal{A}](g)$. Let $g \in G_{n, i}$.
+  Suppose $g$ is an input gate labelled by $V_j$ for some $j > i$ and let
+  $\vec{b} := (\Lambda_i)_{V_j}(g)$. Then we have that $C_{n, i}[\gamma
+  \mathcal{A}^*](g) = 1$ if, and only if, $\gamma^{-1} \vec{b} \in
+  V^{\mathcal{A}^*}_j$ if, and only if, $\mathcal{A} \models \theta_{n,
+    j}'[\gamma^{-1} \vec{b}]$ if, and only if, $C_{n, j}'[\gamma
+  \mathcal{A}](\Omega_j'(\vec{b})$. Clearly if $g$ is an input gate not labelled
+  by $V_j$ for some $j > i$ then $C_{n, i}[\gamma \mathcal{A}^*](g) = C_{n, i}'
+  [\gamma \mathcal{A}^*](g)$. Suppose $g$ is not an input gate and suppose the
+  inductive hypothesis holds for all children of $g$. Let $a \in \ind(g)$. If
+  $L_i'(g)(a) \in G_i$ then $L_i' (g) (a) = L_i (g)(a)$ and so $(L_i')^{\gamma
+    \mathcal{A}}(g)(a) = L^{\gamma \mathcal{A}}_i(g)(a)$. If $L_i'(g)(a) \not\in
+  G_i$ then $L_i(g)(a)$ is an input gate labelled by some $V_j$ for $j > i$. It
+  follows from the definition of the circuit that $L_i'(g)(a) =
+  \Omega_j'((\Lambda_i)_{V_j})(L_i(g)(a))$, from the inductive hypothesis,
+  $C_{n, i}[\gamma \mathcal{A}^*](L_i'(g)(a)) = C_{n, j}'[\gamma
+  \mathcal{A}](\Omega_j'((\Lambda_i)_{V_j})(L_i(g)(a))) = C_{n, i}'[\gamma
+  \mathcal{A}](L_i'(g)(a))$. It follows that $(L_i')^{\gamma \mathcal{A}}(g) =
+  L^{\mathcal{A}^*}_i(g)$.
+
+  Let $\vec{a}$ be an assignment to the free variables in $\theta_{n, i}'$. But
+  $\theta_{n, i}$ has the same free first-order variables as $\theta_{n, i}$ and
+  so $\vec{a}$ is a $q$-tuple, where $q$ is the arity of the query decided by
+  $C_{n, i}$. It follows from the definition of the circuit that
+  $\Omega_i'(\gamma \vec{a}) = \Omega_i(\gamma \vec{a})$ and from the above
+  inductive argument that $C_{n, i}'[\gamma \mathcal{A}](\Omega_i'(\gamma
+  \vec{a})) = C_{n, i} [\gamma \mathcal{A}^*] (\Omega_i(\gamma \vec{b}))$. It
+  follows that $C_{n, i}' [\gamma \mathcal{A}](\Omega_i' (\gamma \vec{a})) = 1$
+  if, and only if, $C_{n, i} [\gamma \mathcal{A}^*] (\Omega_i(\gamma \vec{a})) =
+  1$ if, and only if, $\mathcal{A}^* \models \theta_{n, i} [\vec{a}]$ if, and
+  only if, $\mathcal{A} \models \theta_{n, i}'[\vec{a}]$. The final equivalence
+  follows from the definition of a flattening.
+
+
+  % It follows that $C_{n, i}' [\gamma \mathcal{A}](\Omega_i (\gamma \vec{a})) =
+  % 1$ if, and only if,$ $i}[\gamma \mathcal{A}^*](\Omega_i)$C
+
+  
+
+
+  % Suppose $\Omega_i'(\vec{b}) \not\in G_i$. Then $\Omega_i(\vec{b})$ is an
+  % input gate in $C_{n, i}$ labelled by some $V_j$ for $j > i$ and $\Omega_i'
+  % (\vec{b}) = \Omega_j'(\vec{b})$. We also have have from the above inductive
+  % argument that $C_{n, i}[\gamma \mathcal{A}^*](\Omega_i (\vec{b})) = C_{n,
+  % j}'[\gamma \mathcal{A}](\Omega_j'((\Lambda_i)_{V_j})(\Omega_i (\vec{b}))) $
+
+  
+
+
+
+  
+  % From the inductive hypotheses we have that the claim holds for each $j > i$.
+  % Let $\mathcal{A}^*$ be the $\rho_i$-structure defined by extending
+  % $\mathcal{A}$ by mapping each relation symbol $V_j \in \vec{V}_i$ to the
+  % relation $V^{\mathcal{A}^*}_j = (\theta_{n, j}')^{\mathcal{A}}$. Then
+  % $\vec{b} \in V^{\mathcal{A}^*}$ if, and only if, $\mathcal{A} \models
+  % \theta_{n, j}'[\vec{b}]$ if, and only if, $C[\gamma
+  % \mathcal{A}](\Omega_j'(\gamma \vec{b})) = 1$. From the definition of a
+  % flattening and the fact that $C_{n, i}$ translates $\theta_{n, i}$ for $n$
+  % (where we think of $\theta_{n, i}$ as a $\rho_i$-formula) it follows that
+  % $\mathcal{A} \models \theta_{n, i}'[\vec{a}]$ if, and only if,
+  % $\mathcal{A}^* \models \theta_{n, i} [\vec{a}]$ if, and only if, $C_{n,
+  % i}[\gamma \mathcal{A}^*](\Omega_i (\gamma \vec{a}))$. Thus to prove the
+  % claim it suffices to show that $C_{n, i}[\gamma \mathcal{A}^*](\Omega_i
+  % (\vec{b})) = C_{n, i}' [\gamma \mathcal{A}](\Omega_i' (\vec{b}))$ for all
+  % $\vec{b} \in \dom(\Omega_i)$.
+
+  % Let $\vec{b} \in \dom(\Omega_i)$. Suppose $\Omega_i'(\vec{b}) \not\in G_i$.
+  % Then $\Omega_i(\vec{b})$ is an input gate in $C_{i, j}$ such that
+  % $(\Lambda_i)_{V_j}(\Omega_i(\vec{b})) = \vec{b}$ for some $j > i$ and
+  % $\Omega_i'(\vec{b}) = \Omega_j'(\vec{b})$. Then $C_{n, i}[\gamma
+  % \mathcal{A}^*](\Omega_i (\vec{b})) = 1$ if, and only if,
+  % $\gamma^{-1}(\vec{b}) \in (V_j)^{\mathcal{A}^*}$ if, and only if,
+  % $\mathcal{A} \models \theta_{n, j}' [\gamma^{-1} \vec{b}]$ if, and only if,
+  % $C_{n, j}'[\gamma \mathcal{A}](\Omega_j'(\vec{b})) = 1 $ if, and only if,
+  % $C_{n, i}' [\gamma \mathcal{A}](\Omega_i'(\vec{b}))$. Suppose $\Omega_i'
+  % (\vec{b}) \in G_i$. Then $\Omega_i' (\vec{b}) = \Omega_i (\vec{b})$.
+
+  % We now show by induction on the structure of the circuit that for each $g
+  % \in G_i \cap G_i'$ if $g$ is an input gate in $C_{n, i}'$ then we have
+  % $L^{\gamma \mathcal{A}^*}_i = L^{\gamma \mathcal{A}^*}C_{n,
+  % i}[\gamma\mathcal{A}^*](g) = C_{n, i}' [\gamma\mathcal{A}](g)$. We prove
+  % this by induction. Suppose $g$ is a gate such that all of its children in
+  % $C_{n, i}$ are input gates. From the definition of the circuit we have that
+  % for each $a \in \ind(g)$ if $L_i(g)(a)$ is an input gate labelled by the
+  % relation symbol $V_j$ for some $j > i$ and tuple $\vec{c}$ then $L_i'(g)(a)
+  % = \Omega_j' (\vec{c})$. But then $C_{n, j}'[\gamma \mathcal{A}](\Omega_j
+  % (\vec{b})) = C_{n, i}[\gamma \mathcal{A}^*]((\Lambda_{i})^{-1}(\vec{b}))$.
+  % Then for each $a \in \ind(g)$ if $L_i(g)(a)$ is an input gate in $C_{n, i}$
+  % labelled by $V_j$ and the tuple $\vec{b}$ then $(L_i')^{\gamma \mathcal{A}}
+  % (g)(a) = C_{n, i}'[\gamma \mathcal{A}](L_i'(g)(a)) = C_{n, j}' [\gamma
+  % \mathcal{A}] (\Omega_j' (\vec{b}) = C_{n, i}[\gamma
+  % \mathcal{A}^*]((\Lambda_{i})^{-1}(\vec{b})) = C_{n, i}[\gamma
+  % \mathcal{A}^*](L_i(g)(a))$. It follows that $(L_i')^{\gamma \mathcal{A}} (g)
+  % = L^{\gamma \mathcal{A}^*}_i (g)$ and so $C_{n, i}[\gamma \mathcal{A}^*] (g)
+  % = C_{n, i}' [\gamma \mathcal{A}](g)$. We can extend this result from gates
+  % with children that are input gates to all gates via a straight-forward
+  % inductive argument.
+
+\end{proof}
+
+For each $n \in \nats$ let $C_{n}' := C_{n, 1}'$ and let $\theta_n'$ be the
+flattening of $\Theta_n'$. It follows from the above three claims that $C_n'$
+translates $\theta_{n}'$ for $n$. It remains to argue that the construction of
+$C_n'$ for each $n$ may be completed in time polynomial in $n$. This follows
+from three polynomial bounds. First, since $\Theta$ is $\PT$-uniform there
+exists a polynomial $p_1$ such that the function $n \mapsto \Theta_n$ is
+computable in time $p_1(n)$. Second, it follows from
+Lemma~\ref{lem:translating-FOquant-to-formulas} that there is a polynomial $p_2$
+such that the function that maps $\Theta_n$ to the sequence of circuits $C_{n,
+  1}, \ldots, C_{n, \vert \Theta_n \vert}$ is computable in time $\sum_{i \in
+  [\vert \Theta_n \vert]} p_2(\vert \cl{\theta_{n, i}} \vert (\vert
+\cl{\theta_{n, i}} \vert + \ewidth{\theta_{n, i}}) \cdot n^{\ewidth{\theta_{n,
+      i}}}) \leq p_2(n) \cdot p_2(p_1 (n) (p_1(n) + c_1) n^{c_1})$, where $c_1$
+is the constant bound on the variable-width of the formulas of $\Theta$.
+Thirdly, the construction of $C_n'$ from $C_{n, 1}, \ldots, C_{n, \vert \Theta_n
+  \vert}$ works by constructing each $C_{n, i}'$ from $C_{n, j}$, for all $j >
+i$, by replacing the appropriate input gates of $C_{n, i}$ with the output gates
+of $C_{n, j}'$. It can be shown that this algorithm runs in time polynomial in
+the combined size of these circuits. The function that maps $n \mapsto C_n'$ is
+the composition of these three functions and so can be computed in time
+polynomial in $n$.
+
+
+% Suppose there exists $h \in G_{n, i}$ such that $h$ is a child of $g$,
+% $\Sigma_i (h) = V_j$ for some $j > i$ and let $\vec{a} :=
+% (\Lambda_i)_{V_j}(g)$. From the definition of $C_{n, i}'$ we have that
+% $L_i'(g)(a) = \Omega_j'(\vec{a})$ for each $a \in \ind(g)$ such that $L_i
+% (g)(a) = h$. From the inductive hypothesis it follows that $C_{}[\gamma
+% \mathcl]$
+
+
+% From the inductive hypothesis we have for each $j > i$ that $C_{n, j}'$
+% translates $\theta_{n, j}'$ for $n$. Let $g$ be an input gate in $C_{n, i}$
+% such that $\Sigma_i (g) = V_j$ for some $j > i$ and let $\vec{a} :=
+% (\Lambda_i)_{V_j}(g)$. We have that $C_{n, i}[\gamma\mathcal{A}^*](g) = 1$ if,
+% and only if, $C_{n, i}$
+
+
+% It follows from the fact that $C_{n, j}'$ translates $\theta_{n, j}'$ for all
+% $j > i$ and the fact that $C_{n, i}$ translates $\theta_{n, i}$
+
+% Let $\mathcal{A}^*$ be the $\rho_i$-structure defined by extending
+% $\mathcal{A}$ by mapping each relation symbol $V_j \in \vec{V}_i$ to the
+% relation $V^{\mathcal{A}^*}_j = (\theta_{n, j})^{\mathcal{A}}$. We have that
+% $\mathcal{A}^* \models \Theta_{n}(i)[\alpha]$ if, and only if, $\mathcal{A}
+% \models \theta_{n, i}[\alpha]$. Let $\gamma \in [n]^{\underline{U}}$. We have
+% that $C_{n, i}[\gamma \mathcal{A}^*] = vec{a}$ if, and only if, $\mathcal{A}^*
+% \models theta_{n, j}[\vec{a}]$. But $C_{n, i}$ $\mathcal{A}^* \models
+% \theta_{n, i}[\alpha]$
+
+
+% $\mathcal{A} \models \$
+
+
+% $If none of the children of $g$ in $C_{n, i}$ are in input gates labelled by a
+% relation symbol in $\vec{V}_i$ then, from the transparency of $C_{n, i}$, it
+% follows $g$ has unique labels.
+
+
+% rom the definition of a translation in Lemma~\ref{}, it follows that
+
+% It is easy too see that for each $\mathcal{A} \in \fin[\rho, n]$
+
+% as follows. let denote the circuit corresponding the kth circuit and replace
+% each
+  
+\end{proof}
+We now present the main theorem of this chapter: that each extension of a
+fixed-point logic by generalised operators may be translated to an equivalent
+$\PT$-uniform family of transparent symmetric circuits. This result follows
+almost immediately from Lemma~\ref{lem:unroll-fixed-point},
+Lemma~\ref{lem:translate-sub-operators-to-queries}, and
+Proposition~\ref{prop:translating-programs-to-circuits}.
+
+\begin{thm}
+  Let $\rho$ is a vocabulary. Let $\setop$ be a set of operators and let $\BB$
+  be the associated basis. Every query definable in $\FP(\setop)[\rho]$ is
+  definable by a $\PT$-uniform family of transparent symmetric $(\BB,
+  \rho)$-circuits $(C_n)_{n \in \nats}$.
+  \label{thm:translating-FP-formulas-to-circuits}
+\end{thm}
+\begin{proof}
+  Let $\theta(\vec{x}) \in \FP^{\nats}(\setop)[\rho]$. From
+  Lemma~\ref{lem:unroll-fixed-point} there exists a $\PT$-uniform family of
+  $\FO^{\nats}(\setop)[\rho]$-substitution programs $\Theta^1 := (\Theta^1_n)_{n
+    \in \nats}$ with constant bounds on width and formula-length and such that
+  $\Theta^1$ decides the same query as $\theta$. Let $\setquant$ be the set of
+  quantifiers correpsonding to $\setop$. From
+  Lemma~\ref{lem:translate-sub-operators-to-queries} there exists a
+  $\PT$-uniform family of $\FO(\setquant)[\rho]$-substitution programs $\Theta^2
+  := (\Theta^2_n)_{n \in \nats}$ with a constant bound on width such that
+  $\Theta^1$ and $\Theta^2$ define the same query. From
+  Proposition~\ref{prop:translating-programs-to-circuits} there is a
+  $\PT$-uniform family of transparent symmetric $(\BB, \rho)$-circuits $(C_n)_{n
+    \in \nats}$ that decides the same query as $\Theta^2$. The result follows.
+\end{proof}
+
+% \section{rough nonsense}
+
+% \subsection{Generalised Many-Sorted Mixed-Type Quantifiers}
+% Let $\tau = (\{R_1, \ldots, R_{l_1}\},\{F_1, \ldots, F_{l_2} \}, \{s_1,
+% \ldots, s_{q}\}, \nu)$ be a many-sorted vocabulary with number-valued function
+% symbols. Let $\mathcal{K}$ be a class of $\tau$-structures.
+
+% \begin{align*}
+%   Q_{\mathcal{K}}[\vec{\phi}^D, \vec{\phi}^{\approx}]  [&((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\theta_i))_{i \in [l_1]}\\&((\vec{y}^j_1 \vec{\nu}^j_1, \ldots, \vec{y}^j_{f_j} \vec{\nu}^j_{f_j})(\eta_i))_{i \in [l_2]}]
+% \end{align*}
+
+% Let $B_1, \ldots , B_{q}$ be a sequence of sets such that $B_i = \phi^D_i /
+% \phi^{\approx}_i$. Let $R^{B}_i$ be defined such that $(e_1, \ldots , e_{r_i})
+% \in R^{B}_i$ if, and only if, there exists $(\vec{a}_1 \vec{m}_1, \ldots ,
+% \vec{a}_{r_i} \vec{m}_{r_i})$ such that $\vec{a}_j \vec{m}_j \in e_j$ for all
+% $j \in [r_i]$ and $\mathcal{A} \models \theta_i [\vec{a}_1\vec{m}_1, \ldots,
+% \vec{a}_{r_i} \vec{m}_{r_i}]$. Let $F^{B}_i$ be defined such that $F^B_i (e_1,
+% \ldots, e_{f_i}) = k$ there exists $(\vec{a}_1, \vec{m}_1, \ldots ,
+% \vec{a}_{r_i} \vec{m}_{r_i})$ such that $\vec{a}_j \vec{m}_j \in e_j$ for all
+% $j \in [f_i]$ where $\mathcal{A} \models (k = \nu_i [\vec{a}_1, \vec{m}_1,
+% \ldots , \vec{a}_{r_i} \vec{m}_{r_i}])$. Let $\mathcal{B}$ be the structure
+% defined from the above. We have $\mathcal{A} \models Q_{\mathcal{K}}...$ if,
+% and only if, $\mathcal{B} \in \mathcal{K}$.
+
+% We
+
+% \subsection{Restriction to Operators on Formulas}
+% Let $\tau = (\{R_1, \ldots, R_{l_1}\}, \{s_1, \ldots, s_{q}\}, \nu)$ be a
+% many-sorted vocabulary. Let $\mathcal{K}$ be a class of $\tau$-structures.
+
+% \begin{lem}
+%   Let $\Omega$ be a family of generalised many-sorted operators. Let
+%   $L(\Omega)$ be a logic extended by $\Omega$. There is a family of
+%   generalised many-sorted operators $\Omega^*$ with no number-terms being
+%   operated on such that $L(\Omega)$ and $L(\Omega^*)$ have the same expressive
+%   power.
+% \end{lem}
+% \begin{proof}
+%   Let $\oper_E \in \Omega$ where $\dom (E) = \nats^{m_1} \times \{0,1\}^{m_2}
+%   \times \fin[\tau]$ and $\tau = (\{R_1, \ldots, R_{l_1}\},\{F_1, \ldots,
+%   F_{l_2} \}, \{s_1, \ldots, s_{q}\}, \zeta)$. Let $S^* = S \uplus
+%   \{s_{q+1}\}$. For each $F_i$ define a relation symbol $R^*_i$ with arity
+%   $\iota (R^^)$ Let $\tau^* = (\{R^{*}_1, \ldots, R^*_{l_1}\})$ where $r^*_i =
+%   r$
+
+
+%   $E^{*} : \dom (E) \ra $, $\oper_{E^{*}}$ be defined as follows.
+% \end{proof}
+
+% \subsection{Restriction to Boolean-Valued Operators}
+
+
+% \begin{align*}
+%   Q_{\mathcal{K}}[\vec{\phi}^D, \vec{\phi}^{\approx}]  [&((\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^i_{r_i})(\theta_i))_{i \in [l_1]}\\&((\vec{y}^j_1 \vec{\nu}^j_1, \ldots, \vec{y}^j_{f_j} \vec{\nu}^j_{f_j})(\eta_i))_{i \in [l_2]}]
+% \end{align*}
+
+
+% \subsection{From Operators to Families of Quantifiers}
+
+% \subsection{Quantifiers}
+% Let $\tau = (\{R_1, \ldots, R_{l}\}, \{s_1, \ldots, s_{q}\}, \nu)$. Let
+% $\mathcal{K}$ be a class of $\tau$-structures. Let $L$ be an extension of
+% first-order logic with a number sort. A many-sorted Lindst\"{o}m quantifier
+% $Q_{\mathcal{K}}$ of arity $\arty : S \ra \nats^2$ is defined such that
+
+% \begin{align*}
+%   Q_{\mathcal{K}}((\phi^D_{s_1}, \ldots, \phi^D_{s_q}), (\vec{t}_{s_1} \ldots \vec{t}_{s_q}), (\phi^{\equiv}_{s_1},
+%   \ldots, \phi^{\equiv}_{s_q})) ([\vec{x}^i_1 \vec{\mu}^i_1, \ldots, \vec{x}^i_{r_i} \vec{\mu}^{i}_{r_i} \cdot \theta_i)_{i \in [l]}
+% \end{align*}
+
+% such that for each $i \in [l]$, $j \in [r_i]$ if $\nu (R_i)(j) = s$ then
+% $\arty(s) = (\vert \vec{x}^i_j \vert, \vert \vec{\mu}^i_j \vert$.
+
+% The semantics of the quantifier is defined as follows. For each $s \in S$ let
+% \begin{align*}
+%   D_s := \{\vec{a} \vec{m} : \vec{a} \in A^{\arty(s)(1)}, \vec{a} \in \phi^D_s, \vec{m} \in \nats^{\arty(s)(2)} and \vec{m} \leq
+%   (t_s)^{\mathcal{A}}\}.
+% \end{align*}
+
+% The formulas $\Phi^{\equiv}$ We may define an equivalence relation on $D_s$ by
+
+
+% Let $A_s := $
+
+
+% For each $i \in [l]$ let $R^A_i$
+
+\section{Counting and Rank Operators}
+
+
+\end{document}
+
+→
+%  LocalWords:  correpsonding

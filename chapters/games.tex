@@ -1,0 +1,725 @@
+%!TEX root = ../main/thesis.tex
+\documentclass[../main/thesis.tex]{subfiles}
+\begin{document}
+
+\section{Definition}
+
+Let $C$ be a symmetric circuit of order $n$ with symmetric gates and let
+$\mathcal{A}$ and $\mathcal{B}$ be structures of size $n$ with universes $A$ and
+$B$, respectively. We now describe the $(p,r)$-\emph{circuit game} on $(C,
+\mathcal{A}, \mathcal{B})$.
+
+The \emph{state} of the game is a tuple $s = (g, \alpha, \beta)$ where $g$ is a
+gate in $C$, $\alpha : [n] \rightharpoonup A$ and $\beta: [n] \rightharpoonup B$
+are injective partial functions. We associate each round of the game with a
+state.
+
+Let $s_0 := (g_0, \alpha_0, \beta_0)$, where $g_0$ is the output gate, $\alpha_0
+= \beta_0 = \emptyset$, be the initial state. The $i$th round of the game (for $i
+> 0$) is played as follows.
+
+\begin{enumerate}
+\item Spoiler picks $e := \emptyset$ or picks $e := \{(u, v)\}$ with $u \in
+  \img(\alpha_{i-1})$ and $v = \beta_{i-1}(\alpha^{-1}_{i-1}(u))$.
+
+  Let $\alpha_i' := \alpha_{i-1} \setminus \{(a, \alpha_{i-1}(a)) : \exists b
+  \in \img(\beta_{i-1}) , \,\, (\alpha_{i-1}(a) , b) \in e\}$ and $\beta_i' :=
+  \beta_{i-1} \setminus \{(b, \beta_{i-1}(b)) : \exists a \in \img(\alpha_{i-1})
+  , \,\, (a,\beta_{i-1}(b)) \in e\}$.
+
+\item Duplicator picks $\gamma^A_i \in [n]^{\underline{A}}$ and $\gamma^B_i \in
+  [n]^{\underline{B}}$ such that $(\gamma^A_i)^{-1} \sim \alpha_i'$ and
+  $(\gamma^B_i)^{-1} \sim \beta_i'$
+\item Spoiler picks $u_i \in A \setminus \dom(\alpha_i')$ and lets $v_i :=
+  (\gamma^B_i)^{-1}(\gamma^A_i(u_i))$. Spoiler picks $g_i \in H_{g_{i-1}} \cup
+  \{g_{i-1}\}$.
+\end{enumerate}
+
+Let $\alpha_i := \alpha_{i-1} \cup \{(u_i, \gamma^{A}_i(u_i))\}$ and $\beta_i :=
+\beta_{i-1} \cup \{(v_i, \gamma^{B}_i(v_i))\}$. Let $p_i := \vert \dom(\alpha_i)
+\vert = \vert \dom (\beta_i)\vert$ and let $s_i := (g_i, \alpha_i, \beta_i)$.
+
+If $p_i > p$, $i > r$ or $C[\gamma^A_i \mathcal{A}](g_i) = C[\gamma^B_i
+\mathcal{B}](g_i)$ then duplicator wins. If duplicator has not won, $g_i$ is an
+input gate, and $\Lambda_R(g_i) \subseteq \dom(\alpha_i) \cap \dom(\beta_i)$
+then spoiler wins. If neither player has won we proceed to the $(i+1)$th round.
+
+If duplicator has a strategy for winning the $(p,r)$-circuit game on $(C,
+\mathcal{A}, \mathcal{B})$ for each $r \geq 0$ then we say duplicator has a
+strategy for winning the $p$-circuit game on $(C, \mathcal{A}, \mathcal{B})$.
+
+\section{Notation}
+Let $C$ be a circuit of order $n$, $\mathcal{A}$ be a graph with $n$ vertices,
+and $\alpha : [n] \rightharpoonup A$ be an injection such that $\consp(g)
+\subseteq \dom(\alpha)$. We write $C[\alpha\mathcal{A}](g)$ to denote the value
+of $C[\gamma^A \mathcal{A}](g)$ for some $\gamma^A \in [n]^{\underline{A}}$ such
+that $(\gamma^A)^{-1} \sim \alpha$. From Lemma~\ref{} this is well defined. We
+let $\EV^\alpha_g$ denote all those assignments $\nu \in
+A^{\underline{\consp(g)}}$ such that $\nu \sim \alpha$ and $C[\nu
+\mathcal{A}](g) = 1$.
+
+\section{Results}
+
+\begin{lem}t 
+Let $C$ be a symmetric circuit with symmetric gates of order $nt$ and depth
+  $d$ that takes in graphs as input. Let $k := \SP(C)$ and $\mathcal{A}$ and
+  $\mathcal{B}$ be graphs. If the duplicator has a winning strategy for the
+  $(2k, kd)$-circuit game on $(C, \mathcal{A}, \mathcal{B})$ then $C
+  [\mathcal{A}] = C [\mathcal{B}]$.
+\end{lem}
+\begin{proof}
+  We prove the result by contraposition. Suppose $C[\mathcal{A}] \neq C
+  [\mathcal{B}]$. We define a winning strategy for the spoiler in the $(2k,
+  kd)$-circuit game.
+
+  Each round the spoiler defines a set $S_i \subseteq [n]$. We say the $i$th
+  round of the game is \emph{acceptable} if
+
+  \begin{enumerate}
+  \item $\consp(g_i) \subseteq \dom(\alpha_i) \cap \dom (\beta_i)$,
+  \item $C[\alpha_i \mathcal{A}](g_i) \neq C[\beta_i \mathcal{B}](g_i)$,
+  \item $p_i \leq 2k$,
+  \item $\vert S_i \vert < k$, and
+  \item if $ i > 0$ and $g_{i} = g_{i-1}$ then $\vert S_i \vert > \vert S_{i-1}
+    \vert$.
+  \end{enumerate}
+
+  We inductively define a strategy for spoiler and show that if the spoiler
+  follows this strategy then each round played up to the $kd$th round is either
+  acceptable or the spoiler wins at the end of this round. We then show that if
+  spoiler follows a strategy such that each round of the game is acceptable then
+  spoiler must win the game in at most $kd$ rounds.
+
+  Let $s_0 := (g_0, \alpha_0, \beta_0)$ be the initial state of the game and let
+  $S_0 := \emptyset$. It is easy to see that the $0$th round is acceptable. We
+  describe the actions of the spoiler in the $i$th round of the game for $i > 0$
+  and show that if all rounds previous to the $i$th round are acceptable then
+  the $i$th round is acceptable.
+
+  \begin{enumerate}
+  \item Spoiler checks if $\vert \dom(\alpha_{i-1}) \vert < 2k$ and if so picks
+    $e := \emptyset$ and otherwise picks $e := \{(u,v)\}$ for some $u \in
+    \img(\alpha_{i-1}) \setminus \alpha_{i-1} (S_{i-1} \cup \consp(g_{i-1})))$
+    and where $v = \beta_{i-1}(\alpha^{-1}_{i-1}(u))$. Let $\alpha_i'$ and
+    $\beta_i'$ be defined as above.
+
+    % From Lemma~\ref{} we have that $C[\alpha_i' \mathcal{A}](g_{i-1}) =
+    % C[\alpha_{i-1} \mathcal{A}](g_{i-1}) \neq C[\beta_{i-1}
+    % \mathcal{B}](g_{i-1}) = C[\beta_i' \mathcal{B}](g_{i-1})$. It follows from
+    % this fact and from Lemmas~\ref{} and~\ref{} there exists $h \in
+    % H_{g_{i-1}}$
+    % such that $\vert \EV^{\alpha_i'} \vert \neq \vert \EV^{\beta_i'} \vert$.
+
+    
+
+
+    % It follows that there exists $\nu \in A^{\underline{\consp(h)}}$ such that
+    % $\nu \in \EV^{\alpha_{i}'}_h$ if, and only if, $(\gamma^B_{i})^{-1}
+    % \gamma^A_{i} \nu \not\in EV^{\beta_{i}'}_h$.
+
+    
+  \item Duplicator responds by picking $\gamma^{A}_{i} \in [n]^{\underline{A}}$
+    and $\gamma^B_{i} \in [n]^{\underline{B}}$ such that $(\gamma^A_i)^{-1} \sim
+    \alpha_i'$ and $(\gamma^B_i)^{-1} \sim \beta_i'$.
+
+  \item We have that $\consp(g_{i-1}) \subseteq \dom(\alpha_{i-1}) \cap
+    \dom(\beta_{i-1})$ and the duplicator did not win last round, and so
+    $C[\alpha_{i-1} \mathcal{A}](g_{i-1}) \neq C[\beta_{i-1}
+    \mathcal{B}](g_{i-1})$. It follows from this observation and Lemma~\ref{}
+    that
+    \begin{align*}
+      \sum_{h \in H_{g_{i-1}}} \frac{\vert A_h \cap \EV^{\alpha_{i}'}_h \vert}{\vert A_h \vert} &= \vert \{ h \in H_{g_{i-1}} : \gamma^A_i \in \Gamma(h)\} \vert \\ &\neq \vert \{h \in H_{g_{i-1}} : \gamma^B_i \in \Gamma(h)\} \vert = \sum_{h \in H_{g_{i-1}}}\frac{\vert A_h \cap \EV^{\beta_{i}'}_h \vert}{\vert A_h \vert}.
+    \end{align*}
+
+    Therefore there exists $h \in H_{g_{i-1}}$ such that $\vert
+    \EV^{\alpha_{i}'}_h \vert \neq \vert \EV^{\beta_{i}'}_h \vert$, and so there
+    exists $\nu \in A^{\underline{\consp(h)}}$ such that $\nu \in
+    \EV^{\alpha_{i}'}_h$ if, and only if, $(\gamma^B_{i})^{-1} \gamma^A_{i} \nu
+    \not\in EV^{\beta_{i}'}_h$.
+
+    From Lemma~\ref{} we have that $\nu \in \EV^{\alpha_{i}'}_h$ if, and only
+    if, $C[\gamma^A_i \mathcal{A}] (\Pi^{\gamma^A_i}_{\nu} (h)) = 1$. We
+    similarly have that $(\gamma^B_{i})^{-1} \gamma^A_{i} \nu \not\in
+    EV^{\beta_{i}'}_h$ if, and only if, $C[\gamma^B_i \mathcal{B}]
+    (\Pi^{\gamma^B_i}_{(\gamma^B_i)^{-1} \gamma^A_{i} \nu} (h)) = 0$. Notice
+    that for all $a \in \consp(h)$, $\Pi^{\gamma^B_i}_{(\gamma^B_i)^{-1}
+      \gamma^A_{i} \nu} (a) = \gamma^B_i ((\gamma^B_i)^{-1} (\gamma^A_i (\nu
+    (a)))) = \gamma^A_i (\nu (a)) = \Pi^{\gamma^A_i}_{\nu}(a)$. It follows from
+    Lemma~\ref{} that $\Pi^{\gamma^B_i}_{(\gamma^B_i)^{-1} \gamma^A_{i} \nu} (h)
+    = \Pi^{\gamma^A_i}_{\nu} (h)$. Let $h' = \Pi^{\gamma^A_i}_{\nu} (h)$.
+
+    Moreover, since $\nu \sim \alpha_i'$ and $(\gamma^A_i)^{-1} \sim \nu$ we
+    have that for all $a \in \consp(h) \cap \dom (\alpha_i')$, $a =
+    \Pi^{\gamma^A_i}_\nu (a) = \Pi^{\gamma^B_i}_{(\gamma^B_i)^{-1} \gamma^A_{i}}
+    (a)$.
+    
+    Putting this all together we can conclude that $C[\gamma^A_i
+    \mathcal{A}](h') \neq C[\gamma^{B}_i \mathcal{B}](h')$ and $S_{i-1}
+    \subseteq \consp(h')$. (I must justify the second point a bit better.)
+
+    If $\consp(h') \subseteq \dom(\alpha_i')$ then spoiler picks $u_i \not\in
+    \alpha_i' (\consp(h'))$ and otherwise spoiler picks $u_i :=
+    (\gamma^A_i)^{-1}(\min (\consp(h') \setminus \dom(\alpha_i')))$. Let $v_i :=
+    (\gamma^B_i)^{-1}(\gamma^A_i(u_i))$. Let $\alpha_i$ and $\beta_i$ be defined
+    as above. If $\consp(h') \subseteq \dom(\alpha_i)$ then let $g_i := h'$ and
+    $S_i := \emptyset$. Otherwise, let $g_i := g_{i-1}$ and $S_i := \consp(h')
+    \cap \dom(\alpha_i)$.
+
+    % If $\consp(h') \subseteq \dom(\alpha_i')$ then spoiler picks $e_i :=
+    % \emptyset$. Otherwise, let $a := \min (\consp(h') \setminus
+    % \dom(\alpha_i'))$ and spoiler picks $e_i := \{(u_i, v_i)\}$ where $u_i :=
+    % (\gamma^A_i)^{-1}(\min (\consp(h') \setminus \dom(\alpha_i')))$ and $v_i
+    % :=
+    % (\gamma^B_i)^{-1}(\gamma^A_i(u_i))$.
+
+    % Define $\alpha_i$ and $\beta_i$ as above. If $\consp(h') \subseteq
+    % \dom(\alpha_i)$ then let $g_i := h'$ and $S_i := \emptyset$. Otherwise,
+    % let
+    % $g_i := g_{i-1}$ and $S_i := \consp(h') \cap \dom(\alpha_i)$.
+  \end{enumerate}
+
+  We have from the inductive hypothesis that the $(i-1)$th round is acceptable.
+  Notice that $p_i \leq p_{i-1} + 1$ and if $p_i > p_{i-1}$ then spoiler picked
+  $e = \emptyset$ and so $p_{i-1} < 2k$ and $p_i \leq p_{i-1} + 1 \leq 2k$.
+  Notice that either $\consp(h') \subseteq \dom(\alpha_i)$ and $S_i :=
+  \emptyset$ or $S_i = \consp(h') \cap \dom(\alpha_{i}) \subsetneq \consp(h')$.
+  In either case $\vert S_i\vert < \vert \consp(h')\vert \leq k$.
+
+  \underline{Suppose $g_i = g_{i-1}$}. Then spoiler either picked $e =
+  \emptyset$ or picked $e = \{(u,v)\}$ where $u \not\in
+  \alpha_{i-1}(\consp(g_{i-1}))$. It follows that $\consp(g_i) = \consp(g_{i-1})
+  \subseteq \dom(\alpha_i') \cap \dom(\beta_i') \subseteq \dom(\alpha_i) \cap
+  \dom(\beta_i)$ and $C[\alpha_i \mathcal{A}](g_i) = C[\alpha_{i-1}
+  \mathcal{A}](g_{i-1}) \neq C[\beta_{i-1}\mathcal{B}](g_{i-1}) = C[\beta_i
+  \mathcal{B}](g_i)$. We have that $S_i = \consp(h') \cap \dom(\alpha_i) \neq
+  \consp(h')$. If spoiler picked $e = \emptyset$ then $\alpha_{i-1} = \alpha_i'
+  \subseteq \alpha_i$ and otherwise, from the choice of $u$, we must have
+  $S_{i-1} \subseteq \dom(\alpha_i')$. It follows that $S_{i-1} \subseteq
+  \dom(\alpha_i') \subseteq \dom(\alpha_i)$ and so $S_{i-1} \subseteq
+  \dom(\alpha_i') \cap \consp(h') \subsetneq \dom(\alpha_i) \cap \consp(h') =
+  S_i$. The strict inclusion follows from the fact that $\alpha^{-1}_i(u_i) \in
+  \dom(\alpha_i) \cap \consp(h')$ and $\alpha^{-1}_i(u_i) \not\in
+  \dom(\alpha_{i}') \cap \consp(h')$.
+  
+  \underline{Suppose $g_i \neq g_{i-1}$}. We have that $g_i = h'$ and so
+  $\consp(g_i) = \consp(h') \subseteq \dom(\alpha_i) \cap \dom (\beta_i)$ and
+  $C[\alpha_i\mathcal{A}](g_i) = C[\gamma^A_i \mathcal{A}](g_i) \neq
+  C[\gamma^{B}_i \mathcal{B}](g') = C[\beta_i\mathcal{B}](g_i)$
+
+  It follows that there is a strategy such that spoiler can force each round
+  played to be acceptable. It is easy to see that if the $i$th round is
+  acceptable and $i \in [kd]$ then duplicator has not won the game and if there
+  exists $j \in \nats$ such that $j \in [k d]$, round $j$ of the game is
+  acceptable, and $g_j$ is an input gate, then spoiler wins the game after $j$
+  rounds. It is thus sufficient to show that if spoiler plays the above strategy
+  then there exists $j \in [k d]$ such that $g_j$ is an input gate.
+
+  For the $i$th round of the game, with $i > 0$, we have $\depth(g_{i-1}) - 1
+  \leq \depth(g_i) \leq \depth(g_{i-1})$. If $\depth(g_{i}) = \depth(g_{i-k})$
+  then $g_{i} = g_{i-1} = \ldots = g_{i-k}$ and so $\vert S_i \vert > \vert
+  S_{i-1} \vert > \ldots > \vert S_{i - k} \vert \geq 0$. It follows that $\vert
+  S_i \vert \geq k > \vert S_i \vert$, a contradiction. We thus have that
+  $\depth(g_i) < \depth(g_{i-k})$ for all $i > k$, and so there exists $j \in
+  [kd]$ such that $\depth(g_j) = 0$. The result follows.
+\end{proof}
+
+
+\begin{lem}
+  Suppose $\mathcal{A}$ and $\mathcal{B}$ are graphs with $n$ vertices. If
+  $\mathcal{A} \equiv^{p} \mathcal{B}$ then for each symmetric circuit $C$ of
+  order $n$ with symmetric gates duplicator has a strategy for winning the
+  $p$-circuit game (where $d$ is the depth of the circuit).
+  \label{lem:pebble-to-circuit-games}
+\end{lem}
+\begin{proof}
+  We prove the result by contraposition. Let $C$ be a symmetric circuit of order
+  $n$ with symmetric gates such that spoiler has a winning strategy for the
+  $p$-circuit game. We use this strategy to derive a winning strategy for the
+  spoiler in the $p$-pebble game.
+
+  Let $S_P$ (resp. $D_P$) denote the spoiler (resp. duplicator) in the pebble
+  game and $S_C$ (resp. $D_C$) denote the spoiler (resp. duplicator) in the
+  circuit game.
+
+  We play the pebble game and simulating a run of the circuit game
+  simultaneously and we then define the strategy for $S_P$ using the strategy
+  for $S_C$.
+
+  Suppose we are playing the $i$th round of the game. If $S_C$ chooses $e :=
+  \emptyset$ then $S_P$ picks up a pair of pebbles $(a_j, b_j)$ that have not
+  been placed yet. If $S_C$ chooses $e := \{(u,v)\}$ for some $u \in
+  \dom(\alpha_{i-1})$ and $v := \beta_{i-1} (\alpha^{-1}_{i-1} (u))$ then there
+  exists a pair of pebbles $(a_{j}, b_{j})$ such that $a_{j}$ is on $u$ and
+  $b_{j}$ is on $v$. Then $S_P$ picks up $(a_{j}, b_{j})$.
+
+  Suppose $D_P$ picks a bijection $\gamma_i : A \ra B$ that is compatible with
+  the partial isomorphism defined by the pebbles placement. $D_C$ chooses
+  $\gamma^A_{i}$ and $\gamma^B_{i}$ such that $\alpha_i' \sim (\gamma^A_i)^{-1}$
+  and $\beta_i' \sim (\gamma^B_i)^{-1}$ and such that $\gamma_i =
+  (\gamma^B_i)^{-1}\gamma^A_i$.
+
+  Suppose $S_C$ picks $u_i$ in response to the choices of $D_C$. Then $S_P$
+  places the pebble $a_{j}$ on $u_i$ and $b_{j}$ on $v_i :=
+  (\gamma^B_i)^{-1}(\gamma^A_i(u_i))$. This is a valid move in the pebble game
+  as $\gamma_i (u_i) := (\gamma^B_i)^{-1}(\gamma^A_i(u_i)) = v_i$.
+
+  Suppose $S_C$ has won the circuit game at the end of the $r$th round. Then
+  $g_r$ is a relational gate. Let $R = \Sigma (g_r)$ and $\vec{a} =
+  \Lambda(g_r)$. It follows that $\vec{a} \subseteq \dom(\alpha_r(g_r))$, and so
+  $(\gamma^A_r)^{-1}(\vec{a})$ has been pebbled. We have that
+  $(\gamma^A_{r})^{-1}(\vec{a}) \in R^{\mathcal{A}}$ if, and only if,
+  $C[\gamma^A_r \mathcal{A}] (g_r) = 1$ if, and only if, $C[\gamma^B_r
+  \mathcal{B}](g_r) = 0$ if, and only if, $(\gamma^B_{r})^{-1}(\vec{a}) \not\in
+  R^{\mathcal{B}}$. But $\gamma_r ((\gamma^A_{r})^{-1}(\vec{a}) =
+  (\gamma^B_{r})^{-1}(\vec{a})$. It follows that $\gamma_r$ is not a partial
+  isomorphism on the pebbled part of its domain. It follows that the spoiler
+  wins the pebble game.
+
+
+  % Suppose $S_C$ has won the circuit game at the end of the $r$th round. If
+  % $\consp(g_r) \subseteq \dom(\alpha_r)$ then $S_P$ has won the pebble game.
+  % Otherwise, we continue playing the pebble game. Let $x := \gamma_p(\min
+  % (\consp(g_p) \setminus \img(\dom(\alpha_p))))$. Then $(u_p, x) \in
+  % R^{\mathcal{A}}$ if, and only if, $\gamma_p (u_p, x) \not\in
+  % R^{\mathcal{B}}$.
+  % Suppose $(u_p, x) \in R^{\mathcal{A}}$. Then there exists no $y \in
+  % \adj_{\mathcal{B}}(\gamma_p(u_p))$ such that $y$ has no pebble $p$th round
+  % as
+  % otherwise $D_C$ could have won by choosing $\gamma_P'$ to be equal to
+  % $\gamma_P(u_p)$ except that it swaps $\gamma_p (x)$ and $y$. Moreover, since
+  % $\gamma_p$ is a partial isomorphism on the pebbled portion of the graph, the
+  % number of $y \in \adj_{\mathcal{B}}(\gamma(a))$ that are pebbled is equal to
+  % the number of $x' \in \adj_{\mathcal{A}}(a)$ that are pebbled. It follows
+  % that
+  % $\vert \adj_{\mathcal{A}}(a) \vert \neq \vert \adj_{\mathcal{B}}(\gamma(a))
+  % \vert$. It can thus be shown that spoiler can win the game after the next
+  % round. The argument follows similarly if $(u_p, x) \not\in R^{\mathcal{A}}$.
+  
+  % $S_P$ picks a pair of pebbles $(a_j, b_j)$ such that $a_j$ is not on $u_p$.
+  % It
+  % is easy to see th
+
+
+  % Let $a$ be the element of $A$ pebbled in the $p$th round and let $(a,x) :=
+  % \Lambda(g_p)$.
+
+  % $S_P$ picks up any two pebbles $(a_j, b_j)$ such that $a_j$ is not on an
+  % element of $(\gamma^A_p)^{-1}(\consp(g_p))$ and $b_j$ is not on an element
+  % of
+  % $(\gamma^B_p)^{-1}(\consp(g_p))$.
+
+  % $D_P$ picks a bijection $\gamma : A \ra B$ that is a partial isomorphism on
+  % the pebbled elements of $A$ and $B$.
+
+  % Let $a$ be the minimal element of $(\gamma^A_p)^{-1}(\consp(g_p))$ that is
+  % not
+  % pebbled. $S_P$ puts $a_j$ on a and puts $b_j$ on $\gamma(a)$.
+
+  % After $p + \vert \consp(g_p) \setminus \dom(\alpha_p) \vert$ rounds
+  % $()\gamma^A_j)^{-1}(\consp(g_p))$ has all been pebbled.
+
+  % $S_P$ picks up the pebbles $(a_j, b_j)$ where $a_j$ and $b_j$ are not
+  % pebbles
+  % on
+
+  % . In each round for all $\gamma_p$...and $\gamma^A_p$ and
+  % $\gamma^B_p$...$\gamma^A_p$, $C[\gamma^A_p\mathcal{A}](g_p) \neq
+  % C[\gamma^B_p\mathcal{B}](g_p)$ and therefore $\gamma_p (\gamma_p
+  % (\Lambda_R()))R$
+
+  % It follows that
+
+  % If $g_i$ is an input gate and spoiler has a winning str
+
+  % such that $u := \gamma$
+
+  % $S_C$ begins by choosing $e := \emptyset$ or $e = \{(u,v)\}$. If $e :=
+  % \emptyset$ and $:= \emptyset$ or
+  
+
+
+
+
+
+  % Suppose $S_C$ is playing a strategy that wins in winning strategy. We
+  % suppose
+  % the game has Suppose $S_C$ chooses $e := \emptyset$.
+
+
+  % $S_C$
+
+
+  % Suppose $e := \emptyset$
+
+
+  % If $S_C$ chooses $e := \emptyset$ then $S_P$ picks pebble pair $(a_j, b_j)$
+  % that have not been placed yet. If $S_C$ chooses $e := \{(u,v)\}$ for some $u
+  % \in \dom(\alpha_{i-1})$ and $v := \beta_{i-1} (\alpha^{-1}_{i-1} (u))$ then
+  % there exists pebbles $(a_{j'}, b_{j'})$ such that $a_{j'}$ is on $u$ and
+  % $b_{j'}$ is on $v$. $S_P$ picks $(a_{j'}, b_{j'})$.
+
+  % $D_P$ picks $\gamma_i : \mathcal{A} \ra \mathcal{B}$ is a bijection that
+  % defines a partial automorphism on the automorphism defined by the pebble
+  % positions.
+
+  % We suppose $D_C$ has been played $\gamma^A_{i}$ and $\gamma^B_{i}$.
+
+  % Suppose $S_C$ has picked $u_i$. $S_P$ places the pebble $a_{j'}$ on $u_i$
+  % and
+  % $b_{j'}$ on $v_i := (\gamma^B_i)^{-1}(\gamma^A_i(u_i))$. Notice that
+  % $\gamma_i
+  % (u_i) = (\gamma^B_i)^{-1}(\gamma^A_i(u_i)) = v_i$.
+
+  % Suppose $S_C$ has won the game after the $j$th round. Then $g_j$ is a
+  % relational gate and $C [\gamma^A_j \mathcal{A}] (g_j) \neq
+  % C[\gamma^B_j](g_j)$. Let $R := \Sigma (g_j)$ and $\vec{a} :=
+  % \Lambda_R(g_j)$.
+  % It follows that $\gamma^A_j \mathcal{A} \models R [\vec{a}]$ if, and only
+  % if,
+  % $\gamma^B_j \mathcal{A} \models R[\vec{a}]$. We thus have that
+  % $(\gamma^{A}_j)^{-1} (\vec{a}) \in R^{\mathcal{A}}$ if, and only if,
+  % $(\gamma^B_j)^{-1}(\vec{a}) \not\in R^{\mathcal{B}}$. But
+  % $(\gamma^B_j)^{-1}(\vec{a}) = \gamma_j ((\gamma^{A}_j)^{-1}(\vec{a}))$. It
+  % follows that $\gamma^A_j$ is not an isomorphism on the pebbled part.
+
+  % $S_C$ begins by choosing $e := \emptyset$ or $e = \{(u,v)\}$. If $e :=
+  % \emptyset$ and $:= \emptyset$ or
+  
+\end{proof}
+
+\section{Pebble Games on Rank Circuits}
+\subsection{Definitions}
+
+\begin{definition}[Indistinguishable by Circuits]
+  Let $\mathcal{A}$ and $\mathcal{B}$ be $\rho$-structures of size $n$. Let $k
+  \in \nats$ and let $\vec{a} \in A^k$ and $\vec{b} \in B^k$. We write
+  $(\mathcal{A}, \vec{a}) \equiv^{\BB}_k (\mathcal{B}, \vec{b})$ if, and only
+  if, for any symmetric $(\BB, \rho)$-circuit $C$ of order $n$ with $\SP(C) \leq
+  k$ and all $\alpha \in [n]^{\underline{A}}$ and $\beta \in
+  [n]^{\underline{B}}$ such that $\alpha(\vec{a}) = \beta(\vec{b})$ it follows
+  that for every gate $g$ in $C$ such that $\alpha(\vec{a})$ is a support of $g$
+  then $C[\alpha \mathcal{A}](g) = C[\beta \mathcal{B}] (g)$.
+\end{definition}
+
+\begin{definition}[Game on Circuits]
+  Let $\mathcal{A}$ and $\mathcal{B}$ with $\rho$-structures of size $n$.
+  \begin{itemize}
+    
+  \item Spoiler picks $F \in BB$ and lets $I = \ind(F)$. Spoiler picks an
+    injection $L : I \ra \uplus_{i \in K} \{P \text{ a partition of} S : S
+    \subseteq n, \vert S \vert \leq k\}$. Spoiler picks up $k$ pebbles.
+    
+  \item Duplicator picks $\alpha$ and $\beta$ and $\mathcal{P}$ a partition of
+    $I$ and a function $f : \mathcal{P}^\alpha \ra \mathcal{P}^{\beta}$ such
+    that $\gamma : \mathcal{P} \ra \{0,1\}$, $F(M_\gamma) = F(M_{\gamma
+      f^{-1}})$.
+
+  \item Spoiler picks $P \in \mathcal{P}$, $x \in P$ and $y \in F(P)$ and places
+    pebbles on $L^{\alpha}(x)$ and $L^{\beta}(y)$.
+  \end{itemize}
+  
+  If at the end of the round if the mapping defined by the pebbles is not a
+  partial isomorphism then spoiler wins. If not, play the next round. If the
+  game is played such that spoiler never wins, then duplicator wins.
+\end{definition}
+
+\subsection{Results}
+
+\begin{lem}
+  If duplicator wins the $(\BB, 2k)$ game then $\mathcal{A}
+  \equiv^{\BB_{\rank}}_{k} \mathcal{B}$.
+\end{lem}
+\begin{proof}
+  We prove this by contraposition. Suppose there exists a circuit $C$ and
+  $\alpha_1 \in [n]^{\underline{A}}$ and $\beta_1 \in [n]^{\underline{B}}$ such
+  that $C[\alpha_1 \mathcal{A}](g) \neq C[\beta_1 \mathcal{B}](g)$.
+
+
+  \underline{Spoiler} picks up $k$ pebbles. Let $H^\orb$ the orbit partition of
+  $H_g$ under the action of $\spstab(g)$. For $H \in H^\orb$ let $S_{H} :=
+  \{\SP(h) : h \in H\}$. Spoiler picks $L : \ind(g) \ra \uplus_{H \in H^\orb}
+  S_H$ such that $L (x) := (\orb_{\spstab(g)}(L(g)(x)), \SP(L(g)(x)))$.
+
+  \underline{Duplicator} picks $\mathcal{P}$ and picks $\alpha$ and $\beta$.
+
+  Suppose there exists $P \in \mathcal{P}$ and $x, x' \in P$ such that $L(x)$
+  and $L(x')$ do not have the same type or there exists $h \in H_g$ such that
+  $L^{\alpha}(x) \in \EV_h$ and $L^{\alpha}(x') \not\in \EV_h$.
+
+  (Claim) Since $L(x)$ and $L(x')$ are in the same orbit there supports must be
+  compatible. So the second thing must happen. But then there exists $y \in P$
+  such that $L^{\beta}(y) \in \EV_h$ or $L^{\beta}(y) \not\in \EV_h$ and $L(y)$
+  are compatible with both. So in the first case pick $(x, y, h)$ for a
+  disagreeing assignment, otherwise, $(x', y, h)$ either way, spoiler continues
+  to the next round.
+
+  If this is not the case, and for all $x x' \in P$ $L(x)$ and $L(x')$ have the
+  same type and for all $h \in H_g$ they agree. Then let $\gamma' : I \ra
+  \{0,1\}$ be defined by $\gamma'(x) = C[\alpha \mathcal{A}](L(g)(x))$. Notice
+  that $\gamma'(x) = 1$ if, and only if, $\alpha (\consp(L(g)(x)) = \alpha(L(x))
+  \in \EV_{L}$
+
+
+  % Suppose $C$ is such that $C[\alpha \mathcal{A}](g) \neq C[\beta
+  % \mathcal{B}](g)$ for some rank gate $g$. Spoiler picks . Spoiler picks pebbles
+  % not on $g$.
+
+  % Duplicator picks...
+
+  % Let $P \in \mathcal{P}$. We want to show that there exists $P \in \mathcal{P}$
+  % and $\vec{x} \in P$ and $\vec{y} \in f(P)$ such that there exists $h \in H_g$
+  % and $\vec{x} \in \EV^{\alpha}_h$ if, and only if, $f(\vec{x}) \not\in
+  % \EV^{\beta}_h$.
+
+  % Suppose not. Then for all $P \in \mathcal{P}$ such that for all $\vec{x} \in
+  % P$ and all $\vec{y} \in f(P)$ and all $h \in H_g$, such that $\vec{x} \in
+  % \EV^{\alpha}_h$ if, and only if, $f(\vec{x}) \in \EV^{\beta}_h$.
+
+  % It follows that for all $\vec{x}, \vec{x}'\in P$, and $h \in H_g$, $\vec{x}
+  % \in \EV_h$ if, and only if, $\vec{x}' \in \EV_h$. Let $\gamma : \mathcal{P}
+  % \ra \{0,1\}$ and $\gamma (P) = 1$ if, and only if, there exists $\vec{x} \in
+  % P$ such that
+  
+\end{proof}
+
+\begin{thm}
+  If $\mathcal{A} \equiv \mathcal{B}$ then duplicator wins.
+\end{thm}
+\begin{proof}
+  Suppose we have $(\mathcal{A}, \vec{a}) \equiv (\mathcal{B}, \vec{b})$.
+  Suppose spoiler has defined $L^{\alpha}$ and $L^{\beta}$. Define an
+  equivalence relation $\sim_{\alpha}$ on $I\times J$ by $\vec{x} \sim \vec{y}$
+  if, and only if, for all $h$ with support of size less than $k$, $\vec{x} \in
+  \EV_h$ if, and only if, $\vec{y} \in \EV_h$. Similarly define $\sim_{\beta}$.
+  Let $\mathcal{P}$ and $\mathcal{Q}$ be the equivalence classes of
+  $\sim_{\alpha}$ and $\sim_{\beta}$ respectively.
+
+  For $P \in \mathcal{P}$ let $H_\alpha(P)$ be the set of all $h$ such that
+  there exists $\vec{x} \in P$ such that $\vec{x} \in \EV_h$. Similarly define
+  $H_{\beta}$. Let $f : \mathcal{P} \ra \mathcal{Q}$ be defined by $f (P) = Q$
+  if, and only if, $H_\alpha(P) = H_\beta(Q)$.
+
+  \begin{claim}
+    $f$ is well-defined, $f$ is a bijection.
+  \end{claim}
+  \begin{proof}
+    We first show that for each $P \in \mathcal{P}$ there is exactly one $Q \in
+    \mathcal{Q}$ such that $H_\alpha (P) = H_{\beta}(Q)$. Let $P \in
+    \mathcal{P}$. Then there exists $h_P$ such that $h_P(\vec{c}) = 1$ if, and
+    only if, for all $h \in H_\alpha(P)$ such that $h(\vec{c}) = 1$. The gate
+    $h_P$ has support of size $k$. So $h()$
+
+    there exists $\vec{x} \in P$ such that $\vec{c}\in L^{\alpha}(\vec{x})$.
+  \end{proof}
+
+  \begin{claim}
+    $F(M_{\gamma}) = F(M_{\gamma})$
+  \end{claim}
+  \begin{proof}
+    Let $h$ be a gate defined as follows. $L(h) : I \times J \ra G$ such that
+    $L(h)(i,j) = h_P$ if, and only if, $(i, j) \in P$. $M_{\gamma} $
+  \end{proof}
+\end{proof}
+  
+
+\section{Pebble Game on Circuits}
+
+\begin{definition}[Game]
+  Let $\BB$ be a basis, $k \in \nats$, $\mathcal{A}$ and $\mathcal{B}$ be
+  structures of size $n$, and let $G \leq \sym_A$. A round of the game proceeds
+  as follows.
+
+  \begin{itemize}
+    
+  \item Spoiler picks up $m \leq k$ pebbles. Spoiler picks $F \in \BB$. Let $I =
+    \ind(F)$ and $S := \{\overline{\SP}(K) : K \subseteq A, \vert K \vert \leq
+    k\}$. Spoiler picks $M : I \ra S$ and $\mathcal{P}$ a partition of $I$ such
+    that
+    \begin{enumerate}
+    \item $\stab_G(\underline{u}) \subseteq \stab_G(\mathcal{P})$, and
+    \item $\sigma M \sim M$, for all $\sigma \in \stab_G(\overline{u})$.
+    \end{enumerate}
+
+  \item Duplicator picks $\delta : \mathcal{A} \ra \mathcal{B}$ a bijection such
+    that $\delta (\overline{u}) = \overline{v}$. Duplicator picks $\mathcal{R}$
+    and $\mathcal{S}$ partitions of $I$ and a bijection $f : \mathcal{R} \ra
+    \mathcal{S}$ such that for all $\gamma : \mathcal{R} \ra \{0,1\}$,
+    $F(M^{\gamma}_{\mathcal{R}}) = F(M^{\gamma f^{-1}}_{\mathcal{S}})$.
+
+  \item Spoiler picks $R \in \mathcal{R}$, $a \in R$ and $b \in f(R)$ and places
+    pebbles on $M(a)$ and $\delta (M(b))$.
+    
+  \end{itemize}
+    
+\end{definition}
+
+\begin{lem}
+  Spoilers Game
+\end{lem}
+\begin{proof}
+  Let $g$ be the gate of disagreement. Let $\alpha \in [n]^{\underline{A}}$. Let
+  $F := \Sigma(g)$, $I = \ind (g)$, and let $M : I \ra D$ be defined by $M(a) :=
+  \consp(L(g)(a))$. For $H$ an orbit in $H_g$ let $P_H := \{a \in I : L(g)(a)
+  \in H\}$. Let $\mathcal{P}$ be the set of $P_H$. Let $M^{\alpha{A}} : I \ra D$
+  be defined by $M^{\alpha A} (a) = \alpha^{-1} |_{M(a))}$.
+
+  \begin{claim}
+    Conditions (i) and (ii) are satisfied.
+  \end{claim}
+
+  Let us assume duplicator has defined a bijection $\gamma : \mathcal{A} \ra
+  \mathcal{B}$ such that $\gamma (\overline{u}) = \overline{v}$. Let $\beta :=
+  \alpha \gamma^{-1}$. Let $\mathcal{R}$ and $\mathcal{S}$ be partitions of $I$
+  that refine $\mathcal{P}$.
+
+  Suppose it is the case that for each $P_H \in \mathcal{P}$, for all $R \in
+  \mathcal{R}$ such that $R \subseteq P_H$ and all $a \in R$, $b \in f(R)$,
+  $L^{\alpha \mathcal{A}}(g)(a) = L^{\beta \mathcal{B}}(g)(b)$. Then let
+  $\delta: R \ra \{0,1\}$ be defined such that $\delta (R) = 1$ if, and only if,
+  there exists $a \in R$ such that $L^{\alpha \mathcal{A}}(g)(a) = 1$. Then
+  $L^{\alpha \mathcal{A}}(g) = M^\delta_{\mathcal{R}}$. Similarly....
+
+  Suppose it is the case that there exists $P_H$, $R \in \mathcal{R}$ such that
+  $R \subseteq P_H$ and there exists $a \in R$ and $b \in f(R)$, such that
+  $L^{\alpha \mathcal{A}}(g)(a) \neq L^{\beta \mathcal{B}}(g)(b)$. Then pebble.
+\end{proof}
+
+\begin{lem}
+  Let $T$ be a set of gates. Let $S \subseteq [n]$. There exists gate
+  $h_{T^{S}}$ such that $S$ supports $h_{T^S}$ and $[h_{T^S}]_{\alpha
+    \mathcal{A}} = 1$ if, and only if, $T^S = \Tp^S(\BB, \mathcal{A},
+  \alpha(\vec{S})$.
+\end{lem}
+\begin{proof}
+  
+\end{proof}
+
+\begin{lem}
+  Duplicators Game
+\end{lem}
+\begin{proof}
+  Suppose spoiler has done it.
+
+  Duplicator picks any $\gamma : \mathcal{A} \ra \mathcal{B}$ such that
+  $\gamma(\overline{u}) = \overline{v}$. Let $\Tp (\BB, \mathcal{A}, \vec{x}) =
+  \{h : \vec{x} \in \vec{\EV}^{\mathcal{A}}_h\}$. Let $T = \Tp (\BB,
+  \mathcal{A}, \vec{x})$ then let $T^{\vec{a}} = \{h \in T : \consp(h) =
+  \vec{a}, \,\,\, \vec{x}\vec{a}^{-1} \in \EV_h \}$. Let $h_{T^{\vec{a}}}$ be
+  such that $\consp(h) = \vec{a}$ and $[h_{T^{\vec{a}}}]_{\alpha \mathcal{A}} =
+  1$ if, and only if, $T^{\vec{a}} = \Tp^{\vec{a}}(\BB, \mathcal{A},
+  \alpha(\vec{a}))$.
+
+  Let $R_{P, T} := \{a \in I : \Tp^{M(a)}(\BB, \mathcal{A}, \alpha (M(a))) =
+  T^{M(a)}\}$. Let $S_{P, T} := \{a \in I : \Tp(\BB, \mathcal{B}, \gamma
+  \alpha^{-1}_{M(a)}) = T\}$.
+
+  Let $f : \mathcal{R} \ra \mathcal{S}$ be defined by $f(R_{P, T}) = S_{P, T}$.
+
+  \begin{claim}
+    $f$ is a bijection.
+  \end{claim}
+
+  % Let
+
+  % Let $h_a := h_T$ where $h_T$ is such that $[h_T]_{\alpha \mathcal{A}}$ if,
+  % and
+  % only if, $\Tp(\BB, \mathcal{A}, \alpha |_{\consp(h_T)}) = T$, and $T = \Tp
+  % (\BB, \mathcal{A}, \alpha^{-1} |_{M(a)})$.
+
+  Let $\delta : \mathcal{R} \ra \{0,1\}$. Let $\Rho_\delta(P) = \{T :
+  \delta(R_{P, T}) = 1\}$. Let $h^\delta_a := \bigwedge_{T \in \Rho_\delta(P)}
+  h_{T^{M(a)}}$, where $P \in \mathcal{P}$ such that $a \in P$.
+
+  Let $g_\delta$ be such that $\Sigma (g_\delta) = F$, $L(g_{\delta})(a) =
+  h^{\delta}_a$.
+  
+  \begin{claim}
+    $g_{\delta}$ is sufficiently symmetric.
+  \end{claim}
+
+  Then $[L(g_{\delta})(a)]_{\alpha \mathcal{A}} = 1$ if, and only if,
+  $[h^{\delta}_a]_{\alpha \mathcal{A}} = 1$ if, and only if, there exists $T$
+  such that $\delta (R_{P, T}) = 1$ and $[h_{T^{M(a)}}]_{\alpha \mathcal{A}} =
+  1$ if, and only if, exists $T$ such that $\delta(R_{P, T}) = 1$ and
+  $\consp(h_{T^{M(a)}}) = M(a)$ and $T^{M(a)} = \Tp^{M(a)}(\BB, \mathcal{A},
+  \alpha(M(a)))$ if, and only if, exists $T$ such that $\delta(R_{P, T}) = 1$
+  and $\consp(h_{T^{M(a)}}) = M(a)$ and $a \in R_{P, T}$.
+
+  It follows that $[L(g_{\delta})(a)]_{\alpha \mathcal{A}} =
+  M^{\delta}_{\mathcal{R}}(a)$ for all $a \in I$.
+
+  Similarly, $[L(g_{\delta})(a)]_{\alpha \gamma^{-1}\mathcal{B}} = 1$ if, and
+  only if, $[h^{\delta}_a]_{\alpha \gamma^{-1}\mathcal{B}} = 1$ if, and only if,
+  there exists $T$ such that $\delta(R_{P, T}) = 1$ and $[h_{T^{M(a)}}]_{\alpha
+    \gamma^{-1} \mathcal{B}} = 1$ if, and only if, exists $T$ such that
+  $\delta(R_{P, T}) = 1$
+  
+
+ 
+\end{proof}
+
+\begin{lem}
+  Duplicators Game (2)
+\end{lem}
+\begin{proof}
+  Suppose $(\mathcal{A}, \vec{a}) \equiv^{\BB, k}_G (\mathcal{B}, \vec{b})$.
+  Spoiler does his thing.
+
+  Duplicator picks $\gamma: \mathcal{A} \ra \mathcal{B}$ that fixes the pebbles
+  and such that for all $P \in \mathcal{P}$, Let $C^A_P = \{\Tp(G, \mathcal{A},
+  (M^{\alpha}(a))) : a \in P\}$ $C^B_P = \{\Tp(G, \mathcal{B}, M^{\gamma
+    \alpha}(a)): a \in P\}$.
+
+  Let $h_P = \bigvee_{a \in P, T \in C^A_P} h^{M(a)}_T$.
+ 
+  \begin{claim}
+    $\consp_G(h_P) \subseteq \alpha(\vec{a})$.
+  \end{claim}
+
+  \begin{claim}
+    $[h_P]_{\alpha \mathcal{A}} = [h_P]_{\alpha \gamma^{-1}\mathcal{B}}$ if, and
+    only if, $C^A_P = C^B_P$.
+  \end{claim}
+
+  We conclude that if there is no $\gamma$ such that $C^A_P = C^B_P$ then we
+  arrive at a contradiction. Let $C := C^A_P = C^B_P$.
+
+  Let $C_A, C_B : I \ra C$ be colourings of $I$ such that $C_A(a) = T$ if, and
+  only if, $[h^{M(a)}_T]_{\alpha \mathcal{A}} = 1$ and $C_B(b) = T$ if, and only
+  if, $[h^{M(a)}_T]_{\alpha \gamma^{-1} \mathcal{B}} = 1$.
+
+  Let $\delta : C \ra \{0,1\}$. Let $h^\delta_{a} := \bigvee_{T \in C, \delta
+    (T) = 1} h^{M(a)}_T$. Let $L(g^\delta)(a) = h^{\delta}_a$.
+
+  \begin{claim}
+    $\consp_G (g^{\delta}) \subseteq \alpha(vec{a})$
+  \end{claim}
+
+  Let $M^{\delta}_{C_A} : I \ra \{0,1\}$, $M^{\delta}_{C_A}(a) = 1$ if, and only
+  if, there exists $T \in C$ such that $\delta(T) = 1$ and $C_A(a) = T$.
+
+  Then $L^{\alpha \mathcal{A}}(g^{\delta})(a) = 1$ if, and only if, there exists
+  $T \in C$ such that $\delta (T) = 1$ and $[h^{M(a)}_T]_{\alpha \delta} = 1$
+  if, and only if, exists $T \in C$, $\delta(T) = 1$ and $C_A(a) = T$ if, and
+  only if, $M^\delta_{C_A}(a) = 1$.
+
+  Similarly $L^{\beta \mathcal{B}}(g^{\delta})$ if, and only if, there exists $T
+  \in C$ such that $\delta (T) = 1$ and $[h^{M(a)}_T]_{\alpha \delta} = 1$ if,
+  and only if, there exists $T \in C$, $\delta(T) = 1$, $C_B(a) = T$ if, and
+  only if, $M^{\delta}_{C_B}(a) = 1$.
+
+  We have from the assumption that $F(L^{\beta \mathcal{A}}) = F(L^{\alpha
+    \mathcal{B}})$, and so $F(M^\delta_{C_A}) = F(M^{\delta}_{C_B})$.
+
+
+  Now spoiler picks $P \in \mathcal{P}$ and $a, b \in P$ such that $C_A(a) =
+  C_B(b)$. Note that $M^\alpha(a)$ and $M^\beta(b)$ have the same type. It
+  follows that $(\mathcal{A}, M^{\alpha}(a)) \equiv (\mathcal{B}, M^{\beta}(b))$.
+
+
+
+
+\end{proof}
+
+\end{document}
+
