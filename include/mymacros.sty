@@ -10,6 +10,9 @@
 \newcommand{\setop}{\bd{\oper}}
 \newcommand{\setquant}{\bd{Q}}
 \newcommand{\ar}{\logic{Ar}}
+\newcommand{\assign}[2]{[#1 \mapsto #2 \,]}
+\newcommand{\exassign}[3]{#1^{#3}_{#2}}
+\newcommand{\lassign}[2]{#2 / #1}
 
 % BASIC MATHS
 \newcommand{\reals}{\mathbb{R}} \newcommand{\nats}{\mathbb{N}}
@@ -36,11 +39,13 @@
 \newcommand{\arity}{\ensuremath{\mathrm{arty}}}
 
 % LOGIC
-\newcommand{\fin}{\logic{fin}}
+\newcommand{\fin}[1]{\logic{fin}{[#1]}}
 \newcommand{\ewidth}[1]{\ensuremath{\mathrm{width}}(#1)\xspace}
 \newcommand{\width}{\ensuremath{\mathrm{wdth}}\xspace}
 \newcommand{\numwidth}{\ensuremath{\mathrm{nwdth}}\xspace}
 \newcommand{\cl}[1]{\mathrm{cl}(#1)}
+\newcommand{\asgn}[2]{\logic{asgn}(\gamma, \mathcal{A})}
+\newcommand{\ext}[2]{#1 \triangleleft#2}
 \newcommand{\free}[1]{\mathrm{free}(#1)}
 \newcommand{\FPC}{\logic{FPC}}
 \newcommand{\FO}{\logic{FO}} 
@@ -53,6 +58,7 @@
 \newcommand{\FOc}{\logic{FO+C}}
 \newcommand{\CPT}{\logic{CPT}}
 \newcommand{\CPTC}{\logic{CPTC}}
+\newcommand{\infcount}{\mathcal{C}^\omega}
 
 % LOGIC OPERATORS
 \newcommand{\AND}{\logic{AND}}
@@ -83,6 +89,11 @@
 \newcommand{\sortstab}{\text{\textbf{SortStab}}}
 \newcommand{\inv}{\text{\textbf{inv}}} 
 \newcommand{\aut}{\text{\textbf{Aut}}}
+\newcommand{\minorb}[1]{\logic{minorb}(#1)}
+\newcommand{\graph}[1]{\logic{graph}(#1)}
+\newcommand{\lab}[2]{\logic{col}_{#1}(#2)}
+\newcommand{\vatoms}[2]{#1[#2]}
+\newcommand{\atoms}[1]{\logic{atoms}(#1)}
 
 \newcommand{\std}{\text{\textbf{std}}}
 \newcommand{\rank}{\text{\textbf{rk}}} 
@@ -151,3 +162,14 @@
 
 
 \newcommand{\exlogic}[2]{#1 (\widetilde{#2})}
+
+\newcommand{\maxnum}[2]{(#1 + 1)^{#2} - 1}
+\newcommand{\numdomain}[1]{[#1]_0}
+\newcommand{\numdompow}[2]{[#1]^{#2}_0}
+\newcommand{\maxnumdom}[2]{[\maxnum{#1}{#2}]_0}
+
+
+% NAMES
+
+\newcommand{\lindstrom}{Lindstr\"{o}m}
+\newcommand{\gradel}{Gr\"{a}del}

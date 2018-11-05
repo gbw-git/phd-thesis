@@ -1,63 +1,92 @@
 %!TEX root = ../main/thesis.tex
 \documentclass[../main/thesis.tex]{subfiles}
 \begin{document}
-We have thus far shown how to translate formulas of $\FPR$ into equivalent
-families of circuits. In this section we show how to translate families of
-circuits into equivalent formulas -- completing the proof of the main theorem of
-this paper. More explicitly, in this section we show how to construct for every
-$P$-uniform family of transparent symmetric rank-circuits a corresponding $\FPR$
-formula defining the same query. In Section~\ref{sec:evaluating-circuits} we
-develop the theory needed for this construction and in
+% We have thus far shown how to translate formulas of $\FPR$ into equivalent
+% families of circuits. In this section we show how to translate families of
+% circuits into equivalent formulas -- completing the proof of the main theorem
+% of this paper. More explicitly, in this section we show how to construct for
+% every $P$-uniform family of transparent symmetric rank-circuits a
+% corresponding $\FPR$ formula defining the same query. In
+% Section~\ref{sec:evaluating-circuits} we develop the theory needed for this
+% construction and in Section~\ref{sec:translating-formulas-to-FPR} we use this
+% theory to explicitly construct the formula.
+
+In this chapter we translate families of symmetric circuits to appropriate
+formulas. In particular, we prove the following proposition.
+
+\begin{prop}
+  Let $\setop$ be a set of generalised operators that act on formulas. Let $\BB
+  := \BB_{\setop} \cup \BB_{\std}$. Let $\rho$ be a vocabulary. For each
+  $\PT$-uniform family of transparent symmetric $(\BB, \rho)$-circuits
+  $\mathcal{C} = (C_n)_{n \in \nats}$ there is a formula $\theta \in
+  \FPC(\setop)[\rho]$ such that $\mathcal{C}$ and $\theta$ define the same
+  query.
+  \label{prop:translate-circuits-to-formulas}
+\end{prop}
+
+In Section~\ref{sec:evaluating-circuits} we develop the theory needed to
+construct a formula $\theta$ from a family of circuits $\mathcal{C}$ and in
 Section~\ref{sec:translating-formulas-to-FPR} we use this theory to explicitly
-construct the formula.
+construct the $\theta$, and hence complete the proof of
+Proposition~\ref{prop:translate-circuits-to-formulas}
 
-\subsection {Evaluating Circuits}\label{sec:evaluating-circuits}
-In this subsection we let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$ denote a
-fixed family of polynomial-size symmetric $(\BB,\rho)$-circuits with unique
-labels that compute a $q$-ary query. Let $n_0$ and $k$ be the constants in the
-statement of Lemma~\ref{lem:row-column-supports}, and fix an $n > n_0$ and a
-$\rho$-structure $\mathcal{A}$ with universe $U$ of size $n$. Let $C_n = \langle
-G, \Omega, \Sigma, \Lambda, L \rangle$.
+\subsection {Evaluating Circuits}
+\label{sec:evaluating-circuits}
 
-We first introduce some notation. We are often interested in the case where two
-injections can be combined into a single injection over their combined domains.
-We say that two injections $f$ and $q$ are \emph{compatible} if we can define an
-injection over the union of their domains that agrees with both $f$ and $q$ on
-their respective domains. We formalise this notion in the following definition.
+% In this In this subsection we let $\mathcal{C} = (C_n)_{n \in \mathbb{N}}$
+% denote a fixed family of polynomial-size symmetric $(\BB,\rho)$-circuits with
+% unique labels that compute a $q$-ary query. Let $n_0$ and $k$ be the constants
+% in the statement of Lemma~\ref{lem:row-column-supports}, and fix an $n > n_0$
+% and a $\rho$-structure $\mathcal{A}$ with universe $U$ of size $n$. Let $C_n =
+% \langle G, \Omega, \Sigma, \Lambda, L \rangle$.
 
-\begin{definition}
-	Let $f \in Y^{\underline{X}}$ and $q : Z^{\underline{W}}$. We say that $f$ is
-  \emph{compatible} with $q$, and we write $f \sim q$, if for all $a \in X \cap
-  W$, $f(a) = q(a)$ and for all $a \in X \setminus W$ and $b \in W \setminus X$,
-  $f(a) \neq q(b)$.
-\end{definition}
+% We first introduce some notation. We are often interested in the case where
+% two injections can be combined into a single injection over their combined
+% domains. We say that two injections $f$ and $q$ are \emph{compatible} if we
+% can define an injection over the union of their domains that agrees with both
+% $f$ and $q$ on their respective domains. We formalise this notion in the
+% following definition.
 
-It is also useful to have some notation for combining two compatible functions.
-Let $f \in Y^{\underline{X}}$ and $q : Z^{\underline{W}}$ be compatible
-injections. Define the combination $(f | q): X \cup W \rightarrow Y \cup Z$ by
+% \begin{definition}
+%   Let $f \in Y^{\underline{X}}$ and $q : Z^{\underline{W}}$. We say that $f$
+%   is \emph{compatible} with $q$, and we write $f \sim q$, if for all $a \in X
+%   \cap W$, $f(a) = q(a)$ and for all $a \in X \setminus W$ and $b \in W
+%   \setminus X$, $f(a) \neq q(b)$.
+% \end{definition}
 
-\begin{align*}
-	(f \vert q) (x) =
-	\begin{cases}
-    f (x) & x \in X  \\
-    q (x) & x \in Y.
-	\end{cases}
-\end{align*}
+% It is also useful to have some notation for combining two compatible
+% functions. Let $f \in Y^{\underline{X}}$ and $q : Z^{\underline{W}}$ be
+% compatible injections. Define the combination $(f | q): X \cup W \rightarrow Y
+% \cup Z$ by
 
-We also introduce some other notation for combining functions. Let $f: X
-\rightarrow Y$ be an injection and $q: X \rightarrow Z$ be a function. We let
-$q_f : \img(f) \rightarrow Z$ be defined by $q_f(a) := q \circ f^{-1}(a)$ for
-all $a \in \img(f)$.
+% \begin{align*}
+% 	(f \vert q) (x) =
+% 	\begin{cases}
+%    f (x) & x \in X  \\
+%    q (x) & x \in Y.
+% 	\end{cases}
+% \end{align*}
+
+% We also introduce some other notation for combining functions. Let $f: X
+% \rightarrow Y$ be an injection and $q: X \rightarrow Z$ be a function. We let
+% $q_f : \img(f) \rightarrow Z$ be defined by $q_f(a) := q \circ f^{-1}(a)$ for
+% all $a \in \img(f)$.
 
 
-Let $\gamma \in [n]^{\underline{U}}$. We first show that the evaluation of a
-gate $g$ in $C_n$ depends only on those elements $\gamma$ maps to $\consp(g)$.
+% Let $\gamma \in [n]^{\underline{U}}$. We first show that the evaluation of a
+% gate $g$ in $C_n$ depends only on those elements $\gamma$ maps to $\consp(g)$.
+
+We now show that the evaluation of a gate in a symmetric circuit depends on the
+assignment to its support.
 
 \begin{lem}
-	Let $g$ be a gate in $C_n$. Let $\eta \in U^{\underline{\consp(g)}}$ and
-  $\gamma_1, \gamma_2 \in [n]^{\underline{U}}$ such that $\gamma^{-1}_1 \sim
-  \eta$ and $\gamma^{-1}_2 \sim \eta$. Then $L^{\gamma_1 \mathcal{A}}(g)$ and
-  $L^{\gamma_2 \mathcal{A}}(g)$ are isomorphic.
+  Let $\rho$ be a vocabulary and $\BB$ a basis. Let $C$ be a symmetric $(\BB,
+  \rho)$-circuit with unique labels of order $n$ and let $g$ be an internal gate
+  in $C$. Let $\mathcal{A} \in \fin{\rho, n}$. Let $\eta \in
+  A^{\underline{\consp(g)}}$ and $\gamma_1, \gamma_2 \in [n]^{\underline{A}}$
+  such that $\gamma^{-1}_1 \sim \eta$ and $\gamma^{-1}_2 \sim \eta$. Then
+  $L^{\gamma_1 \mathcal{A}}(g)$ and $L^{\gamma_2 \mathcal{A}}(g)$ are isomorphic
+  and $C[\gamma_1 \mathcal{A}](g) = C[\gamma_2 \mathcal{A}](g)$.
 	\label{lem:support-determines-evaluation}
 \end{lem}
 
@@ -66,45 +95,565 @@ gate $g$ in $C_n$ depends only on those elements $\gamma$ maps to $\consp(g)$.
   \gamma_2$. Moreover, since $\gamma^{-1}_1$ and $\gamma^{-1}_2$ are both
   consistent with $\eta$, it follows that $\pi$ must fix $\consp(g)$ pointwise.
   From the definition of a support, we have that $\pi g = g$, and so $L(g)$ is
-  isomorphic to $\pi L(g)$. Thus there exists $\lambda \in \aut(g)$ such that
-  such that $\pi L(g) = L(g) \lambda$, and so for all $x \in \ind(g)$,
+  isomorphic to $\pi L(g)$. Therefore there exists $\lambda \in \aut(g)$ such
+  that such that $\pi L(g) = L(g) \lambda$, and so for all $a \in \ind(g)$,
 	\begin{align*}
-		L^{\gamma_1 \mathcal{A}}(g) (x) & = C_n[\gamma_1 \mathcal{A}](L(g)(x))                    \\
-                                    & = C_n[\pi \gamma_1 \mathcal{A}][\pi L(g)(x)]            \\
-                                    & = C_n[\gamma_2 \mathcal{A}][L(g)(\lambda(a,b))] \\
-                                    & = L^{\gamma_2 \mathcal{A}}(g) (\lambda (a,b)),                 
+		L^{\gamma_1 \mathcal{A}}(g) (a) & = C[\gamma_1 \mathcal{A}](L(g)(a))                    \\
+                                    & = C[\pi \gamma_1 \mathcal{A}][\pi L(g)(a)]            \\
+                                    & = C[\gamma_2 \mathcal{A}][L(g)(\lambda(a))] \\
+                                    & = L^{\gamma_2 \mathcal{A}}(g) (\lambda (a)),                 
 	\end{align*}
 	and it follows that $L^{\gamma_1 \mathcal{A}}(g)$ and $L^{\gamma_2
-    \mathcal{A}}(g)$ are isomorphic.
+    \mathcal{A}}(g)$ are isomorphic and $C[\gamma_1 \mathcal{A}](g) = \Sigma(g)
+  (L^{\gamma_1 \mathcal{A}}(g)) = \Sigma(g) (L^{\gamma_2 \mathcal{A}}(g)) =
+  C[\gamma_2 \mathcal{A}](g)$.
 \end{proof}
 
-We associate with each gate $g$ in $C_n$ a set $\Gamma_g:= \{\gamma \in
-[n]^{\underline{U}} : C[\gamma \mathcal{A}](g) = 1 \}$. We also associate with
-each gate $g$ in $C_n$ a set $\EV_g \subseteq U^{\underline{\consp(g)}}$
-consisting of all assignments to the support of $g$ for which $g$ evaluates to
-true, i.e.\ $\EV_g := \{ \eta \in U^{\underline{\consp(g)}} : \exists \gamma \in
-\Gamma_g \, ,\eta \sim \gamma^{-1}\}$. It follows from
-Lemma~\ref{lem:support-determines-evaluation} that $\Gamma_g$ is entirely
-determined by $\EV_g$. In other words, the set of all bijections that cause $g$
-to evaluate to true is entirely determined by a set of assignments to the
-support of $g$. It is important to note that, from the support theorem and
-choice of $n$, each $\eta \in \EV_g$ has a constant-size domain, and as such
-$\EV_g$ gives us a succinct way of encoding $\Gamma_g$.
+For the remainder of this section let
+\begin{myitemize}
+\item $\setop$ be a fixed set of generalised operators,
+\item $\BB := \BB_{\setop} \cup \BS$,
+\item $\mathcal{C} = (C_n)_{n \in \nats}$ be a fixed polynomial-size family of
+  symmetric $(\BB,\rho)$-circuits with unique labels,
+\item $q$ be the arity of the query defined by $\mathcal{C}$,
+\item $n_0$ and $k$ be the constants in the statement of
+  Lemma~\ref{lem:row-column-supports},
+
+\item $n \in \nats$ be fixed such that $n > n_0$,
+\item $\mathcal{A} \in \fin{\rho, n}$ be some fixed structure, where $A$ denotes
+  the universe of $\mathcal{A}$, and
+\item $\langle G, \Omega, \Sigma, \Lambda, L \rangle := C_n$.
+\end{myitemize}
+
+Let $g \in G$. Let $\Gamma_g:= \{\gamma \in [n]^{\underline{A}} : C[\gamma
+\mathcal{A}](g) = 1 \}$. Let $\EV_g := \{ \eta \in A^{\underline{\consp(g)}} :
+\exists \gamma \in \Gamma_g \, ,\eta \sim \gamma^{-1}\}$. In other words
+$\Gamma_g$ consists of all those bijections that make $g$ evaluate to $1$ and
+$\EV_g$ consists of all those assignments to the support for $g$ for which $g$
+evaluates to $1$. It follows from Lemma~\ref{lem:support-determines-evaluation}
+that $\Gamma_g$ is entirely determined by $\EV_g$. It is important to note that,
+from the support theorem, each $\eta \in \EV_g$ has a constant-size domain, and
+as such $\EV_g$ gives us a succinct way of encoding $\Gamma_g$.
+
+For the remainder of this section fix some internal gate $g \in G$. Let $\tau :=
+(R, S, \zeta)$ be the vocabulary of $g$, where $R = \{R_1, \ldots, R_r\}$ and $S
+= \{s_1, \ldots, s_l\}$. For each $R_i \in R$ let $r_i$ denote the arity of
+$R_i$. For each $i \in [l]$ let $X_i$ be the $i$th sort in the universe of $g$.
+For each $h \in H_g$ and $R_i \in R$ we say \emph{$h$ is in $R_i$} if there is
+some $\vec{x}$ such that $(\vec{x}, R_i) \in \ind(g)$. If $h$ is in $R_i$ then
+for each $j \in [r_i]$ let $\lab{j}{h}$ be the $j$th element of the tuple
+$\vec{x}$ such that $L(g)(\vec{x}, R_i) = h$. For each $x \in \universe{g}$ we
+abbreviate a few commonly used symbols, and let $\consp(x) :=
+\consp_{\spstab{g}}(x)$, $\orb(x) = \orb_{\spstab{g}}(x)$, and $\stab(a) =
+\stab_{\spstab{g}}(x)$.
+
+For the remainder of the subsection we fix $\eta \in A^{\underline{\consp(g)}}$.
+For each $h \in H_g$ let $A_h := \{\alpha \in A^{\underline{\consp(h)}} : \eta
+\sim \alpha\}$ be the set of assignments to the support of $h$ that are
+compatible with $\eta$. We should also like to consider sets of assignments to
+the supports of elements in the universe of $g$. For each $x \in \universe{g}$
+let $A_x:= \{\alpha \in A^{\underline{\consp(x)}} : \eta \sim \alpha\}$.
+
+In this section we aim to define a structure and show that for any $\gamma \in
+[n]^{\underline{A}}$ such that $\gamma^{-1} \sim \eta$ this structure is
+isomorphic to $L^{\gamma \mathcal{A}}(g)$. In the next section we show that this
+structure is definable in an appropriate logic, and use this result to define a
+formula that evaluates $g$, and hence, using the fixed-point operator, we
+recursively evaluate the circuit in the logic. We will first define a structure
+$M$ and then, by taking appropriate quotients, we will define a structure
+$M_\equiv$. We finally show that $M_{\equiv}$ is isomorphic to $L^{\gamma
+  \mathcal{A}}(g)$.
+
+We now define the universe of $M$. For each $i \in [l]$ let $\minorb{i} :=
+\{\min (\orb(x)) : x \in X_i\}$ and let $I_{i} := \{(x, \alpha): x \in \minorb
+{i}, \alpha \in A_x\}$. Let $\vec{I} := (I_1, \ldots, I_{l})$. Before define $M$
+we need to establish 
+
+We define an action of $\spstab{g}$ on the set of all injections from any subset
+of $[n]$ to $A$ that are compatible with $\eta$. For each $\sigma \in
+\spstab{g}$, $S \subseteq [n]$, and $\alpha \in A^{\underline{S}}$, let $\sigma
+\cdot \alpha := \alpha \circ (\restr{\sigma}{\dom(\alpha)})^{-1}$.
+
+\begin{lem}
+  Let $i \in [r]$ and for each $j \in [r_i]$ let $(x_j, \alpha_j) \in I_{R_i,
+    j}$. There exists $\sigma_1, \ldots, \sigma_{r_i} \in \spstab{g}$ such that
+  \vspace{-1.5mm}
+  \begin{myenum}
+  \item\label{lem:defining-h-from-index--obj:1}each pair of functions in
+    $\{\sigma_j \alpha_j : j \in [r_i]\}$ are compatible; and
+  \item\label{lem:defining-h-from-index--obj:2}if $h := L(g)((\sigma_1 x_1,
+    \ldots, \sigma_{r_i} x_{r_i}), R_i)$, $\epsilon := \restr{(\sigma_1 \alpha_1
+      \vert \ldots \vert \sigma_{r_i} \alpha_{r_i})}{\consp(h)}$, and $\gamma'
+    := (\Pi^{\gamma}_\epsilon)^{-1}\gamma$, then for all $j \in [r_i]$ we have
+    $\Pi^{\gamma'}_{\alpha_j}(x_j) = \sigma_j (x_j) = \lab{j}{h}$.
+  \end{myenum}
+  \label{lem:defining-h-from-index}
+\end{lem}
+\begin{proof}
+  Let $i \in [r]$ and for each $j \in [r_i]$ let $(x_j, \alpha_j) \in I_{R_i,
+    j}$. For each $j \in [r_j]$ we define an injection $\bar{\sigma}_j :
+  \dom(\alpha_j) \ra [n]$ by induction as follows. Let $u \in \dom (\alpha_1)$.
+  If $u \in \dom(\alpha_1) \setminus \consp(g)$ let $\bar{\alpha}_1 (u)$ be the
+  $k_u$th element of $[n] \setminus \consp(g)$, where $k_u$ is such that $u$ is
+  the $k_u$th element of $\dom(\alpha_1) \setminus \spstab{g}$. Otherwise, let
+  $\bar{\sigma}_1 (u) := u$. For $j > 1$ let $\bar{\sigma}_j$ be defined as
+  follows. Let $u \in \dom (\alpha_j)$. If $u \in \consp(g)$ then let
+  $\bar{\sigma}_j(u) := u$. Otherwise, if there exists $j' < j$ and $u' \in \dom
+  (\alpha_{j'})$ such that $\alpha_j (u) = \alpha_{j'}(u')$, then let $j'$ be
+  the minimal such element and let $\bar{\sigma}_j (u) :=
+  \bar{\sigma}_{j'}(u')$. Otherwise, let $\bar{\sigma}_j (u)$ be the $((j - 1)k
+  + k_u)$th element of $[n] \setminus \consp(g)$, where $k_u$ is such that $u$
+  is the $k_u$th element of $[n] \setminus \spstab{g}$.
+
+  We now prove by induction that for all $j \in [r_i]$, $\bar{\sigma}_j$ is an
+  injection and for all $j' < j$, $\alpha_j \bar{\sigma}^{-1}_j$ and
+  $\alpha_{j'} \bar{\sigma}^{-1}_{j'}$ are compatible. Let $j \in [r_i]$.
+  Suppose $j = 1$. Let $u, v \in \dom(\alpha_1)$ be such that $\bar{\sigma}_1(u)
+  = \bar{\sigma}_1(v)$. Suppose $u \in \consp(g)$. Then $v \in \consp(g)$, as if
+  $v \not\in \consp(g)$ then, from the definition of $\bar{\sigma}_1$, we have
+  $\bar{\sigma}_1 (v) \not\in \consp(g)$, but $\bar{\sigma}_1(v) =
+  \bar{\sigma}_1(u) = u \in \consp(g)$. It follows that $u = \bar{\sigma}_1(u) =
+  \bar{\sigma}_1(v) = v$. Otherwise, suppose $u \not\in \consp(g)$. Then $v
+  \not\in \consp(g)$. We have $\bar{\sigma}_1(u)$ is the $k_u$th element of $[n]
+  \setminus \consp(g)$, where $k_u$ is such that $u$ is the $k_u$th element of
+  $\dom(\alpha_1) \setminus \consp(g)$ and $\bar{\sigma}_1(v)$ is the $k_v$th
+  element of $[n] \setminus \consp(g)$ where $k_v$ is such that $v$ is the
+  $k_v$th element of $\dom(\alpha_1) \setminus \consp(g)$. But
+  $\bar{\sigma}_1(u) = \bar{\sigma}_1 (v)$ and so $k_u = k_v$ and $u = v$. It
+  follows that $\bar{\sigma}_1$ is an injection. This completes the proof of the
+  base case.
+
+  Suppose $j > 1$ and suppose the induction hypothesis holds for all $j' < j$.
+  It can be shown, following a very similar approach as for the base case, that
+  $\bar{\sigma}_j$ is an injection. Let $j' < j$. We first prove a claim.
+  
+  \begin{claim}
+    Let $u \in \dom(\alpha_j \bar{\sigma}^{-1}_j)$ and $u' \in
+    \dom(\alpha_{j'}\bar{\sigma}^{-1}_{j'})$. Then $\alpha_j
+    (\bar{\sigma}^{-1}_j(u)) = \alpha_{j'}(\bar{\sigma}^{-1}_{j'}(u'))$ if, and
+    only if, $u = u'$.
+    \label{claim:compatibility}
+  \end{claim}
+  \begin{proof}
+    \begin{myenum}
+    \item[`$\Rightarrow$'] Suppose $\alpha_j (\bar{\sigma}^{-1}_j(u)) =
+      \alpha_{j'}(\bar{\sigma}^{-1}_{j'}(u'))$. If $u \in \consp(g)$ then
+      $\eta(u') = \alpha_{j'}(u') = \alpha_{j'} (\bar{\sigma}^{-1}_{j'}(u')) =
+      \alpha_j (\bar{\sigma}^{-1}_j(u)) = \alpha_j(u) = \eta (u)$ and, since
+      $\eta$ is an injection, it follows that $u = u'$. Suppose $u \not\in
+      \consp(g)$. Since $\alpha_{j}(\bar{\sigma}^{-1}_{j}(u)) =
+      \alpha_{j'}(\bar{\sigma}^{-1}_{j'}(u'))$, it follows that there exists a
+      minimal $j'' < j$ and $u'' \in \dom(\alpha_{j''})$ such that $
+      \alpha_{j}\bar{\sigma}^{-1}_{j}(u) = \alpha_{j'}
+      \bar{\sigma}^{-1}_{j'}(u') = \alpha_{j''}(u'')$. Then $u =
+      \bar{\sigma}_j(\bar{\sigma}^{-1}_j (u)) = \bar{\sigma}_{j''}(u'') =
+      \bar{\sigma}_{j'}(\bar{\sigma}^{-1}_{j'} (u')) = u'$.
+
+    \item[`$\Leftarrow$'] Suppose $u = u'$. Suppose that both $u \not\in
+      \consp(g)$ and for all $j'' < j$ and all $u'' \in \dom(\alpha_{j''})$ we
+      have $\alpha_j(\bar{\sigma}^{-1}_j(u)) \neq \alpha_{j''}(u'')$. Then $u >
+      u_1$, where $u_1$ is the $(j-1)k$th element in $[n] \setminus \consp(g)$.
+      Let $j'' < j$ and $u'' \in \dom(\alpha_{j''})$. If $u'' \in \consp(g)$
+      then $u \neq u'' = \bar{\sigma}_{j''}(u'')$. Otherwise $u'' \not\in
+      \consp(g)$ and it can be shown that $\bar{\sigma}_{j''}(u'') \leq u_2 \leq
+      u_1$, where $u_2$ is the $((j'' - 1)k + k)$th element of $[n] \setminus
+      \consp(g)$. It follows that $\bar{\sigma}_{j''}(u'') \leq u_1< a$ and so
+      $u \neq \bar{\sigma}_{j''}(u'')$. Thus, for all $j'' \leq j$ we have $u
+      \not\in \img(\sigma_{j''})$. Then $u \not\in \dom(\alpha_{j'}
+      \bar{\sigma}^{-1}_{j'})$. But this is a contradiction as $u = u' \in
+      \dom(\alpha_{j'} \bar{\sigma}^{-1}_{j'})$.
+
+      It follows that either $u \in \consp(g)$ or there exists $j'' < j$ and
+      $u'' \in \dom(\alpha_{j''})$ such that $\alpha_j(\bar{\sigma}^{-1}_j(u)) =
+      \alpha_{j''}(u'')$. If $u \in \consp(g)$ then $\bar{\sigma}_{j}(u) = u =
+      u' = \bar{\sigma}_{j'}(u')$ and so $\alpha_j \bar{\sigma}^{-1}_j(u) =
+      \alpha_j (u) = \eta (u) = \eta (u') = \alpha_{j'}(u') =
+      \alpha_{j'}\bar{\sigma}^{-1}_{j'}(u')$. Suppose $u \not\in \consp(g)$. Let
+      $j'' < j$ be minimal such that there exists $u'' \in \dom(\alpha_{j''})$
+      such that $\alpha_{j} (\bar{\sigma}^{-1}_{j}(u)) = \alpha_{j''} (u'')$.
+      Then $u' = u = \bar{\sigma}_j (\bar{\sigma}^{-1}_{j}(u)) =
+      \bar{\sigma}_{j'}(u'')$. It follows that $u'' \in
+      \dom(\alpha_{j'}\bar{\sigma}^{-1}_{j'})$. From the induction hypothesis we
+      have that $\alpha_{j'}\bar{\sigma}^{-1}_{j'}$ and
+      $\alpha_{j''}\bar{\sigma}^{-1}_{j''}$ are compatible, and so
+      $\alpha_{j'}\bar{\sigma}^{-1}_{j'}(u') =
+      \alpha_{j''}\bar{\sigma}^{-1}_{j''}(\bar{\sigma}_{j''}(u'')) =
+      \alpha_{j''}(u'') = \alpha_{j} (\bar{\sigma}^{-1}_{j}(u))$.
+    \end{myenum}
+  \end{proof}
+
+  Let $u \in \dom(\alpha_{j}\bar{\sigma}^{-1}_j) \cap
+  \dom(\alpha_{j'}\bar{\sigma}^{-1}_{j'})$. Then, from
+  Claim~\ref{claim:compatibility}, it follows that $\alpha_j
+  (\bar{\sigma}^{-1}_j(u)) = \alpha_{j'}(\bar{\sigma}^{-1}_{j'}(u))$. Let $u \in
+  \dom(\alpha_{j}\bar{\sigma}^{-1}_j) \setminus
+  \dom(\alpha_{j'}\bar{\sigma}^{-1}_{j'})$ and $u' \in
+  \dom(\alpha_{j'}\bar{\sigma}^{-1}_{j'}) \setminus
+  \dom(\alpha_{j}\bar{\sigma}^{-1}_j)$. Then, from
+  Claim~\ref{claim:compatibility}, since $u \neq u'$ it follows $\alpha_j
+  (\bar{\sigma}^{-1}_j(u)) \neq \alpha_{j'}(\bar{\sigma}^{-1}_{j'}(u'))$. We
+  conclude that $\alpha_{j}\bar{\sigma}^{-1}_{j}$ and
+  $\alpha_{j'}\bar{\sigma}^{-1}_{j'}$ are compatible. For each $j \in [r_i]$ let
+  $\sigma_j \in \spstab{g}$ be an extension of $\bar{\sigma}_j$. Notice that
+  $\sigma_j \cdot \alpha_j = \alpha_j \bar{\sigma}^{-1}_j$. This suffices to
+  prove Statement~\ref{lem:defining-h-from-index--obj:1}.
+
+  We now prove Statement~\ref{lem:defining-h-from-index--obj:2}. Let $h :=
+  L(g)((\sigma_1 x_1, \ldots, \sigma_{r_i} x_{r_i}), R_i)$ and let $\epsilon :=
+  \restr{(\sigma_1 \alpha_1 \vert \ldots \vert \sigma_{r_i}
+    \alpha_{r_i})}{\consp(h)}$. Let $\gamma' :=
+  (\Pi^{\gamma}_\epsilon)^{-1}\gamma$. Let $j \in [r_i]$. We aim to show
+  $\Pi^{\gamma'}_{\alpha_j}(x_j) = \sigma_j (x_j)$. From Lemma
+  \ref{lem:support-determine-action} it suffices to show that for all $u \in
+  \consp(x_j)$, $\Pi^{\gamma'}_{\alpha_j} (u) = \sigma_j (u)$. Let $u \in
+  \consp(x_j)$. We have from Lemmas~\ref{lem:support-containment}
+  and~\ref{lem:support-mapping} that $\sigma_j (u) \in \consp(\sigma_j (u)) =
+  \consp(\lab{j}{h}) \subseteq \consp(h) \cup \consp(g)$.
+
+  Suppose $\sigma_j (u) \in \consp(g)$. Then, since both
+  $\Pi^{\gamma'}_{\alpha_j}$ and $\sigma_j$ are in $\spstab{g}$, it follows that
+  $\Pi^{\gamma'}_{\alpha_j}(u) = u = \sigma_j(u)$. Otherwise, we have $\sigma_j
+  (u) \in \consp(h)$. Then $\Pi^{\gamma}_{\epsilon} (\sigma_j (u)) = \gamma
+  (\epsilon (\sigma_j(u))) = \gamma(\alpha_j \bar{\sigma}^{-1}_j (\sigma_j (u)))
+  = \gamma(\alpha_j (u))$. But then $\sigma_j (u) =
+  (\Pi^{\gamma}_{\epsilon})^{-1} \gamma (\alpha_j(u)) = \gamma' (\alpha_j(u)) =
+  \Pi^{\gamma'}_{\alpha_j} (u)$. The result follows.
+\end{proof}
+
+From Lemma~\ref{lem:defining-h-from-index} we can define a function $F$ that
+maps each tuple $(((x_1, \alpha_1), \ldots, (x_{r_i}, \alpha_{r_i})), R_i) \in
+\vatoms{\tau}{\vec{I}\,}$ to a sequence of permutations $(\sigma_1, \ldots,
+\sigma_{r_i})$ in $\spstab{g}$ satisfying the requirements in the statement of
+Lemma~\ref{lem:defining-h-from-index}.
+
+Let $M : \ind (\tau, I_1, \ldots , I_l) \ra \{0,1\}$ be defined as follows. For
+$(((a_1, \alpha_1), \ldots, (a_{r_i}, \alpha_{r_i})), R_i) \in \ind (\tau, I_1,
+\ldots , I_l)$ let $(\sigma_1, \ldots, \sigma_{r_i}) := F(((a_1, \alpha_1),
+\ldots, (a_{r_i}, \alpha_{r_i})), R_i)$. Let $h := L(g)((\sigma_1 a_1, \ldots,
+\sigma_{r_i} a_{r_i}), r_i)$ and $\epsilon := \restr{(\sigma_1 \alpha_1 \vert
+  \ldots \vert \sigma_{r_i} \alpha_{r_i})}{\consp(h)}$. Then $M(((a_1,
+\alpha_1), \ldots, (a_{r_i}, \alpha_{r_i})), R_i) = 1$ if, and only if,
+$\epsilon \in \EV_h$.
+
+\begin{lem}
+	Let $\gamma\in [n]^{\underline{A}}$ and $h \in H_g$. Then $\epsilon \in \EV_h$
+  if, and only if, $C[\gamma \mathcal{A}](\Pi^{\gamma}_{\epsilon} (h)) = 1$.
+  \label{lem:translate-EV-circuits}
+\end{lem}
+\begin{proof}
+  From the definition of $\EV_h$ it follows that $\epsilon \in \EV_h$ if, and
+  only if, there exists $\delta_{\epsilon} \in [n]^{\underline{A}}$ such that
+  $\delta^{-1}_{\epsilon} \sim \eta$, $\delta^{-1}_{\epsilon} \sim \epsilon$,
+  and $C[\delta_{\epsilon} \mathcal{A}](h) = 1$. Let $\pi_{\epsilon} := \gamma
+  \delta^{-1}_{\epsilon}$. Notice that $\pi \in \spstab{g}$ and $\pi_{\epsilon}
+  \delta_{\epsilon} = \gamma$. For $a \in \consp(h)$ we have $\gamma
+  (\epsilon(a)) = \pi_{\epsilon} \delta_{\epsilon} (\epsilon (a)) =
+  \pi_{\epsilon}(a)$ (the second equality follows from the fact that
+  $\delta^{-1}_{\epsilon} \sim \epsilon$ and so $\delta_{\epsilon} (\epsilon
+  (a)) = a$). It follows that for all $a \in \consp(h)$ we have
+  $\Pi^{\gamma}_\epsilon (a) = \gamma (\epsilon (a)) = \pi_{\epsilon}(a)$, and
+  so $\Pi^{\gamma}_{\epsilon}(h) = \pi_{\epsilon}(h)$. Thus
+  \begin{align*}
+    \epsilon \in \EV_h \iff C[\delta_{\epsilon} \mathcal{A}](h) = 1 
+    & \iff C[\pi_\epsilon \delta_{\epsilon} \mathcal{A}](\pi_{\epsilon} (h)) = 1 \\
+    & \iff C[\gamma \mathcal{A}](\pi_{\epsilon} (h)) = 1 
+      \iff C[\gamma \mathcal{A}](\Pi^{\gamma}_{\epsilon}(h) = 1.
+  \end{align*}
+  
+\end{proof}
+
+Let $\gamma \in [n]^{\underline{U}}$ such that $\eta \sim \gamma^{-1}$. Let $j
+\in [l]$. Let $P^{\gamma}_j: I_j \rightarrow A_j$ be defined by $P^{\gamma} (a,
+\alpha) := \Pi^{\gamma}_{\alpha}(a)$ for all $(a, \alpha) \in I_j$. Let
+$P^{\gamma} : \uplus_{j \in [l]} I_j \ra \uplus_{j \in [l]}A_j$ be defined for
+$(a, \alpha) \in \uplus_{j \in [l]} I_j$ such that $P^{\gamma}(a, \alpha) :=
+P^{\gamma}_j (a, \alpha)$ if $(a, \alpha) \in I_j$.
+
+\begin{lem}
+  \label{lem:permuting projections}
+  Let $(a, \alpha) \in \uplus_{j \in [l]} I_j$ and let $\gamma \in
+  [n]^{\underline{A}}$ be such that $\gamma^{-1} \sim \eta$. Let $\pi \in
+  \spstab{g}$. Then $\pi P^{\gamma}(a, \alpha) = P^{\pi \gamma}(a, \alpha)$.
+\end{lem}
+\begin{proof}
+	We have that $\pi P^{\gamma}(a, \alpha) = \pi \Pi^{\gamma}_{\alpha}(a)$ and
+  for all $b \in \consp(a)$, $\pi \Pi^{\gamma}_{\alpha}(b) = \pi \gamma
+  (\alpha(b)) = \Pi^{\pi \gamma}_{\alpha}(b)$. It follows that $\pi
+  P^{\gamma}(a, \alpha) = \pi \Pi^{\gamma}_{\alpha}(a) = \Pi^{\pi
+    \gamma}_{\alpha}(a) = P^{\pi \gamma}(a, \alpha)$.
+\end{proof}
+
+\begin{lem}
+	\label{lem:changing-gamma-on-projections}
+  Let $\gamma_1, \gamma_2 \in [n]^{\underline{A}}$ be such that $\gamma^{-1}_1
+  \sim \eta$ and $\gamma^{-1}_2 \sim \eta$. Let $i \in [r]$ and $(((a_1,
+  \alpha_1), \ldots, (a_{r_i}, \alpha_{r_i})), R_i) \in \ind(\tau, I_1, \ldots,
+  I_l)$. Then $C[\gamma_1 \mathcal{A}] (L(g)(P^{\gamma_1}_{i, 1}(a_1, \alpha_1),
+  \ldots, P^{\gamma_1}_{i, {r_i}}(a_{r_i}, \alpha_{r_i}) = C[\gamma_2
+  \mathcal{A}] (L(g)(P^{\gamma_2}_{i, 1}(a_1, \alpha_1), \ldots,
+  P^{\gamma_2}_{i, {r_i}}(a_{r_i}, \alpha_{r_i})$.
+\end{lem}
+\begin{proof}
+  Let $\pi := \gamma_1 \gamma^{-1}_2$. Notice that $\pi \in \spstab{g}$. We thus
+  have
+	\begin{align*}
+		C[\gamma_1 \mathcal{A}](L(\alpha^{\gamma_1}(i, \vec{x}), \beta^{\gamma_1}(j,
+		\vec{y})) & = C_n[\pi \gamma_1 \mathcal{A}](\pi L(\alpha^{\gamma_1}(i, \vec{x}), 
+                \beta^{\gamma_1}(j, \vec{y})) \\
+		          & = C_n[\pi \gamma_1 \mathcal{A}](L(\pi                                
+                \alpha^{\gamma_1}(i, \vec{x}), \pi \beta^{\gamma_1}(j, \vec{y}))\\
+		          & = C_n[\pi                                                            
+                \gamma_1 \mathcal{A}](L(\alpha^{\pi \gamma_1}(i, \vec{x}), \pi \beta^{\pi
+                \gamma_1}(j, \vec{y})\\
+		          & = C_n[\gamma_2 \mathcal] (L(\alpha^{\gamma_2}(i,                     
+                \vec{x}), \beta^{\gamma_2}(j, \vec{y})))\\
+	\end{align*}The third equality follows from Lemma \ref{lem:alpha-and-gamma}.
+\end{proof}
+
+\begin{prop}
+  Let $((a_1, \alpha_1), \ldots, (a_{r_i}, \alpha_{r_i})), R_i) \in \dom (M)$.
+  Let $\gamma \in [n]^{\underline{A}}$ be such that $ \gamma^{-1} \sim \eta$.
+  Then $M(((a_1, \alpha_1), \ldots, (a_{r_i}, \alpha_{r_i})), R_i) =
+  L^{\gamma\mathcal{A}}(g)((P^{\gamma}(a_1, \alpha_1), \ldots,
+  P^{\gamma}(a_{r_i}, \alpha_{r_i})), R_i))$.
+  
+  % In other words, $P^{\gamma}$ is a homomorphism from the $\tau$-structure
+  % defined by $M$ to the $\tau$-structure defined by $L^{\gamma
+  % \mathcal{A}}(g)$.
+	\label{prop:M-to-L-homomorphism}
+\end{prop}
+\begin{proof}
+  Let $(\sigma_1, \ldots, \sigma_{r_i}) := F(((a_1, \alpha_1), \ldots, (a_{r_i},
+  \alpha_{r_i})), R_i)$. Let $h := L(g)((\sigma_1 a_1, \ldots, \sigma_{r_i}
+  a_{r_i}), R_i)$ and $\epsilon := \restr{(\sigma_1 \alpha_1 \vert \ldots \vert
+    \sigma_{r_i} \alpha_{r_i})}{\consp(h)}$. Let $\gamma' :=
+  (\Pi^{\gamma}_{\epsilon})^{-1} \gamma$. Then
+	\begin{align*}
+    M(((a_1, \alpha_1), \ldots, (a_{r_i}, \alpha_{r_i})), R_i) = 1 &\iff \epsilon \in \EV_h \\
+                                                                   &\iff C[\gamma \mathcal{A}] (\Pi^{\gamma}_{\epsilon} (h))  = 1\\
+                                                                   &\iff C[(\Pi^{\gamma}_{\epsilon})^{-1}\gamma \mathcal{A}] (h)  = 1\\
+                                                                   &\iff C[\gamma' \mathcal{A}] (h)  = 1  \\
+                                                                   &\iff C[\gamma' \mathcal{A}](L(g)((\sigma_1 a_1, \ldots, \sigma_{r_i}
+                                                                     a_{r_i}), R_i)) = 1                                       \\
+                                                                   &\iff C[\gamma' \mathcal{A}](L(g)((\Pi^{\gamma'}_{\alpha_1}(a_1), \ldots, \Pi^{\gamma'}_{\alpha_{r_i}}(a_{r_i})), R_i)) = 1  \\
+                                                                   &\iff C[\gamma' \mathcal{A}](L(g)((P^{\gamma'}(a_1, \alpha_1), \ldots, P^{\gamma'}(a_{r_i}, \alpha_{r_i})), R_i)) = 1  \\
+                                                                   &\iff C[\gamma \mathcal{A}](L(g)((P^{\gamma}(a_1, \alpha_1), \ldots, P^{\gamma}(a_{r_i}, \alpha_{r_i})), R_i)) = 1  \\
+                                                                   &\iff L^{\gamma \mathcal{A}}(g)((P^{\gamma}(a_1, \alpha_1), \ldots, P^{\gamma}(a_{r_i}, \alpha_{r_i})), R_i) = 1
+	\end{align*}
+	The second equality follows from Lemma~\ref{lem:translate-EV-circuits}. The
+  fifth equality follows from Lemma~\ref{lem:defining-h-from-index}. The sixth
+  equality follows from Lemma~\ref{lem:changing-gamma-on-projections}.
+\end{proof}
+
+
+\begin{lem} 
+	If $\gamma \in [n]^{\underline{A}}$ is such that $\gamma^{-1} \sim \eta$, then
+  $P^{\gamma}$ is surjective.
+  \label{lem:M-to-L-surjective}
+\end{lem}
+\begin{proof}
+  Let $i \in [l]$. Let $x \in X_i$ and $a = \min(\orb(x))$. There exists $\sigma
+  \in \spstab{g}$ such that $\sigma (a) = x$. Let $\alpha := \gamma^{-1}
+  \restr{\sigma}{\consp(a)}$. Then for each $b \in \consp(a) \cap \consp(g)$ we
+  have $\alpha(b) = \gamma^{-1} \restr{\sigma}{\consp(a)} (b) = \gamma^{-1}(b) =
+  \eta (b)$, and so $\alpha \in A_a$. For each $b \in \consp(a)$ we have
+  $\Pi^{\gamma}_\alpha(b) = \gamma (\alpha(b)) = \gamma(\gamma^{-1}
+  \restr{\sigma}{\consp(a)}(b)) = \sigma (b)$. It follows that $P^{\gamma}(a,
+  \alpha) = \Pi^{\gamma}_\alpha(a) = \sigma (a) = x$.
+\end{proof}
+
+
+We'd love to show $P^{\gamma}$ injective. but no hope. yada yada.
+
+We instead define a new matrix $M_{\equiv}$ by quotienting $M$ by an appropriate
+equivalence relation and show that the lifting of $P^{\gamma}$ to equivalence
+classes of $\equiv$ gives an isomorphism from $M_\equiv$ to
+$L^{\gamma\mathcal{A}}(g)$. We first define the equivalence relation $\equiv$.
+
+\begin{definition}
+  Let $s \in \universe{g}$ and let $\alpha, \alpha' \in A_s$. We say that
+  $alpha$ and $\alpha$ are \emph{mutually stable} on $s$ if there exists $\pi
+  \in \stab(s)$ such that $\alpha (a) = \alpha' (\pi (a))$ for all $a \in
+  \consp(s)$. Note that mutual stability on $s$ is an equivalence relation on
+  $A_s$. We write $\alpha \equiv_s \alpha'$ to denote that $\alpha$ and
+  $\alpha'$ are mutually stable with respect to $s$.
+  
+  We say that $\sigma, \sigma' \in \spstab{g}$ are \emph{mutually stable} on $s$
+  if there exists $\pi \in \stab(s)$ such that $\sigma (a) = \sigma' \pi (a)$
+  for all $a \in \consp(s)$. Note that mutual stability on $s$ is an equivalence
+  relation on $\spstab{g}$. We write $\sigma \equiv_s \sigma'$ to denote that
+  $\sigma$ and $\sigma'$ are mutually stable with respect to $s$.
+\end{definition}
+
+\begin{lem}
+  Let $i \in [l]$ and $(a, \alpha), (a, \alpha') \in I_i$. If $\alpha \equiv_a
+  \alpha'$ then $P^{\gamma}(a, \alpha) = P^{\gamma}(a, \alpha')$.
+	\label{lem:quot-well-defined}
+\end{lem}
+\begin{proof}
+  From mutually stability there exists $\pi \in \stab(a)$ such that for all $b
+  \in \stab(a)$, $\alpha (b) = \alpha' \pi (b)$. For all $b \in \stab(a)$ we
+  have $\Pi^{\gamma}_{\alpha'} (\pi (b)) = \gamma (\alpha' (\pi b)) = \gamma
+  (\alpha (b)) = \Pi^{\gamma}_{\alpha}(b)$. It follows that $P^{\gamma}(a,
+  \alpha') = \Pi^{\gamma}_{\alpha'} (a) = \Pi^{\gamma}_{\alpha'} (\pi (a)) =
+  \Pi^{\gamma}_{\alpha}(a) = P^{\gamma}(a, \alpha)$.
+\end{proof}
+
+\begin{lem}
+  Let $((a_1, \alpha_1), \ldots, (a_{r_i}, \alpha_{r_i}), R_i), ((a_1',
+  \alpha_1'), \ldots, (a_{r_{j}}', \alpha_{r_j}'), R_j) \in I$. If $R_i = R_j$
+  and for all $m \in [r_i]$ we have $a_m = a_m'$ and $\alpha_{m} \equiv_{a_m}
+  \alpha_m'$ then $M ((a_1, \alpha_1), \ldots, (a_{r_i}, \alpha_{r_i}), R_j) =
+  M((a_1', \alpha_1'), \ldots, (a_{r_i}', \alpha_{r_j}'), R_j)$.
+  \label{lem:M-quot-well-defined}
+\end{lem}
+\begin{proof}
+  Let $((a_1, \alpha_1), \ldots, (a_{r_i}, \alpha_{r_i}), R_i), ((a_1',
+  \alpha_1'), \ldots, (a_{r_{j}}', \alpha_{r_j}'), R_j) \in I$ with $R_i = R_j$
+  and for all $m \in [r_i]$ we have $a_m = a_m'$ and $\alpha_{m} \equiv_{a_m}
+  \alpha_m'$. Then
+  \begin{align*}
+    M((a_1, \alpha_1), \ldots (a_{r_i}, \alpha_{r_i}), R_i)  &= L^{\gamma \mathcal{A}}(g)(P^{\gamma}(a_1, \alpha_1), \ldots, P^{\gamma}(a_{r_i}, \alpha_{r_i}), R_i)\\
+                                                             &= L^{\gamma \mathcal{A}}(g)(P^{\gamma}(a_1', \alpha_1), \ldots, P^{\gamma}(a_{r_j}', \alpha_{r_j}), R_j) \\
+                                                             &= L^{\gamma \mathcal{A}}(g)(P^{\gamma}(a_1', \alpha_1'), \ldots, P^{\gamma}(a_{r_j}', \alpha_{r_j}'), R_j) \\
+                                                             &= M((a_1', \alpha_1'), \ldots (a_{r_i}', \alpha_{r_j}'), R_j).
+  \end{align*}
+  The first equivalence and final equivalence follows from
+  Proposition~\ref{prop:M-to-L-homomorphism}. The second equivalence follows
+  from the fact that $R_i = R_j$ and for all $m \in [r_i]$ we have $a_m = a_m'$.
+  The third equivalence follows from Proposition~\ref{prop:M-to-L-homomorphism}.
+\end{proof}
+
+For each $i \in [l]$ let $I_{i}/\equiv = \{(a, [\alpha]_{\equiv_a}) : (a,
+\alpha) \in I_i \}$. For each $\gamma \in [n]^{\underline{A}}$ such that
+$\gamma^{-1} \sim \eta$ let $P^{\gamma}_i /\equiv : I_{i}/\equiv \ra X_i$ be
+defined such that $P^{\gamma}_i\/equiv (a, [\alpha]_{\equiv_a}) = P^{\gamma}_i
+(a, \alpha)$. Let $P^{\gamma}_i /\equiv = \uplus_{i \in [l]}P_i /\equiv$. It
+follows from Lemma~\ref{lem:quot-well-defined} that these functions are
+well-defined.
+
+Let $M_\equiv : \ind (\tau, I_{1}/\equiv , \ldots I_{l}/\equiv) \ra \{0,1\}$ be
+defined by $M_{\equiv} ((a_1, [\alpha_1]_{\equiv_{a_1}}), \ldots, [(a_{r_i},
+\alpha_{r_i})]_{\equiv_{a_{r_i}}}, R_i)) = M((a_1, \alpha_1), \ldots, (a_{r_i},
+\alpha_{r_i}), R_i)$ for each $((a_1, [\alpha_1]_{\equiv_{a_1}}), \ldots,
+(a_{r_i}, [\alpha_{r_i}]_{\equiv_{a_{r_i}}}), R_i) \in \ind (\tau, I_{1}/\equiv
+, \ldots I_{l}/\equiv)$. It follows from Lemma~\ref{lem:M-quot-well-defined}
+that this function is well defined.
+
+
+\begin{thm}
+	Let $\gamma \in [n]^{\underline{U}}$ such that $\gamma^{-1} \sim \eta$. Then
+  $L^{\gamma}$ is isomorphic to $M_{\equiv}$.
+	\label{thm:M-to-L-isomorphism}
+\end{thm}
+\begin{proof}
+  Let $([(a_1, \alpha_1)], \ldots, [(a_{r_i}, \alpha_{r_i})], R_i) \in \dom
+  (M)$. We have $M_\equiv ([(a_1, \alpha_1)], \ldots, [(a_{r_i}, \alpha_{r_i})],
+  R_i) = M (((a_1, \alpha_1), \ldots, (a_{r_i}, \alpha_{r_i})), R_i) = L^{\gamma
+    \mathcal{A}}(g)(P^{\gamma}(a_1, \alpha_1), \ldots, P^{\gamma}(a_{r_i},
+  \alpha_{r_i}), R_i) = L^{\gamma \mathcal{A}}(g)(P^{\gamma}_{\equiv}(a_1,
+  \alpha_1), \ldots, P^{\gamma}_\equiv(a_{r_i}, \alpha_{r_i}), R_i)$.
+
+  
+		
+	Moreover, from Lemma \ref{lem:alpha-beta-mutal-equivalence} we can lift
+  $\alpha^\gamma$ to $I_\equiv$ and $\beta^{\gamma}$ to $J_\equiv$. It remains
+  to show that $\alpha^\gamma_{\equiv}$ and $\beta^{\gamma}_{\equiv}$ are
+  bijections. We prove the result for $\alpha^{\gamma}_{\equiv}$, with the proof
+  for $\beta^\gamma_\equiv$ following similarly.
+		
+	We first note that $\alpha^{\gamma}_{\equiv}$ is surjective as both
+  $\alpha^{\gamma}$ (see Lemma \ref{lem:alpha-beta-surjective}) and the lifting
+  function (i.e.\ the quotient map from $I$ to $I_\equiv$) are surjective.
+		
+	Suppose $\alpha^{\gamma}_\equiv((i, [\vec{x}])) = \alpha^{\gamma}_\equiv((i',
+  [\vec{x}']))$, and so $\Pi^{\gamma}_{\vec{x}}(i) =
+  \Pi^{\gamma}_{\vec{x}'}(i')$. But then $i$ and $i'$ are in the same orbit and
+  so, from the definition of $I_{\equiv}$, we have $i = i'$. Thus
+  $\Pi^{\gamma}_{\vec{x}}(i) = \Pi^{\gamma}_{\vec{x}'}(i)$, and so from Lemma
+  \ref{lem:functions-mutual-equivalence} there exists $\sigma \in \stab(i)$ such
+  that for all $a \in \consp(i)$ we have that $\Pi^{\gamma}_{\vec{x}}(a) =
+  \Pi^{\gamma}_{\vec{x}'} (\sigma (a))$. But then $\Pi^{\gamma}_{\vec{x}}(a) =
+  \gamma (\vec{x}(a)) = \Pi^{\gamma}_{\vec{x}'}(\sigma (a)) = \gamma (\vec{x}'
+  (\sigma (a))$ and, since $\gamma$ is a bijection, it follows that $\vec{x}(a)
+  = \vec{x}' \sigma (a)$. Thus $\vec{x} \equiv_i \vec{x}'$, and so $[\vec{x}] =
+  [\vec{x}']$. We thus have that $\alpha^{\gamma}_\equiv$ and
+  $\beta^{\gamma}_\equiv$ are injections, and the result follows.
+\end{proof}
+
+
+% -------------------------------------------------------------BREAK--------------------------------------------------------------
+% -------------------------------------------------------------BREAK--------------------------------------------------------------
+% -------------------------------------------------------------BREAK--------------------------------------------------------------
+% -------------------------------------------------------------BREAK--------------------------------------------------------------
+% -------------------------------------------------------------BREAK--------------------------------------------------------------
+% -------------------------------------------------------------BREAK--------------------------------------------------------------
+% -------------------------------------------------------------BREAK--------------------------------------------------------------
+% -------------------------------------------------------------BREAK--------------------------------------------------------------
+% -------------------------------------------------------------BREAK--------------------------------------------------------------
+% -------------------------------------------------------------BREAK--------------------------------------------------------------
+\pagebreak
+
+
+
+
+and $\beta^{\gamma} (j, \vec{y}) := \Pi^{\gamma}_{\vec{y}}(j)$, respectively. We
+now prove a number of technical lemmas that ultimately allow us to to prove that
+the matrix $M$ quotiented by an appropriate equivalence relation is isomorphic
+to $L^{\gamma}$. We use $\alpha^{\gamma}$ and $\beta^{\gamma}$ to construct the
+isomorphism. We first show that $\alpha^{\gamma}$ and $\beta^{\gamma}$ are
+surjective.
+
+
+
+
+$\epsilon := \restr{(\sigma_1 \alpha_1 \vert \ldots \vert \sigma_{r_i}
+  \alpha_{r_i})}{\consp(h)}$ and
+
+
+
+
+
+
+
+
+
+
+
+
+
+We define an action on the set of all injections from a subset of $A$ to $[n]$
+as follows. Let $\sigma \in \sym_n$. Let $S \subseteq [n]$ and let $\alpha \in
+A^{\underline{S}}$. Then
+
+If $h$ is in $R_i$
+
+
+let $\row_i(h)L(g)^{-1}(h)(1)$ and $\column(h) := L(g)^{-1}(h)(2)$. For $a \in
+\universe{g}$ we let $\consp(a) := \consp_{\spstab{g}}(a)$, $\orb(a) =
+\orb_{\spstab{g}}(a)$ and $\stab(a) = \stab_{\spstab{g}}(a)$.
+
+
+
+
+
+
+
 
 In the remainder of this subsection we show how to define $\EV_g$ recursively
 for each internal gate $g$ in $C_n$, i.e.\ how to define $\EV_g$ given $\{\EV_h
 : h \in H_g \}$. In Section~\ref{sec:translating-formulas-to-FPR} we show that
-there is a formula $\theta \in \FP^{\BB}$ implementing this recursive definition. We
-then use $\theta$, and the fixed-point operator, to define an $\FPR$-formula $Q$
-that evaluates the output gates of the appropriate-size circuit for a given
-input structure, and hence defines the query computed by the family $(C_n)_{n
-  \in \nats}$. In fact, the recursive definition of $\EV_g$ is handled
-differently depending on if $g$ is a constant, relational, $\AND$, $\NAND$,
-$\OR$, or $\RANK$ gate, and so we define a different $\FPR$-formula in each
-case. We then use a disjunction over cases in order to define $\theta$. We note
-that Anderson and Dawar~\cite{AndersonD17} define formulas of $\FPC$, and hence
-$\FPR$, that handle every case except where $g$ is a rank gate. As such, we need
-only consider the latter case.
+there is a formula $\theta \in \FP^{\BB}$ implementing this recursive
+definition. We then use $\theta$, and the fixed-point operator, to define an
+$\FPR$-formula $Q$ that evaluates the output gates of the appropriate-size
+circuit for a given input structure, and hence defines the query computed by the
+family $(C_n)_{n \in \nats}$. In fact, the recursive definition of $\EV_g$ is
+handled differently depending on if $g$ is a constant, relational, $\AND$,
+$\NAND$, $\OR$, or $\RANK$ gate, and so we define a different $\FPR$-formula in
+each case. We then use a disjunction over cases in order to define $\theta$. We
+note that Anderson and Dawar~\cite{AndersonD17} define formulas of $\FPC$, and
+hence $\FPR$, that handle every case except where $g$ is a rank gate. As such,
+we need only consider the latter case.
 
 The argument in~\cite{AndersonD17} works by establishing a bijection (for any
 fixed $\gamma$) between the set of possible assignments to $\consp(g)$ and the
@@ -121,6 +670,8 @@ $U^{\underline{\consp(h)}}$ and $\orb(h)$ to recover from $\EV_h$ information
 about the matrix structure that is input to $g$. This involves a careful
 analysis of how permutations that move $\consp(h)$ shift the row and column
 indices in $L^{-1}(h)$. We develop this machinery next.
+
+For the remainder of this section we fix a gate $g$ in $C_n$.
 
 For the remainder of the section we fix a rank gate $g$ in $C_n$. For $\gamma
 \in [n]^{\underline{U}}$ we let $L^{\gamma} = L^{\gamma \mathcal{A}}(g)$. We let
@@ -433,7 +984,7 @@ $L^{\gamma}$.
 
 \begin{thm}
   If $(i, \vec{x})\in I$; $(j, \vec{y})\in J$, and $\gamma\in
-  [n]^{\underline{U}}$ is such that $ \gamma^{-1} \sim \eta$, then
+  [n]^{\underline{A}}$ is such that $ \gamma^{-1} \sim \eta$, then
   $M((i,\vec{x}), (j, \vec{y})) = L^{\gamma}(\alpha^{\gamma}(i, \vec{x}),
   \beta^{\gamma}(j, \vec{y}))$.
 	\label{lem:ML-equal-elements}
