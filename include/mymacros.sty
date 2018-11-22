@@ -5,7 +5,8 @@
 \newcommand{\bd}[1]{\mathbf{#1}} % for bolding symbols
 \newcommand{\mathsc}[1]{{\normalfont\textsc{#1}}}
 
-% OPERATORS AND QUANTIFIERS 
+% OPERATORS AND QUANTIFIERS
+\newcommand{\Op}{\Omega}
 \newcommand{\oper}{\bd{\Omega}}
 \newcommand{\setop}{\bd{\oper}}
 \newcommand{\setquant}{\bd{Q}}
@@ -24,6 +25,7 @@
 \newcommand{\dom}{\text{\textbf{Dom}}}
 \newcommand{\img}{\text{\textbf{Img}}}
 \newcommand{\ra}{\rightarrow}
+\newcommand{\quot}[2]{#1 / #2}
 
 % GRAPH THEORY
 \newcommand{\adj}{\text{\textbf{Adj}}}
@@ -35,8 +37,6 @@
 % COMPLEXITY THEORY
 \newcommand{\PT}{\ensuremath{\mathrm{P}}\xspace}
 \newcommand{\NP}{\ensuremath{\mathrm{NP}}\xspace}
-\newcommand{\arty}{\ensuremath{\mathrm{arty}}}
-\newcommand{\arity}{\ensuremath{\mathrm{arty}}}
 
 % LOGIC
 \newcommand{\fin}[1]{\logic{fin}{[#1]}}
@@ -44,12 +44,13 @@
 \newcommand{\width}{\ensuremath{\mathrm{wdth}}\xspace}
 \newcommand{\numwidth}{\ensuremath{\mathrm{nwdth}}\xspace}
 \newcommand{\cl}[1]{\mathrm{cl}(#1)}
-\newcommand{\asgn}[2]{\logic{asgn}(\gamma, \mathcal{A})}
+\newcommand{\asgn}[2]{[#2/#1]}
 \newcommand{\ext}[2]{#1 \triangleleft#2}
 \newcommand{\free}[1]{\mathrm{free}(#1)}
 \newcommand{\FPC}{\logic{FPC}}
 \newcommand{\FO}{\logic{FO}} 
 \newcommand{\FP}{\logic{FP}}
+\newcommand{\natFP}{\logic{FP}^{\nats}}
 \newcommand{\FOR}{\logic{FOR}}
 \newcommand{\FOC}{\logic{FOC}}
 \newcommand{\FOrk}{\logic{FO+rk}}
@@ -59,6 +60,9 @@
 \newcommand{\CPT}{\logic{CPT}}
 \newcommand{\CPTC}{\logic{CPTC}}
 \newcommand{\infcount}{\mathcal{C}^\omega}
+
+\newcommand{\arty}{\ensuremath{\mathrm{arty}}}
+\newcommand{\arity}{\ensuremath{\mathrm{arty}}}
 
 % LOGIC OPERATORS
 \newcommand{\AND}{\logic{AND}}
@@ -162,11 +166,15 @@
 
 
 \newcommand{\exlogic}[2]{#1 (\widetilde{#2})}
+\newcommand{\exFP}[1]{\FP^{\nats}(#1)}
+
 
 \newcommand{\maxnum}[2]{(#1 + 1)^{#2} - 1}
 \newcommand{\numdomain}[1]{[#1]_0}
 \newcommand{\numdompow}[2]{[#1]^{#2}_0}
 \newcommand{\maxnumdom}[2]{[\maxnum{#1}{#2}]_0}
+
+\newcommand{\maxarity}{\logic{r}}
 
 
 % NAMES
